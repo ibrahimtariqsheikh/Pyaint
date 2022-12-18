@@ -6,18 +6,18 @@ STATE = "COLOR"
 Change = False
 isColorWindow = False
 COLOR_WINDOW_WIDTH_SIZE = 500
-COLOR_WINDOW_HEIGHT_SIZE = 530
+COLOR_WINDOW_HEIGHT_SIZE = 570
 COLOR_WINDOW_WIDTH = WIDTH / 2 - COLOR_WINDOW_WIDTH_SIZE / 2
 COLOR_WINDOW_HEIGHT = WIDTH / 2 - COLOR_WINDOW_HEIGHT_SIZE / 2
 
 color_mixer_rect = pygame.Rect(
-    COLOR_WINDOW_WIDTH + 20, COLOR_WINDOW_HEIGHT + 30, 225, 150
+    COLOR_WINDOW_WIDTH + 20, COLOR_WINDOW_HEIGHT + 30, 225, 200
 )
 color_mode_rect = pygame.Rect(
     COLOR_WINDOW_WIDTH + 20 + color_mixer_rect.w + 10,
     COLOR_WINDOW_HEIGHT + 30,
     225,
-    150,
+    200,
 )
 color_mode_display_rect = pygame.Rect(
     COLOR_WINDOW_WIDTH + 20 + color_mixer_rect.w + 130,
@@ -88,6 +88,30 @@ def draw_mouse_position_text(win):
                     continue
                 if button.name == "CloseColorWindow":
                     text_surface = pos_font.render("Close Window", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "ColorModeR":
+                    text_surface = pos_font.render("Enter Red Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "ColorModeG":
+                    text_surface = pos_font.render("Enter Green Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "ColorModeB":
+                    text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "DisplayColorInColorMode":
+                    text_surface = pos_font.render("Color Mode Display", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "AddToCustomColors":
+                    text_surface = pos_font.render("Add To Custom Colors", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "SwitchColorMode":
+                    text_surface = pos_font.render("Switch Color Mode", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                     break
     except IndexError:
@@ -562,26 +586,94 @@ color_window_buttons = [
     Button(
         color_mode_rect.x + 50,
         color_mode_rect.y + 25,
+        50,
+        0,
+        WHITE,
+        name="ColorMode",
+        text="Color Mode",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 60,
+        40,
+        0,
+        WHITE,
+        name="ColorModeRedText",
+        text="Red:",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 90,
+        40,
+        0,
+        WHITE,
+        name="ColorModeBlueText",
+        text="Blue:",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 120,
+        40,
+        0,
+        WHITE,
+        name="ColorModeGreenText",
+        text="Green:",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 70,
+        color_mode_rect.y + 50,
         button_width,
         25,
         WHITE,
         name="ColorModeR",
     ),
     Button(
-        color_mode_rect.x + 50,
-        color_mode_rect.y + 25 + 25 + 5,
+        color_mode_rect.x + 70,
+        color_mode_rect.y + 50 + 25 + 5,
         button_width,
         25,
         WHITE,
         name="ColorModeG",
     ),
     Button(
-        color_mode_rect.x + 50,
-        color_mode_rect.y + 25 + 25 + 25 + 10,
+        color_mode_rect.x + 70,
+        color_mode_rect.y + 50 + 25 + 25 + 10,
         button_width,
         25,
         WHITE,
         name="ColorModeB",
+    ),
+    Button(
+        color_mode_rect.x + color_mode_rect.w / 2 + 30,
+        color_mode_rect.y + color_mode_rect.h / 2 - 25,
+        50,
+        50,
+        BLUE,
+        name="DisplayColorInColorMode",
+    ),
+    Button(
+        color_mode_rect.x + color_mode_rect.w / 2 - 90,
+        color_mode_rect.y + color_mode_rect.h - 50,
+        180,
+        40,
+        WHITE,
+        text="Add To Custom Colors",
+        name="AddToCustomColors",
+        shape="rectangleWithBorderRadius",
+    ),
+    Button(
+        color_mode_rect.x + color_mode_rect.w - 70,
+        color_mode_rect.y + 10,
+        60,
+        40,
+        WHITE,
+        text="Switch",
+        name="SwitchColorMode",
+        shape="rectangleWithBorderRadius",
     ),
 ]
 
@@ -597,8 +689,18 @@ while run:
             run = False
 
         if isColorWindow:
-            if event.type == pygame.KEYDOWN:
+            for button in color_window_buttons:
+                if (
+                    button.name == "ColorModeR"
+                    or button.name == "ColorModeG"
+                    or button.name == "ColorModeB"
+                ):
+                    if button.selected == True:
+                        button.border_color = BLACK
+                    else:
+                        button.border_color = SILVER
 
+            if event.type == pygame.KEYDOWN:
                 for color_window_button in color_window_buttons:
                     if (
                         color_window_button.name == "ColorModeR"

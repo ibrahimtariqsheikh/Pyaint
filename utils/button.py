@@ -16,6 +16,7 @@ class Button:
         image_url="/",
         name=None,
         selected=False,
+        border_color=BLACK,
     ):
         self.x = x
         self.y = y
@@ -28,6 +29,7 @@ class Button:
         self.image_url = image_url
         self.name = name
         self.selected = selected
+        self.border_color = border_color
 
     def draw(self, win):
         # Draws button with an image
@@ -38,7 +40,15 @@ class Button:
 
         elif self.shape == "rectangle":
             pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
-            pygame.draw.rect(win, BLACK, (self.x, self.y, self.width, self.height), 2)
+            pygame.draw.rect(
+                win, self.border_color, (self.x, self.y, self.width, self.height), 2
+            )
+
+        elif self.shape == "rectangleWithBorderRadius":
+            pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height))
+            pygame.draw.rect(
+                win, self.border_color, (self.x, self.y, self.width, self.height), 2, 10
+            )
 
         elif self.shape == "ellipse":
             pygame.draw.ellipse(
@@ -47,7 +57,10 @@ class Button:
             # pygame.draw.ellipse(win, BLACK, (self.x, self.y, self.width, self.height), 2) #border
 
         if self.text:
-            button_font = get_font(int(self.width / 2) - 6)
+            if self.name == "AddToCustomColors" or self.name == "SwitchColorMode":
+                button_font = get_font(int(self.height / 2) - 6)
+            else:
+                button_font = get_font(int(self.width / 2) - 6)
             text_surface = button_font.render(self.text, 1, self.text_color)
             win.blit(
                 text_surface,

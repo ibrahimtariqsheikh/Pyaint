@@ -55,7 +55,7 @@ def get_font(size):
     return pygame.font.SysFont("arial", size)
 
 
-FPS = 120
+FPS = 300
 
 WIDTH, HEIGHT = 600, 770
 
