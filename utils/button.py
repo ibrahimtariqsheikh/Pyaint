@@ -80,12 +80,6 @@ class Button:
 
         return True
 
-    def set_text(self, new_text):
-        self.text = new_text
-
-    def get_text(self):
-        return self.text
-
     def hover(self, pos):
         x, y = pos
 

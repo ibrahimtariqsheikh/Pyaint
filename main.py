@@ -5,6 +5,8 @@ pygame.display.set_caption("Pyaint")
 STATE = "COLOR"
 Change = False
 isColorWindow = False
+isRGBMode = True
+custom_color_count = 0
 COLOR_WINDOW_WIDTH_SIZE = 500
 COLOR_WINDOW_HEIGHT_SIZE = 570
 COLOR_WINDOW_WIDTH = WIDTH / 2 - COLOR_WINDOW_WIDTH_SIZE / 2
@@ -102,6 +104,19 @@ def draw_mouse_position_text(win):
                     text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                     break
+                if button.name == "ColorModeH":
+                    text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "ColorModeS":
+                    text_surface = pos_font.render("Enter Saturation Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+                if button.name == "ColorModeV":
+                    text_surface = pos_font.render("Enter Value", 1, BLACK)
+                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    break
+
                 if button.name == "DisplayColorInColorMode":
                     text_surface = pos_font.render("Color Mode Display", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
@@ -490,6 +505,7 @@ for i in range(int(len(COLORS) / 2)):
             button_width,
             button_height,
             WHITE,
+            name=f"custom_colors_{i}",
         )
     )
 
@@ -609,8 +625,8 @@ color_window_buttons = [
         40,
         0,
         WHITE,
-        name="ColorModeBlueText",
-        text="Blue:",
+        name="ColorModeGreenText",
+        text="Green:",
         shape="text",
     ),
     Button(
@@ -619,8 +635,8 @@ color_window_buttons = [
         40,
         0,
         WHITE,
-        name="ColorModeGreenText",
-        text="Green:",
+        name="ColorModeBlueText",
+        text="Blue:",
         shape="text",
     ),
     Button(
@@ -652,7 +668,7 @@ color_window_buttons = [
         color_mode_rect.y + color_mode_rect.h / 2 - 25,
         50,
         50,
-        BLUE,
+        WHITE,
         name="DisplayColorInColorMode",
     ),
     Button(
@@ -708,9 +724,9 @@ while run:
                         or color_window_button.name == "ColorModeB"
                     ) and color_window_button.selected == True:
                         if event.key == pygame.K_BACKSPACE:
-                            user_input = color_window_button.get_text()
+                            user_input = color_window_button.text
                             user_input = user_input[:-1]
-                            color_window_button.set_text(user_input)
+                            color_window_button.text = user_input
                         elif (
                             event.key == pygame.K_0
                             or event.key == pygame.K_1
@@ -722,10 +738,37 @@ while run:
                             or event.key == pygame.K_7
                             or event.key == pygame.K_8
                             or event.key == pygame.K_9
-                        ) and len(color_window_button.get_text()) < 3:
-                            user_input = color_window_button.get_text()
+                        ) and len(color_window_button.text) < 3:
+                            user_input = color_window_button.text
                             user_input += event.unicode
-                            color_window_button.set_text(user_input)
+                            if int(user_input) > 255:
+                                user_input = user_input[:-1]
+                            color_window_button.text = user_input
+
+                    if (
+                        color_window_buttons[5].text
+                        or color_window_buttons[6].text
+                        or color_window_buttons[7].text
+                    ):
+                        if color_window_buttons[5].text:
+                            color_mode_red = int(color_window_buttons[5].text)
+                        else:
+                            color_mode_red = 0
+                        if color_window_buttons[6].text:
+                            color_mode_green = int(color_window_buttons[6].text)
+                        else:
+                            color_mode_green = 0
+                        if color_window_buttons[7].text:
+                            color_mode_blue = int(color_window_buttons[7].text)
+                        else:
+                            color_mode_blue = 0
+
+                        color_window_buttons[8].color = (
+                            color_mode_red,
+                            color_mode_green,
+                            color_mode_blue,
+                        )
+
                 draw_color_window_buttons(WIN)
 
         if pygame.mouse.get_pressed()[0]:
@@ -749,6 +792,19 @@ while run:
                         if button.name == "CloseColorWindow":
                             isColorWindow = False
                             break
+                        if button.name == "AddToCustomColors":
+                            for button2 in buttons:
+                                if (
+                                    button2.name
+                                    == f"custom_colors_{custom_color_count}"
+                                ):
+                                    custom_color_count = custom_color_count + 1
+                                    button2.color = (
+                                        color_mode_red,
+                                        color_mode_green,
+                                        color_mode_blue,
+                                    )
+                                    break
                         button.selected = True
 
             except IndexError:
