@@ -7,6 +7,9 @@ Change = False
 isColorWindow = False
 isRGBMode = True
 custom_color_count = 0
+color_mode_red = 0
+color_mode_green = 0
+color_mode_blue = 0
 COLOR_WINDOW_WIDTH_SIZE = 500
 COLOR_WINDOW_HEIGHT_SIZE = 570
 COLOR_WINDOW_WIDTH = WIDTH / 2 - COLOR_WINDOW_WIDTH_SIZE / 2
@@ -920,12 +923,7 @@ while run:
                         if button.name == "CloseColorWindow":
                             isColorWindow = False
                             break
-                        if (
-                            button.name == "AddToCustomColors"
-                            and color_mode_red
-                            and color_mode_blue
-                            and color_mode_green
-                        ):
+                        if button.name == "AddToCustomColors":
                             for custom_button in buttons:
                                 if (
                                     custom_button.name
