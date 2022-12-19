@@ -5,12 +5,12 @@ import math
 
 class ColorWindow:
     def __init__(self):
-        self.isself = False
+        self.isColorWindow = False
         self.isRGBMode = True
         self.custom_color_count = 0
-        self.color_mode_red = 0
-        self.color_mode_green = 0
-        self.color_mode_blue = 0
+        self.color_mode_input_one = 0
+        self.color_mode_input_two = 0
+        self.color_mode_input_three = 0
         self.COLOR_WINDOW_WIDTH_SIZE = 500
         self.COLOR_WINDOW_HEIGHT_SIZE = 570
         self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_WIDTH_SIZE / 2
@@ -132,7 +132,7 @@ class ColorWindow:
             Button(
                 self.color_mode_rect.x + self.color_mode_rect.w / 2 + 30,
                 self.color_mode_rect.y + self.color_mode_rect.h / 2 - 25,
-                50,
+                60,
                 50,
                 BLACK,
                 border_color=DARKGRAY,
@@ -190,10 +190,80 @@ class ColorWindow:
             ),
         ]
 
+    def draw_color_window(self, win):
+        pygame.draw.rect(
+            win,
+            (255, 255, 255),
+            (
+                self.COLOR_WINDOW_WIDTH,
+                self.COLOR_WINDOW_HEIGHT,
+                self.COLOR_WINDOW_WIDTH_SIZE,
+                self.COLOR_WINDOW_HEIGHT_SIZE,
+            ),
+            width=0,
+        )
+        pygame.draw.rect(
+            win,
+            (0, 0, 0),
+            (
+                self.COLOR_WINDOW_WIDTH,
+                self.COLOR_WINDOW_HEIGHT,
+                self.COLOR_WINDOW_WIDTH_SIZE,
+                self.COLOR_WINDOW_HEIGHT_SIZE,
+            ),
+            width=2,
+        )
+        pygame.draw.rect(
+            win,
+            SILVER,
+            self.color_mixer_rect,
+            width=2,
+            border_radius=10,
+        )
+        pygame.draw.rect(
+            win,
+            SILVER,
+            self.color_mode_rect,
+            width=2,
+            border_radius=10,
+        )
+        pygame.draw.rect(
+            win,
+            SILVER,
+            self.color_gradients_rect,
+            width=2,
+            border_radius=10,
+        )
+
+        pygame.draw.rect(
+            win,
+            SILVER,
+            self.color_pallete_rect,
+            width=2,
+            border_radius=10,
+        )
+
+    def draw_color_window_buttons(self, win):
+        for button in self.color_window_buttons:
+            if self.isRGBMode:
+                if (
+                    button.name == "ColorModeHueText"
+                    or button.name == "ColorModeSatText"
+                    or button.name == "ColorModeValueText"
+                ):
+                    continue
+            else:
+                if (
+                    button.name == "ColorModeInputOneText"
+                    or button.name == "ColorModeInputTwoText"
+                    or button.name == "ColorModeInputThreeText"
+                ):
+                    continue
+
+            button.draw(win)
+
     def convert_hsv_to_rgb(self, h, s, v):
-        if h > 360 or h < 0 or s > 100 or s < 0 or v > 100 or v < 0:
-            print("The given hsv values are not in valid range")
-            return
+
         temp_saturation = s / 100
         temp_value = v / 100
         C = temp_saturation * temp_value
@@ -225,9 +295,9 @@ class ColorWindow:
             temp_red = C
             temp_green = 0
             temp_blue = X
-        r = int((temp_red + m) * 255)
-        g = int((temp_green + m) * 255)
-        b = int((temp_blue + m) * 255)
+        r = (temp_red + m) * 255
+        g = (temp_green + m) * 255
+        b = (temp_blue + m) * 255
         return r, g, b
 
     def convert_rgb_to_hsv(self, r, g, b):
@@ -248,4 +318,12 @@ class ColorWindow:
         else:
             s = (df / mx) * 100
         v = mx * 100
-        return h, s, v
+        return int(h), int(s), int(v)
+
+    def getListIndex(self, name):
+        count = 0
+        for button in self.color_window_buttons:
+            if button.name == name:
+                return count
+            count = count + 1
+        return -1

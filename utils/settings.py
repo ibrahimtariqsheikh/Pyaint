@@ -42,14 +42,6 @@ COLORS.append(LIME)
 COLORS.append(FUCHSIA)
 COLORS.append(PURPLE)
 
-FPS = 120
-WIDTH, HEIGHT = 600, 700
-ROWS = COLS = 40  # increase to have smaller pixels
-TOOLBAR_HEIGHT = HEIGHT - WIDTH
-PIXEL_SIZE = WIDTH // COLS
-BG_COLOR = WHITE
-DRAW_GRID_LINES = True
-
 
 def get_font(size):
     return pygame.font.SysFont("arial", size)
