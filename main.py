@@ -47,6 +47,47 @@ color_pallete_rect = pygame.Rect(
 )
 
 
+def convert_hsv_to_rgb(H, S, V):
+    if H > 360 or H < 0 or S > 100 or S < 0 or V > 100 or V < 0:
+        print("The given HSV values are not in valid range")
+        return
+    s = S / 100
+    v = V / 100
+    C = s * v
+    X = C * (1 - abs(math.fmod(H / 60.0, 2) - 1))
+    m = v - C
+
+    if H >= 0 and H < 60:
+        r = C
+        g = X
+        b = 0
+
+    elif H >= 60 and H < 120:
+        r = X
+        g = C
+        b = 0
+    elif H >= 120 and H < 180:
+        r = 0
+        g = C
+        b = X
+    elif H >= 180 and H < 240:
+        r = 0
+        g = X
+        b = C
+    elif H >= 240 and H < 300:
+        r = X
+        g = 0
+        b = C
+    else:
+        r = C
+        g = 0
+        b = X
+    R = (r + m) * 255
+    G = (g + m) * 255
+    B = (b + m) * 255
+    return (R, G, B)
+
+
 def init_grid(rows, columns, color):
     grid = []
 
@@ -76,6 +117,27 @@ def draw_grid(win, grid):
             )
 
 
+def convert_rgb_to_hsv(r, g, b):
+    r, g, b = r / 255.0, g / 255.0, b / 255.0
+    mx = max(r, g, b)
+    mn = min(r, g, b)
+    df = mx - mn
+    if mx == mn:
+        h = 0
+    elif mx == r:
+        h = (60 * ((g - b) / df) + 360) % 360
+    elif mx == g:
+        h = (60 * ((b - r) / df) + 120) % 360
+    elif mx == b:
+        h = (60 * ((r - g) / df) + 240) % 360
+    if mx == 0:
+        s = 0
+    else:
+        s = (df / mx) * 100
+    v = mx * 100
+    return h, s, v
+
+
 def draw_mouse_position_text(win):
     pos = pygame.mouse.get_pos()
     pos_font = get_font(MOUSE_POSITION_TEXT_SIZE)
@@ -92,31 +154,34 @@ def draw_mouse_position_text(win):
                     text_surface = pos_font.render("Close Window", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                     break
-                if button.name == "ColorModeR":
-                    text_surface = pos_font.render("Enter Red Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "ColorModeG":
-                    text_surface = pos_font.render("Enter Green Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "ColorModeB":
-                    text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "ColorModeH":
-                    text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "ColorModeS":
-                    text_surface = pos_font.render("Enter Saturation Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "ColorModeV":
-                    text_surface = pos_font.render("Enter Value", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-
+                if isRGBMode:
+                    if button.name == "ColorModeInputOne":
+                        text_surface = pos_font.render("Enter Red Value", 1, BLACK)
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorModeInputTwo":
+                        text_surface = pos_font.render("Enter Green Value", 1, BLACK)
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorModeInputThree":
+                        text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                else:
+                    if button.name == "ColorModeInputOne":
+                        text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorModeInputTwo":
+                        text_surface = pos_font.render(
+                            "Enter Saturation Value", 1, BLACK
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorModeInputThree":
+                        text_surface = pos_font.render("Enter Value", 1, BLACK)
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
                 if button.name == "DisplayColorInColorMode":
                     text_surface = pos_font.render("Color Mode Display", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
@@ -254,6 +319,21 @@ def draw(win, grid, buttons):
 def draw_color_window_buttons(win):
 
     for button in color_window_buttons:
+        if isRGBMode:
+            if (
+                button.name == "ColorModeHueText"
+                or button.name == "ColorModeSatText"
+                or button.name == "ColorModeValueText"
+            ):
+                continue
+        else:
+            if (
+                button.name == "ColorModeInputOneText"
+                or button.name == "ColorModeInputTwoText"
+                or button.name == "ColorModeInputThreeText"
+            ):
+                continue
+
         button.draw(win)
 
 
@@ -427,9 +507,9 @@ drawing_color = BLACK
 button_width = 40
 button_height = 40
 
-button_y_top_row = HEIGHT - TOOLBAR_HEIGHT / 2 - button_height - 1
-button_y_bot_row = HEIGHT - TOOLBAR_HEIGHT / 2 + 1
-button_y_last_row = HEIGHT - TOOLBAR_HEIGHT / 2 + button_height + 1
+button_y_top_row = HEIGHT - TOOLBAR_HEIGHT - 20 + (button_height) - 1
+button_y_bot_row = HEIGHT - TOOLBAR_HEIGHT - 20 + (button_height * 2) + 1
+button_y_last_row = HEIGHT - TOOLBAR_HEIGHT - 20 + (button_height * 3) + 2
 button_space = 42
 
 size_small = 25
@@ -466,11 +546,6 @@ brush_widths = [
         "ellipse",
     ),
 ]
-
-
-button_y_top_row = HEIGHT - TOOLBAR_HEIGHT / 2 - button_height - 1
-button_y_bot_row = HEIGHT - TOOLBAR_HEIGHT / 2 + 1
-button_space = 42
 
 # Adding Buttons
 buttons = []
@@ -615,7 +690,7 @@ color_window_buttons = [
         40,
         0,
         WHITE,
-        name="ColorModeRedText",
+        name="ColorModeInputOneText",
         text="Red:",
         shape="text",
     ),
@@ -625,7 +700,7 @@ color_window_buttons = [
         40,
         0,
         WHITE,
-        name="ColorModeGreenText",
+        name="ColorModeInputTwoText",
         text="Green:",
         shape="text",
     ),
@@ -635,7 +710,7 @@ color_window_buttons = [
         40,
         0,
         WHITE,
-        name="ColorModeBlueText",
+        name="ColorModeInputThreeText",
         text="Blue:",
         shape="text",
     ),
@@ -645,7 +720,7 @@ color_window_buttons = [
         button_width,
         25,
         WHITE,
-        name="ColorModeR",
+        name="ColorModeInputOne",
     ),
     Button(
         color_mode_rect.x + 70,
@@ -653,7 +728,7 @@ color_window_buttons = [
         button_width,
         25,
         WHITE,
-        name="ColorModeG",
+        name="ColorModeInputTwo",
     ),
     Button(
         color_mode_rect.x + 70,
@@ -661,7 +736,7 @@ color_window_buttons = [
         button_width,
         25,
         WHITE,
-        name="ColorModeB",
+        name="ColorModeInputThree",
     ),
     Button(
         color_mode_rect.x + color_mode_rect.w / 2 + 30,
@@ -670,6 +745,36 @@ color_window_buttons = [
         50,
         WHITE,
         name="DisplayColorInColorMode",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 60,
+        40,
+        0,
+        WHITE,
+        name="ColorModeHueText",
+        text="Hue:",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 90,
+        40,
+        0,
+        WHITE,
+        name="ColorModeSatText",
+        text="Sat:",
+        shape="text",
+    ),
+    Button(
+        color_mode_rect.x + 20,
+        color_mode_rect.y + 120,
+        40,
+        0,
+        WHITE,
+        name="ColorModeValueText",
+        text="Value:",
+        shape="text",
     ),
     Button(
         color_mode_rect.x + color_mode_rect.w / 2 - 90,
@@ -707,9 +812,9 @@ while run:
         if isColorWindow:
             for button in color_window_buttons:
                 if (
-                    button.name == "ColorModeR"
-                    or button.name == "ColorModeG"
-                    or button.name == "ColorModeB"
+                    button.name == "ColorModeInputOne"
+                    or button.name == "ColorModeInputTwo"
+                    or button.name == "ColorModeInputThree"
                 ):
                     if button.selected == True:
                         button.border_color = BLACK
@@ -719,9 +824,9 @@ while run:
             if event.type == pygame.KEYDOWN:
                 for color_window_button in color_window_buttons:
                     if (
-                        color_window_button.name == "ColorModeR"
-                        or color_window_button.name == "ColorModeG"
-                        or color_window_button.name == "ColorModeB"
+                        color_window_button.name == "ColorModeInputOne"
+                        or color_window_button.name == "ColorModeInputTwo"
+                        or color_window_button.name == "ColorModeInputThree"
                     ) and color_window_button.selected == True:
                         if event.key == pygame.K_BACKSPACE:
                             user_input = color_window_button.text
@@ -741,8 +846,19 @@ while run:
                         ) and len(color_window_button.text) < 3:
                             user_input = color_window_button.text
                             user_input += event.unicode
-                            if int(user_input) > 255:
-                                user_input = user_input[:-1]
+                            if isRGBMode:
+                                if int(user_input) > 255:
+                                    user_input = user_input[:-1]
+                            else:
+                                if color_window_button.name == "ColorModeInputOne":
+                                    if int(user_input) > 360:
+                                        user_input = user_input[:-1]
+                                if (
+                                    color_window_button.name == "ColorModeInputTwo"
+                                    or color_window_button.name == "ColorModeInputThree"
+                                ):
+                                    if int(user_input) > 100:
+                                        user_input = user_input[:-1]
                             color_window_button.text = user_input
 
                     if (
@@ -754,14 +870,26 @@ while run:
                             color_mode_red = int(color_window_buttons[5].text)
                         else:
                             color_mode_red = 0
+
                         if color_window_buttons[6].text:
                             color_mode_green = int(color_window_buttons[6].text)
                         else:
                             color_mode_green = 0
+
                         if color_window_buttons[7].text:
                             color_mode_blue = int(color_window_buttons[7].text)
                         else:
                             color_mode_blue = 0
+
+                        if not isRGBMode:
+                            converted_color = convert_hsv_to_rgb(
+                                color_mode_red, color_mode_green, color_mode_blue
+                            )
+                            (
+                                color_mode_red,
+                                color_mode_green,
+                                color_mode_blue,
+                            ) = converted_color
 
                         color_window_buttons[8].color = (
                             color_mode_red,
@@ -792,20 +920,35 @@ while run:
                         if button.name == "CloseColorWindow":
                             isColorWindow = False
                             break
-                        if button.name == "AddToCustomColors":
-                            for button2 in buttons:
+                        if (
+                            button.name == "AddToCustomColors"
+                            and color_mode_red
+                            and color_mode_blue
+                            and color_mode_green
+                        ):
+                            for custom_button in buttons:
                                 if (
-                                    button2.name
+                                    custom_button.name
                                     == f"custom_colors_{custom_color_count}"
                                 ):
-                                    custom_color_count = custom_color_count + 1
-                                    button2.color = (
+                                    custom_color_count = (custom_color_count + 1) % 9
+                                    custom_button.color = (
                                         color_mode_red,
                                         color_mode_green,
                                         color_mode_blue,
                                     )
                                     break
                         button.selected = True
+
+                for button in color_window_buttons:
+                    if not button.clicked(pos):
+                        continue
+                    if button.name == "SwitchColorMode":
+                        isRGBMode = not isRGBMode
+                        color_window_buttons[5].text = ""
+                        color_window_buttons[6].text = ""
+                        color_window_buttons[7].text = ""
+                        break
 
             except IndexError:
 
@@ -889,6 +1032,7 @@ while run:
                         BRUSH_SIZE = 3
 
                     STATE = "COLOR"
+
     draw(WIN, grid, buttons)
 
 pygame.quit()

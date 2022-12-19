@@ -57,7 +57,7 @@ def get_font(size):
 
 FPS = 300
 
-WIDTH, HEIGHT = 600, 770
+WIDTH, HEIGHT = 600, 760
 
 ROWS = COLS = 40  # increase to have smaller pixels
 
