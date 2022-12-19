@@ -340,11 +340,6 @@ size_small = 25
 size_medium = 35
 size_large = 50
 
-color_mode_red_index = colorWindow.getListIndex("ColorModeInputOne")
-color_mode_green_index = colorWindow.getListIndex("ColorModeInputTwo")
-color_mode_blue_index = colorWindow.getListIndex("ColorModeInputThree")
-color_mode_display_index = colorWindow.getListIndex("DisplayColorInColorMode")
-
 rtb_x = WIDTH + RIGHT_TOOLBAR_WIDTH / 2
 brush_widths = [
     Button(
@@ -505,16 +500,7 @@ while run:
             run = False
 
         if colorWindow.isColorWindow:
-            for button in colorWindow.color_window_buttons:
-                if (
-                    button.name == "ColorModeInputOne"
-                    or button.name == "ColorModeInputTwo"
-                    or button.name == "ColorModeInputThree"
-                ):
-                    if button.selected == True:
-                        button.border_color = BLACK
-                    else:
-                        button.border_color = SILVER
+            colorWindow.setSelectionBorderColor()
 
             if event.type == pygame.KEYDOWN:
                 for color_window_button in colorWindow.color_window_buttons:
@@ -556,59 +542,7 @@ while run:
                                         user_input = user_input[:-1]
                             color_window_button.text = user_input
 
-                    if (
-                        colorWindow.color_window_buttons[color_mode_red_index].text
-                        or colorWindow.color_window_buttons[color_mode_green_index].text
-                        or colorWindow.color_window_buttons[color_mode_blue_index].text
-                    ):
-                        if colorWindow.color_window_buttons[color_mode_red_index].text:
-                            colorWindow.color_mode_red = int(
-                                colorWindow.color_window_buttons[
-                                    color_mode_red_index
-                                ].text
-                            )
-                        else:
-                            colorWindow.color_mode_red = 0
-
-                        if colorWindow.color_window_buttons[
-                            color_mode_green_index
-                        ].text:
-                            colorWindow.color_mode_green = int(
-                                colorWindow.color_window_buttons[
-                                    color_mode_green_index
-                                ].text
-                            )
-                        else:
-                            colorWindow.color_mode_green = 0
-
-                        if colorWindow.color_window_buttons[color_mode_blue_index].text:
-                            colorWindow.color_mode_blue = int(
-                                colorWindow.color_window_buttons[
-                                    color_mode_blue_index
-                                ].text
-                            )
-                        else:
-                            colorWindow.color_mode_blue = 0
-
-                        if not colorWindow.isRGBMode:
-                            (
-                                colorWindow.color_mode_red,
-                                colorWindow.color_mode_green,
-                                colorWindow.color_mode_blue,
-                            ) = colorWindow.convert_hsv_to_rgb(
-                                colorWindow.color_mode_red,
-                                colorWindow.color_mode_green,
-                                colorWindow.color_mode_blue,
-                            )
-
-                        colorWindow.color_window_buttons[
-                            color_mode_display_index
-                        ].color = (
-                            colorWindow.color_mode_red,
-                            colorWindow.color_mode_green,
-                            colorWindow.color_mode_blue,
-                        )
-
+                    colorWindow.setColorModeInputValues()
                 colorWindow.draw_color_window_buttons(WIN)
 
         if pygame.mouse.get_pressed()[0]:
@@ -633,41 +567,14 @@ while run:
                             colorWindow.isColorWindow = False
                             break
                         if button.name == "AddToCustomColors":
-                            for custom_button in buttons:
-                                if (
-                                    custom_button.name
-                                    == f"custom_colors_{colorWindow.custom_color_count}"
-                                ):
-                                    colorWindow.custom_color_count = (
-                                        colorWindow.custom_color_count + 1
-                                    ) % 9
-                                    custom_button.color = (
-                                        colorWindow.color_mode_red,
-                                        colorWindow.color_mode_green,
-                                        colorWindow.color_mode_blue,
-                                    )
-                                    COLORS.append(
-                                        (
-                                            colorWindow.color_mode_red,
-                                            colorWindow.color_mode_green,
-                                            colorWindow.color_mode_blue,
-                                        )
-                                    )
-                                    break
+                            colorWindow.addToCustomColors(buttons)
                         button.selected = True
 
                 for button in colorWindow.color_window_buttons:
                     if not button.clicked(pos):
                         continue
                     if button.name == "SwitchColorMode":
-                        colorWindow.isRGBMode = not colorWindow.isRGBMode
-                        colorWindow.color_window_buttons[color_mode_red_index].text = ""
-                        colorWindow.color_window_buttons[
-                            color_mode_blue_index
-                        ].text = ""
-                        colorWindow.color_window_buttons[
-                            color_mode_green_index
-                        ].text = ""
+                        colorWindow.switchColorMode()
                         break
 
             except IndexError:
