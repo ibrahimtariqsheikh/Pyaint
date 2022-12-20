@@ -2,6 +2,7 @@ from utils import *
 
 WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
+colorMode = ColorMode()
 pygame.display.set_caption("Pyaint")
 STATE = "COLOR"
 Change = False
@@ -52,7 +53,10 @@ def draw_mouse_position_text(win):
                     text_surface = pos_font.render("Close Window", 1, BLACK)
                     win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                     break
-                if colorWindow.isRGBMode:
+            for button in colorMode.color_mode_buttons:
+                if not button.hover(pos):
+                    continue
+                if colorMode.isRGBMode:
                     if button.name == "ColorModeInputOne":
                         text_surface = pos_font.render("Enter Red Value", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
@@ -158,6 +162,7 @@ def draw(win, grid, buttons):
     if colorWindow.isColorWindow:
         colorWindow.draw_color_window(win)
         colorWindow.draw_color_window_buttons(win)
+        colorMode.draw_color_mode_buttons(win)
     pygame.display.update()
 
 
@@ -500,19 +505,19 @@ while run:
             run = False
 
         if colorWindow.isColorWindow:
-            colorWindow.setSelectionBorderColor()
+            colorMode.setSelectionBorderColor()
 
             if event.type == pygame.KEYDOWN:
-                for color_window_button in colorWindow.color_window_buttons:
+                for button in colorMode.color_mode_buttons:
                     if (
-                        color_window_button.name == "ColorModeInputOne"
-                        or color_window_button.name == "ColorModeInputTwo"
-                        or color_window_button.name == "ColorModeInputThree"
-                    ) and color_window_button.selected == True:
+                        button.name == "ColorModeInputOne"
+                        or button.name == "ColorModeInputTwo"
+                        or button.name == "ColorModeInputThree"
+                    ) and button.selected == True:
                         if event.key == pygame.K_BACKSPACE:
-                            user_input = color_window_button.text
+                            user_input = button.text
                             user_input = user_input[:-1]
-                            color_window_button.text = user_input
+                            button.text = user_input
                         elif (
                             event.key == pygame.K_0
                             or event.key == pygame.K_1
@@ -524,26 +529,25 @@ while run:
                             or event.key == pygame.K_7
                             or event.key == pygame.K_8
                             or event.key == pygame.K_9
-                        ) and len(color_window_button.text) < 3:
-                            user_input = color_window_button.text
+                        ) and len(button.text) < 3:
+                            user_input = button.text
                             user_input += event.unicode
-                            if colorWindow.isRGBMode:
+                            if colorMode.isRGBMode:
                                 if int(user_input) > 255:
                                     user_input = user_input[:-1]
                             else:
-                                if color_window_button.name == "ColorModeInputOne":
+                                if button.name == "ColorModeInputOne":
                                     if int(user_input) > 360:
                                         user_input = user_input[:-1]
                                 if (
-                                    color_window_button.name == "ColorModeInputTwo"
-                                    or color_window_button.name == "ColorModeInputThree"
+                                    button.name == "ColorModeInputTwo"
+                                    or button.name == "ColorModeInputThree"
                                 ):
                                     if int(user_input) > 100:
                                         user_input = user_input[:-1]
-                            color_window_button.text = user_input
+                            button.text = user_input
 
-                    colorWindow.setColorModeInputValues()
-                colorWindow.draw_color_window_buttons(WIN)
+                    colorMode.setColorModeInputValues()
 
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
@@ -566,16 +570,19 @@ while run:
                         if button.name == "CloseColorWindow":
                             colorWindow.isColorWindow = False
                             break
-                        if button.name == "AddToCustomColors":
-                            colorWindow.addToCustomColors(buttons)
                         button.selected = True
 
-                for button in colorWindow.color_window_buttons:
-                    if not button.clicked(pos):
-                        continue
-                    if button.name == "SwitchColorMode":
-                        colorWindow.switchColorMode()
-                        break
+                    for button in colorMode.color_mode_buttons:
+                        if not button.clicked(pos):
+                            button.selected = False
+                            continue
+                        if button.name == "AddToCustomColors":
+                            colorMode.addToCustomColors(buttons)
+                            break
+                        if button.name == "SwitchColorMode":
+                            colorMode.switchColorMode()
+                            break
+                        button.selected = True
 
             except IndexError:
                 for button in buttons:
