@@ -112,6 +112,7 @@ class ColorWindow:
                 25,
                 WHITE,
                 name="ColorModeInputOne",
+                text="0",
             ),
             Button(
                 self.color_mode_rect.x + 70,
@@ -120,6 +121,7 @@ class ColorWindow:
                 25,
                 WHITE,
                 name="ColorModeInputTwo",
+                text="0",
             ),
             Button(
                 self.color_mode_rect.x + 70,
@@ -128,6 +130,7 @@ class ColorWindow:
                 25,
                 WHITE,
                 name="ColorModeInputThree",
+                text="0",
             ),
             Button(
                 self.color_mode_rect.x + self.color_mode_rect.w / 2 + 30,
@@ -266,6 +269,7 @@ class ColorWindow:
 
             button.draw(win)
 
+    # converts hsv to rgb
     def convert_hsv_to_rgb(self, h, s, v):
 
         temp_saturation = s / 100
@@ -302,8 +306,9 @@ class ColorWindow:
         r = (temp_red + m) * 255
         g = (temp_green + m) * 255
         b = (temp_blue + m) * 255
-        return int(r), int(g), int(b)
+        return int(round(r, 0)), int(round(g, 0)), int(round(b, 0))
 
+    # converts rgb to hsv
     def convert_rgb_to_hsv(self, r, g, b):
         r, g, b = r / 255.0, g / 255.0, b / 255.0
         mx = max(r, g, b)
@@ -322,8 +327,9 @@ class ColorWindow:
         else:
             s = (df / mx) * 100
         v = mx * 100
-        return int(h), int(s), int(v)
+        return int(round(h, 0)), int(round(s, 0)), int(round(v, 0))
 
+    # gets the list index according to the name
     def getListIndex(self, name):
         count = 0
         for button in self.color_window_buttons:
@@ -332,6 +338,7 @@ class ColorWindow:
             count = count + 1
         return -1
 
+    # sets the border color to black if selected and grey if not selected in the input boxes
     def setSelectionBorderColor(self):
         for button in self.color_window_buttons:
             if (
@@ -344,7 +351,10 @@ class ColorWindow:
                 else:
                     button.border_color = SILVER
 
+    # sets and manages the input values according to the color mode selected
+    # pyaint internally stores color as rgb values, since we convert the colors accordingly and store them
     def setColorModeInputValues(self):
+
         if (
             self.color_window_buttons[self.color_mode_red_index].text
             or self.color_window_buttons[self.color_mode_green_index].text
@@ -388,6 +398,7 @@ class ColorWindow:
                 self.color_mode_input_three,
             )
 
+    # adds the color to the custom color buttons
     def addToCustomColors(self, buttons):
         for custom_button in buttons:
             if custom_button.name == f"custom_colors_{self.custom_color_count}":
@@ -406,8 +417,29 @@ class ColorWindow:
                 )
                 break
 
+    # switch color mode and set input values according to the one selected
     def switchColorMode(self):
-        self.isRGBMode = not self.isRGBMode
-        self.color_window_buttons[self.color_mode_red_index].text = ""
-        self.color_window_buttons[self.color_mode_blue_index].text = ""
-        self.color_window_buttons[self.color_mode_green_index].text = ""
+        if self.isRGBMode:
+            self.isRGBMode = not self.isRGBMode
+            (temp_h, temp_s, temp_v,) = self.convert_rgb_to_hsv(
+                self.color_mode_input_one,
+                self.color_mode_input_two,
+                self.color_mode_input_three,
+            )
+
+            self.color_window_buttons[self.color_mode_red_index].text = str(temp_h)
+            self.color_window_buttons[self.color_mode_green_index].text = str(temp_s)
+            self.color_window_buttons[self.color_mode_blue_index].text = str(temp_v)
+
+        else:
+            self.isRGBMode = not self.isRGBMode
+
+            self.color_window_buttons[self.color_mode_red_index].text = str(
+                self.color_mode_input_one
+            )
+            self.color_window_buttons[self.color_mode_green_index].text = str(
+                self.color_mode_input_two
+            )
+            self.color_window_buttons[self.color_mode_blue_index].text = str(
+                self.color_mode_input_three
+            )
