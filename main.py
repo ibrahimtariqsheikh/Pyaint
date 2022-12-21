@@ -1,8 +1,10 @@
 from utils import *
+
 WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
 colorPicker = ColorPicker()
+theme = Theme()
 palWindow = PaletteWindow()
 pygame.display.set_caption("Pyaint")
 Change = False
@@ -43,7 +45,9 @@ def draw_mouse_position_text(win):
     try:
         if not colorWindow.isColorWindow and not palWindow.isPaletteWindow:
             row, col = get_row_col_from_pos(pos)
-            text_surface = pos_font.render(str(row) + ", " + str(col), 1, BLACK)
+            text_surface = pos_font.render(
+                str(row) + ", " + str(col), 1, theme.BG_TEXTCOLOR
+            )
             win.blit(text_surface, (5, HEIGHT - TOOLBAR_HEIGHT))
         else:
             if palWindow.isPaletteWindow:
@@ -51,7 +55,9 @@ def draw_mouse_position_text(win):
                     if not button.hover(pos):
                         continue
                     if button.name == "ClosePaletteWindow":
-                        text_surface = pos_font.render("Close Window", 1, BLACK)
+                        text_surface = pos_font.render(
+                            "Close Window", 1, theme.BG_TEXTCOLOR
+                        )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
             else:
@@ -59,7 +65,9 @@ def draw_mouse_position_text(win):
                     if not button.hover(pos):
                         continue
                     if button.name == "CloseColorWindow":
-                        text_surface = pos_font.render("Close Window", 1, BLACK)
+                        text_surface = pos_font.render(
+                            "Close Window", 1, theme.BG_TEXTCOLOR
+                        )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                 for button in colorMode.color_mode_buttons:
@@ -67,42 +75,58 @@ def draw_mouse_position_text(win):
                         continue
                     if colorMode.isRGBMode:
                         if button.name == "ColorModeInputOne":
-                            text_surface = pos_font.render("Enter Red Value", 1, BLACK)
-                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                            break
-                        if button.name == "ColorModeInputTwo":
-                            text_surface = pos_font.render("Enter Green Value", 1, BLACK)
-                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                            break
-                        if button.name == "ColorModeInputThree":
-                            text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
-                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                            break
-                    else:
-                        if button.name == "ColorModeInputOne":
-                            text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
+                            text_surface = pos_font.render(
+                                "Enter Red Value", 1, theme.BG_TEXTCOLOR
+                            )
                             win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                             break
                         if button.name == "ColorModeInputTwo":
                             text_surface = pos_font.render(
-                                "Enter Saturation Value", 1, BLACK
+                                "Enter Green Value", 1, theme.BG_TEXTCOLOR
                             )
                             win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                             break
                         if button.name == "ColorModeInputThree":
-                            text_surface = pos_font.render("Enter Value", 1, BLACK)
+                            text_surface = pos_font.render(
+                                "Enter Blue Value", 1, theme.BG_TEXTCOLOR
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                    else:
+                        if button.name == "ColorModeInputOne":
+                            text_surface = pos_font.render(
+                                "Enter Hue Value", 1, theme.BG_TEXTCOLOR
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputTwo":
+                            text_surface = pos_font.render(
+                                "Enter Saturation Value", 1, theme.BG_TEXTCOLOR
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputThree":
+                            text_surface = pos_font.render(
+                                "Enter Value", 1, theme.BG_TEXTCOLOR
+                            )
                             win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                             break
                     if button.name == "DisplayColorInColorMode":
-                        text_surface = pos_font.render("Color Mode Display", 1, BLACK)
+                        text_surface = pos_font.render(
+                            "Color Mode Display", 1, theme.BG_TEXTCOLOR
+                        )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                     if button.name == "AddToCustomColors":
-                        text_surface = pos_font.render("Add To Custom Colors", 1, BLACK)
+                        text_surface = pos_font.render(
+                            "Add To Custom Colors", 1, theme.BG_TEXTCOLOR
+                        )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                     if button.name == "SwitchColorMode":
-                        text_surface = pos_font.render("Switch Color Mode", 1, BLACK)
+                        text_surface = pos_font.render(
+                            "Switch Color Mode", 1, theme.BG_TEXTCOLOR
+                        )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
     except IndexError:
@@ -110,37 +134,47 @@ def draw_mouse_position_text(win):
             if not button.hover(pos):
                 continue
             if button.text == "Clear":
-                text_surface = pos_font.render("Clear Everything", 1, BLACK)
+                text_surface = pos_font.render(
+                    "Clear Everything", 1, theme.BG_TEXTCOLOR
+                )
+                win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                break
+            if button.text == "Theme":
+                text_surface = pos_font.render("Toggle Theme", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.text == "Erase":
-                text_surface = pos_font.render("Erase", 1, BLACK)
+                text_surface = pos_font.render("Erase", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.name == "FillBucket":
-                text_surface = pos_font.render("Fill Bucket", 1, BLACK)
+                text_surface = pos_font.render("Fill Bucket", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.name == "Brush":
-                text_surface = pos_font.render("Brush", 1, BLACK)
+                text_surface = pos_font.render("Brush", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.name == "Change":
-                text_surface = pos_font.render("Swap Toolbar", 1, BLACK)
+                text_surface = pos_font.render("Swap Toolbar", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.name == "ColorWindow":
-                text_surface = pos_font.render("Color Properties", 1, BLACK)
+                text_surface = pos_font.render(
+                    "Color Properties", 1, theme.BG_TEXTCOLOR
+                )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.name == "Picker":
-                text_surface = pos_font.render("Color Picker", 1, BLACK)
+                text_surface = pos_font.render("Color Picker", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
 
             r, g, b = button.color
             text_surface = pos_font.render(
-                "( " + str(r) + ", " + str(g) + ", " + str(b) + " )", 1, BLACK
+                "( " + str(r) + ", " + str(g) + ", " + str(b) + " )",
+                1,
+                theme.BG_TEXTCOLOR,
             )
 
             win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
@@ -149,21 +183,27 @@ def draw_mouse_position_text(win):
             if not button.hover(pos):
                 continue
             if button.width == size_small:
-                text_surface = pos_font.render("Small-Sized Brush", 1, BLACK)
+                text_surface = pos_font.render(
+                    "Small-Sized Brush", 1, theme.BG_TEXTCOLOR
+                )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.width == size_medium:
-                text_surface = pos_font.render("Medium-Sized Brush", 1, BLACK)
+                text_surface = pos_font.render(
+                    "Medium-Sized Brush", 1, theme.BG_TEXTCOLOR
+                )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
             if button.width == size_large:
-                text_surface = pos_font.render("Large-Sized Brush", 1, BLACK)
+                text_surface = pos_font.render(
+                    "Large-Sized Brush", 1, theme.BG_TEXTCOLOR
+                )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
 
 
 def draw(win, grid, buttons):
-    win.fill(BG_COLOR)
+    win.fill(theme.BG_COLOR)
     draw_grid(win, grid)
 
     for button in buttons:
@@ -349,7 +389,7 @@ def fill_bucket(row, col, color):
 run = True
 
 clock = pygame.time.Clock()
-grid = init_grid(ROWS, COLS, BG_COLOR)
+grid = init_grid(ROWS, COLS, theme.BG_COLOR)
 drawing_color = BLACK
 
 button_width = 40
@@ -398,7 +438,7 @@ brush_widths = [
 # Adding Buttons
 buttons = []
 
-palette= Palette()
+palette = Palette()
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
         Button(
@@ -489,6 +529,18 @@ buttons.append(
 )  # Clear Button
 buttons.append(
     Button(
+        WIDTH - button_space,
+        button_y_last_row,
+        button_width,
+        button_height,
+        WHITE,
+        "Theme",
+        BLACK,
+        name="Theme",
+    )
+)  # Clear Button
+buttons.append(
+    Button(
         WIDTH - 3 * button_space + 5,
         button_y_top_row,
         button_width - 5,
@@ -540,45 +592,88 @@ while run:
         if event.type == pygame.QUIT:  # if user closed the program
             run = False
 
-        if palWindow.isPaletteWindow: 
+        if palWindow.isPaletteWindow:
             for button in palWindow.palette_window_buttons:
-                name= button.name
-                if  ((button is not None) and (button.name.startswith("Color") or button.name == "PaletteName")):
+                name = button.name
+                if (button is not None) and (
+                    button.name.startswith("Color") or button.name == "PaletteName"
+                ):
                     if button.selected == True:
-                            button.border_color = BLACK
+                        button.border_color = BLACK
                     else:
-                            button.border_color = SILVER
+                        button.border_color = SILVER
             if event.type == pygame.KEYDOWN:
                 for palette_window_button in palWindow.palette_window_buttons:
-                    if ((palette_window_button is not None) and (palette_window_button.name.startswith("Color") and palette_window_button.selected == True)):
+                    if (palette_window_button is not None) and (
+                        palette_window_button.name.startswith("Color")
+                        and palette_window_button.selected == True
+                    ):
                         if event.key == pygame.K_BACKSPACE:
                             user_input = palette_window_button.text
                             user_input = user_input[:-1]
                             palette_window_button.text = user_input
-                        elif (event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9) and len(palette_window_button.text) < 3:
+                        elif (
+                            event.key == pygame.K_0
+                            or event.key == pygame.K_1
+                            or event.key == pygame.K_2
+                            or event.key == pygame.K_3
+                            or event.key == pygame.K_4
+                            or event.key == pygame.K_5
+                            or event.key == pygame.K_6
+                            or event.key == pygame.K_7
+                            or event.key == pygame.K_8
+                            or event.key == pygame.K_9
+                        ) and len(palette_window_button.text) < 3:
                             user_input = palette_window_button.text
                             user_input += event.unicode
                             if int(user_input) > 255:
                                 user_input = user_input[:-1]
                             palette_window_button.text = user_input
-                        palWindow.setText()
+                        if palWindow.buttonText:
+                            palWindow.setText
                     elif palette_window_button.name == "PaletteName":
                         if event.key == pygame.K_BACKSPACE:
                             user_input = palette_window_button.text
                             user_input = user_input[:-1]
                             palette_window_button.text = user_input
-                        elif (event.key == pygame.K_a or event.key == pygame.K_b or event.key == pygame.K_c or event.key == pygame.K_d or event.key == pygame.K_e or event.key == pygame.K_f or event.key == pygame.K_g or event.key == pygame.K_h or event.key == pygame.K_i or event.key == pygame.K_j or event.key == pygame.K_k or event.key == pygame.K_l or event.key == pygame.K_m or event.key == pygame.K_n or event.key == pygame.K_o or event.key == pygame.K_p or event.key == pygame.K_q or event.key == pygame.K_r or event.key == pygame.K_s or event.key == pygame.K_t or event.key == pygame.K_u or event.key == pygame.K_v or event.key == pygame.K_w or event.key == pygame.K_x or event.key == pygame.K_y or event.key == pygame.K_z) and len(palette_window_button.text) < 15:
+                        elif (
+                            event.key == pygame.K_a
+                            or event.key == pygame.K_b
+                            or event.key == pygame.K_c
+                            or event.key == pygame.K_d
+                            or event.key == pygame.K_e
+                            or event.key == pygame.K_f
+                            or event.key == pygame.K_g
+                            or event.key == pygame.K_h
+                            or event.key == pygame.K_i
+                            or event.key == pygame.K_j
+                            or event.key == pygame.K_k
+                            or event.key == pygame.K_l
+                            or event.key == pygame.K_m
+                            or event.key == pygame.K_n
+                            or event.key == pygame.K_o
+                            or event.key == pygame.K_p
+                            or event.key == pygame.K_q
+                            or event.key == pygame.K_r
+                            or event.key == pygame.K_s
+                            or event.key == pygame.K_t
+                            or event.key == pygame.K_u
+                            or event.key == pygame.K_v
+                            or event.key == pygame.K_w
+                            or event.key == pygame.K_x
+                            or event.key == pygame.K_y
+                            or event.key == pygame.K_z
+                        ) and len(palette_window_button.text) < 15:
                             user_input = palette_window_button.text
                             user_input += event.unicode
                             palette_window_button.text = user_input
                         palWindow.setPaletteName()
 
-
         if colorWindow.isColorWindow:
             colorMode.setSelectionBorderColor()
 
             for button in colorWindow.color_window_buttons:
-                if (button.name == "Change Palette" and button.selected) :
+                if button.name == "Change Palette" and button.selected:
                     palWindow.isPaletteWindow = True
                     colorWindow.isColorWindow = False
                     break
@@ -640,7 +735,7 @@ while run:
                     drawing_color = colorPicker.picker(WIN)
                     draw_button.color = drawing_color
                     STATE = colorPicker.toggle(STATE)
-                
+
                 if palWindow.isPaletteWindow:
                     for button in palWindow.palette_window_buttons:
                         if not button.clicked(pos):
@@ -683,7 +778,7 @@ while run:
                     if not button.clicked(pos):
                         continue
                     if button.text == "Clear":
-                        grid = init_grid(ROWS, COLS, BG_COLOR)
+                        grid = init_grid(ROWS, COLS, theme.BG_COLOR)
                         drawing_color = BLACK
                         draw_button.color = drawing_color
                         STATE = "COLOR"
@@ -699,6 +794,15 @@ while run:
 
                     if button.name == "ColorWindow":
                         colorWindow.toggle()
+                        break
+
+                    if button.name == "Theme":
+                        theme.toggle(
+                            buttons,
+                            colorMode.color_mode_buttons,
+                            colorWindow.color_window_buttons,
+                        )
+
                         break
 
                     if button.name == "Change":

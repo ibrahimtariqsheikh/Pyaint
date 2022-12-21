@@ -18,6 +18,7 @@ class ColorMode(object):
         self.color_mode_input_one = 0
         self.color_mode_input_two = 0
         self.color_mode_input_three = 0
+        self.theme = Theme()
         self.color_mode_display_rect = pygame.Rect(
             self.colorWindow.COLOR_WINDOW_WIDTH
             + 20
@@ -259,13 +260,12 @@ class ColorMode(object):
     # sets the border color to black if selected and grey if not selected in the input boxes
     def setSelectionBorderColor(self):
         for button in self.color_mode_buttons:
-            if (
-                button.name == "ColorModeInputOne"
-                or button.name == "ColorModeInputTwo"
-                or button.name == "ColorModeInputThree"
-            ):
+            if button.name.startswith("ColorModeInput"):
                 if button.selected == True:
-                    button.border_color = BLACK
+                    if self.theme.isLightMode:
+                        button.border_color = BLACK
+                    else:
+                        button.border_color = WHITE
                 else:
                     button.border_color = SILVER
 
