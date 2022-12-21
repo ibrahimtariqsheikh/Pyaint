@@ -1,6 +1,5 @@
 from .settings import *
 from .button import *
-import math
 
 
 class ColorWindow(object):
@@ -111,6 +110,9 @@ class ColorWindow(object):
     def draw_color_window_buttons(self, win):
         for button in self.color_window_buttons:
             button.draw(win)
+
+    def toggle(self):
+        self.isColorWindow = not self.isColorWindow
 
     # gets the list index according to the name
     def getListIndex(self, name):

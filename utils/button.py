@@ -56,6 +56,14 @@ class Button:
             )  # fill
             # pygame.draw.ellipse(win, BLACK, (self.x, self.y, self.width, self.height), 2) #border
 
+        elif self.shape == "ellipseWithBorderColor":
+            pygame.draw.ellipse(
+                win, self.color, (self.x, self.y, self.width, self.height)
+            )  # fill
+            pygame.draw.ellipse(
+                win, self.border_color, (self.x, self.y, self.width, self.height), 2
+            )  # border
+
         if self.text:
             if self.name == "AddToCustomColors" or self.name == "SwitchColorMode":
                 button_font = get_font(int(self.height / 2) - 6)

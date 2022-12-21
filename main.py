@@ -3,8 +3,8 @@ from utils import *
 WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
+colorPicker = ColorPicker()
 pygame.display.set_caption("Pyaint")
-STATE = "COLOR"
 Change = False
 
 
@@ -124,6 +124,10 @@ def draw_mouse_position_text(win):
                 text_surface = pos_font.render("Color Properties", 1, BLACK)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
+            if button.name == "Picker":
+                text_surface = pos_font.render("Color Picker", 1, BLACK)
+                win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                break
 
             r, g, b = button.color
             text_surface = pos_font.render(
@@ -163,6 +167,9 @@ def draw(win, grid, buttons):
         colorWindow.draw_color_window(win)
         colorWindow.draw_color_window_buttons(win)
         colorMode.draw_color_mode_buttons(win)
+
+    if STATE == "PICKER":
+        colorPicker.draw_zoom_feature_for_color_picker(win)
     pygame.display.update()
 
 
@@ -327,14 +334,6 @@ def fill_bucket(row, col, color):
             vis[x][y - 1] = 1
 
 
-def picker():
-    '''
-    returns the picked color
-    '''
-    color = tuple(WIN.get_at(pygame.mouse.get_pos())) # get the color of pixel at mouse position
-    drawing_color= (color[0],color[1],color[2])
-    return drawing_color
-
 run = True
 
 clock = pygame.time.Clock()
@@ -477,7 +476,7 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="FillBucket",
-        image_url=r"assets\paint-bucket.png",
+        image_url="assets/paint-bucket.png",
     )
 )  # FillBucket
 buttons.append(
@@ -487,17 +486,19 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="Brush",
-        image_url=r"assets\paint-brush.png",
+        image_url="assets/paint-brush.png",
     )
 )  # Brush
 buttons.append(
     Button(
-        WIDTH - 3*button_space + 5, 
-        button_y_bot_row ,button_width-5, 
-        button_height-5, 
-        name = "Picker",
-        image_url=r"assets/paint-picker.png")
-) #Picker
+        WIDTH - 3 * button_space + 5,
+        button_y_bot_row,
+        button_width - 5,
+        button_height - 5,
+        name="Picker",
+        image_url="assets/paint-picker.png",
+    )
+)  # Picker
 
 buttons.append(
     Button(
@@ -506,7 +507,7 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="ColorWindow",
-        image_url=r"assets\color-window.png",
+        image_url="assets/color-window.png",
     )
 )  # ColorWindow
 
@@ -527,10 +528,9 @@ while run:
             if event.type == pygame.KEYDOWN:
                 for button in colorMode.color_mode_buttons:
                     if (
-                        button.name == "ColorModeInputOne"
-                        or button.name == "ColorModeInputTwo"
-                        or button.name == "ColorModeInputThree"
-                    ) and button.selected == True:
+                        button.name.startswith("ColorModeInput")
+                        and button.selected == True
+                    ):
                         if event.key == pygame.K_BACKSPACE:
                             user_input = button.text
                             user_input = user_input[:-1]
@@ -579,9 +579,9 @@ while run:
                     fill_bucket(row, col, drawing_color)
 
                 elif STATE == "PICKER":
-                    drawing_color = picker()
+                    drawing_color = colorPicker.picker(WIN)
                     draw_button.color = drawing_color
-                    STATE = "COLOR"
+                    STATE = colorPicker.toggle(STATE)
 
                 if colorWindow.isColorWindow:
 
@@ -590,7 +590,7 @@ while run:
                             button.selected = False
                             continue
                         if button.name == "CloseColorWindow":
-                            colorWindow.isColorWindow = False
+                            colorWindow.toggle()
                             break
                         button.selected = True
 
@@ -621,12 +621,12 @@ while run:
                         STATE = "FILL"
                         break
 
-                    if button.name == "Picker":                 
-                        STATE = "PICKER"
+                    if button.name == "Picker":
+                        STATE = colorPicker.toggle(STATE)
                         break
 
                     if button.name == "ColorWindow":
-                        colorWindow.isColorWindow = not colorWindow.isColorWindow
+                        colorWindow.toggle()
                         break
 
                     if button.name == "Change":
