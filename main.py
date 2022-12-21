@@ -327,6 +327,14 @@ def fill_bucket(row, col, color):
             vis[x][y - 1] = 1
 
 
+def picker():
+    '''
+    returns the picked color
+    '''
+    color = tuple(WIN.get_at(pygame.mouse.get_pos())) # get the color of pixel at mouse position
+    drawing_color= (color[0],color[1],color[2])
+    return drawing_color
+
 run = True
 
 clock = pygame.time.Clock()
@@ -469,7 +477,7 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="FillBucket",
-        image_url="assets/paint-bucket.png",
+        image_url=r"assets\paint-bucket.png",
     )
 )  # FillBucket
 buttons.append(
@@ -479,9 +487,18 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="Brush",
-        image_url="assets/paint-brush.png",
+        image_url=r"assets\paint-brush.png",
     )
 )  # Brush
+buttons.append(
+    Button(
+        WIDTH - 3*button_space + 5, 
+        button_y_bot_row ,button_width-5, 
+        button_height-5, 
+        name = "Picker",
+        image_url=r"assets/paint-picker.png")
+) #Picker
+
 buttons.append(
     Button(
         WIDTH - 3 * button_space + 45,
@@ -489,7 +506,7 @@ buttons.append(
         button_width - 5,
         button_height - 5,
         name="ColorWindow",
-        image_url="assets/color-window.png",
+        image_url=r"assets\color-window.png",
     )
 )  # ColorWindow
 
@@ -561,6 +578,11 @@ while run:
                 elif STATE == "FILL":
                     fill_bucket(row, col, drawing_color)
 
+                elif STATE == "PICKER":
+                    drawing_color = picker()
+                    draw_button.color = drawing_color
+                    STATE = "COLOR"
+
                 if colorWindow.isColorWindow:
 
                     for button in colorWindow.color_window_buttons:
@@ -597,6 +619,10 @@ while run:
 
                     if button.name == "FillBucket":
                         STATE = "FILL"
+                        break
+
+                    if button.name == "Picker":                 
+                        STATE = "PICKER"
                         break
 
                     if button.name == "ColorWindow":

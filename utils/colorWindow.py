@@ -51,7 +51,7 @@ class ColorWindow(object):
                 25,
                 color=WHITE,
                 name="CloseColorWindow",
-                image_url="assets/close_color_window.png",
+                image_url=r"assets/close_color_window.png",
             )
         ]
 
