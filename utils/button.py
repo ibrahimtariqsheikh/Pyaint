@@ -72,6 +72,8 @@ class Button:
         if self.text:
             if self.name == "AddToCustomColors" or self.name == "SwitchColorMode":
                 button_font = get_font(int(self.height / 2) - 6)
+            elif self.name == "PaletteName":
+                button_font = get_font(int(self.width / 4) - 6)
             else:
                 button_font = get_font(int(self.width / 2) - 6)
             text_surface = button_font.render(self.text, 1, self.text_color)
