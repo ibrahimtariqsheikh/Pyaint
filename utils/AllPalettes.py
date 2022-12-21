@@ -6,14 +6,8 @@ class AllPalettes:
         self.palettes= []
 
     def store(self, newPalette):
-        if(self.isFull):
+        if(len(self.palettes)<8):
             self.palettes.append(newPalette)
-
-    def isFull(self):
-        if(len(self.palettes)==8):
-            return True
-        else :
-            return False
     
     def delete(self, name):
         for palette in self.palettes:

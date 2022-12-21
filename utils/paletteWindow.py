@@ -1,10 +1,12 @@
 from .settings import *
 from .button import *
 from .AllPalettes import *
+from .Palette import *
 
 class PaletteWindow:
     def __init__(self):
         self.count=0
+        self.j=0
         self.isAppend= True
         self.AllPal= AllPalettes()
         self.isPaletteWindow = False
@@ -57,15 +59,21 @@ class PaletteWindow:
         self.r16 = 0
         self.g16 = 0
         self.b16 = 0
+        self.r17 = 0
+        self.g17 = 0
+        self.b17 = 0
+        self.r18 = 0
+        self.g18 = 0
+        self.b18 = 0
         self.name= ""
-        self.rect_x_y = [320,162,363,162,406,162,320,182,363,182,406,182,320,202,363,202,406,202,320,222,363,222,406,222,320,242,363,242,406,242,320,262,363,262,406,262,320,282,363,282,406,282,320,302,363,302,406,302,320,322,363,322,406,322,320,342,363,342,406,342,320,362,363,362,406,362,320,382,363,382,406,382,
-                        320,402,363,402,406,402,320,422,363,422,406,422,320,442,363,442,406,442,320,462,363,462,406,462,]
+        self.rect_x_y = [370,162,413,162,456,162,370,182,413,182,456,182,370,202,413,202,456,202,370,222,413,222,456,222,370,242,413,242,456,242,370,262,413,262,456,262,370,282,413,282,456,282,370,302,413,302,456,302,370,322,413,322,456,322,370,342,413,342,456,342,370,362,413,362,456,362,370,382,413,382,456,382,370,402,413,402,456,402,370,422,413,422,456,
+                        422,370,442,413,442,456,442,370,462,413,462,456,462,370,482,413,482,456,482,370,502,413,502,456,502,]
         self.COLOR_WINDOW_SIZE = 400
         self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_SIZE / 2
-        self.COLOR_WINDOW_HEIGHT = WIDTH / 2 - self.COLOR_WINDOW_SIZE / 2
+        self.COLOR_WINDOW_HEIGHT = WIDTH / 2 - self.COLOR_WINDOW_SIZE / 2 
         self.palette_window_buttons = [
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_SIZE - 25 - 5,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_SIZE - 25 - 5+50,
                 self.COLOR_WINDOW_HEIGHT + 5,
                 25,
                 25,
@@ -74,12 +82,22 @@ class PaletteWindow:
                 image_url="assets/close_color_window.png",
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 40,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 40+50,
                 self.COLOR_WINDOW_HEIGHT+20 * 2,
                 80,
                 15,
                 WHITE,
                 name="PaletteName",
+            ),
+            Button(
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 170+50,
+                self.COLOR_WINDOW_HEIGHT+450,
+                40,
+                15,
+                WHITE,
+                name="SavePalette",
+                text="Save",
+                shape="",
             ),
             Button(
                 int(self.rect_x_y[0]),
@@ -464,6 +482,54 @@ class PaletteWindow:
                 15,
                 WHITE,
                 name="ColorB16",
+            ),
+            Button(
+                int(self.rect_x_y[96]),
+                int(self.rect_x_y[97]),
+                40,
+                15,
+                WHITE,
+                name="ColorR17",
+            ),
+            Button(
+                int(self.rect_x_y[98]),
+                int(self.rect_x_y[99]),
+                40,
+                15,
+                WHITE,
+                name="ColorG17",
+            ),
+            Button(
+                int(self.rect_x_y[100]),
+                int(self.rect_x_y[101]),
+                40,
+                15,
+                WHITE,
+                name="ColorB17",
+            ),
+            Button(
+                int(self.rect_x_y[102]),
+                int(self.rect_x_y[103]),
+                40,
+                15,
+                WHITE,
+                name="ColorR18",
+            ),
+            Button(
+                int(self.rect_x_y[104]),
+                int(self.rect_x_y[105]),
+                40,
+                15,
+                WHITE,
+                name="ColorG18",
+            ),
+            Button(
+                int(self.rect_x_y[106]),
+                int(self.rect_x_y[107]),
+                40,
+                15,
+                WHITE,
+                name="ColorB18",
             )
         ]
 
@@ -474,8 +540,8 @@ class PaletteWindow:
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
-                self.COLOR_WINDOW_SIZE,
-                self.COLOR_WINDOW_SIZE,
+                self.COLOR_WINDOW_SIZE+50,
+                self.COLOR_WINDOW_SIZE+150,
             ),
             width=0,
         )
@@ -485,67 +551,72 @@ class PaletteWindow:
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
-                self.COLOR_WINDOW_SIZE,
-                self.COLOR_WINDOW_SIZE,
+                self.COLOR_WINDOW_SIZE+50,
+                self.COLOR_WINDOW_SIZE+150,
             ),
             width=2,
         )
 
-    def palAppend(self):
+    def palAppend(self, palette, name):
+        self.name= name
+        self.count+=1
+        palette.setName(name)
+        if(self.isAppend==True):
+            self.j+=30
+        else:
+            self.j+=10
         self.palette_window_buttons.append(
-                        Button(
-                        self.COLOR_WINDOW_WIDTH +10,
-                        self.COLOR_WINDOW_HEIGHT + 30,
-                        30,
-                        30,
-                        WHITE,
-                        "Standard",
-                        BLACK,
-                        name= "Palbutton",
-                        shape= ""
-                    ))
-        if(len(self.AllPal.palettes)>0 and self.count<8):
-            j=0
-            for palette in self.AllPal.palettes:
-                self.palette_window_buttons.append(
-                    Button(
-                    self.COLOR_WINDOW_WIDTH +10,
-                    self.COLOR_WINDOW_HEIGHT + 30 + j,
-                    60,
-                    30,
-                    WHITE,
-                    palette.Name,
-                    BLACK,
-                ))
-                for i in range(9):
-                    self.palette_window_buttons.append(
-                        Button(
-                            self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                            self.COLOR_WINDOW_HEIGHT + 50 + j,
-                            15,
-                            15,
-                            palette.palette[i],
-                            name= "Pal"+str(i)+str(self.count)
-                        )
-                    )
-                for i in range(9):
-                    self.palette_window_buttons.append(
-                        Button(
-                            self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                            self.COLOR_WINDOW_HEIGHT + 70 + j,
-                            15,
-                            15,
-                            palette.palette[i + 9],
-                            name= "Pal"+str(i + 9)+str(self.count)
-                        )
-                    )
-                j+=90
-                self.count+=1    
+            Button(
+            self.COLOR_WINDOW_WIDTH +10,
+            self.COLOR_WINDOW_HEIGHT + self.j,
+            40,
+            30,
+            WHITE,
+            self.name,
+            BLACK,
+            name= "Palbutton"+str(self.count),
+            shape= ""
+        ))
+        self.palette_window_buttons.append(
+            Button(
+                self.COLOR_WINDOW_WIDTH +170,
+                self.COLOR_WINDOW_HEIGHT + self.j+30,
+                25,
+                25,
+                color=WHITE,
+                name="Delete"+str(self.count),
+                image_url="assets/trash-bin.png",
+            ))
+        self.j+=25
+        for i in range(9):
+            self.palette_window_buttons.append(
+                Button(
+                    self.COLOR_WINDOW_WIDTH+10 + 16 * i,
+                    self.COLOR_WINDOW_HEIGHT + self.j,
+                    15,
+                    15,
+                    palette.palette[i],
+                    name= "Pal"+str(i)+str(self.count)
+                )
+            )
+        self.j+=20
+        for i in range(9):
+            self.palette_window_buttons.append(
+                Button(
+                    self.COLOR_WINDOW_WIDTH+10 + 16 * i,
+                    self.COLOR_WINDOW_HEIGHT + self.j,
+                    15,
+                    15,
+                    palette.palette[i + 9],
+                    name= "Pal"+str(i + 9)+str(self.count)
+                )
+            )
+        self.isAppend= False    
 
     def draw_palette_window_buttons(self, win, check):
         if(check == False):
             line_color= (0,0,0)
-            pygame.draw.line(win, line_color, (self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 120, self.COLOR_WINDOW_HEIGHT+10 * 1), (self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 120, self.COLOR_WINDOW_HEIGHT *3 +180))
+            pygame.draw.line(win, line_color, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 120, self.COLOR_WINDOW_HEIGHT+10 * 1), (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 120, self.COLOR_WINDOW_HEIGHT *3 +180+150))
             base_font= get_font(15)
             text= "YOUR PALETTES"
             text_surface= base_font.render(text, True, (0 , 0, 0))
@@ -555,69 +626,25 @@ class PaletteWindow:
             base_font= get_font(15)
             text= "CREATE NEW PALETTE"
             text_surface= base_font.render(text, True, (0 , 0, 0))
-            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 145,
+            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 145,
             self.COLOR_WINDOW_HEIGHT+10 * 1))
 
             base_font= get_font(15)
             text= "Name:"
             text_surface= base_font.render(text, True, (0 , 0, 0))
-            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130,
+            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
             self.COLOR_WINDOW_HEIGHT+20 * 2))
 
-            for i in range(16):
+            for i in range(18):
                 base_font= get_font(15)
                 text= "RGB: "
                 text_surface= base_font.render(text, True, (0 , 0, 0))
-                win.blit(text_surface, (self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130,
+                win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
                 self.COLOR_WINDOW_HEIGHT+20 * (i+3)))
-            
-            if(self.isAppend):
-                self.palAppend()
-                self.isAppend= False
                
             for button in self.palette_window_buttons:
-                if(button.name == None):
-                    self.palette_window_buttons.remove(button)
-                else:
-                    print(button.name)
-                    button.draw(win)
+                button.draw(win)
         else:
-            if(len(self.AllPal.palettes)>self.count):
-                j=self.count*90
-                for palette in self.AllPal.palettes:
-                    self.palette_window_buttons.append(
-                        Button(
-                        self.COLOR_WINDOW_WIDTH +10,
-                        self.COLOR_WINDOW_HEIGHT + 30 + j,
-                        60,
-                        30,
-                        WHITE,
-                        palette.Name,
-                        BLACK,
-                    ))
-                    for i in range(9):
-                        self.palette_window_buttons.append(
-                            Button(
-                                self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                                self.COLOR_WINDOW_HEIGHT + 50 + j,
-                                15,
-                                15,
-                                palette.palette[i],
-                                name= "Pal"+str(i)+str(self.count)
-                            )
-                        )
-                    for i in range(9):
-                        self.palette_window_buttons.append(
-                            Button(
-                                self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                                self.COLOR_WINDOW_HEIGHT + 70 + j,
-                                15,
-                                15,
-                                palette.palette[i + 9],
-                                name= "Pal"+str(i + 9)+str(self.count)
-                            )
-                        )
-                    j+=90
             for button in self.palette_window_buttons:
                 button.draw(win)
 
@@ -628,6 +655,50 @@ class PaletteWindow:
                 return count
             count = count + 1
         return -1
+
+    def savePalette(self):
+        if(len(self.AllPal.palettes)<8):
+            pal= Palette()
+            RGB1= (self.r1, self.g1, self.b1)
+            RGB2= (self.r2, self.g2, self.b2)
+            RGB3= (self.r3, self.g3, self.b3)
+            RGB4= (self.r4, self.g4, self.b4)
+            RGB5= (self.r5, self.g5, self.b5)
+            RGB6= (self.r6, self.g6, self.b6)
+            RGB7= (self.r7, self.g7, self.b7)
+            RGB8= (self.r8, self.g8, self.b8)
+            RGB9= (self.r9, self.g9, self.b9)
+            RGB10= (self.r10, self.g10, self.b10)
+            RGB11= (self.r11, self.g11, self.b11)
+            RGB12= (self.r12, self.g12, self.b12)
+            RGB13= (self.r13, self.g13, self.b13)
+            RGB14= (self.r14, self.g14, self.b14)
+            RGB15= (self.r15, self.g15, self.b15)
+            RGB16= (self.r16, self.g16, self.b16)
+            RGB17= (self.r17, self.g17, self.b17)
+            RGB18= (self.r18, self.g18, self.b18)
+            pal.palette[0]=RGB1
+            pal.palette[1]=RGB2
+            pal.palette[2]=RGB3
+            pal.palette[3]=RGB4
+            pal.palette[4]=RGB5
+            pal.palette[5]=RGB6
+            pal.palette[6]=RGB7
+            pal.palette[7]=RGB8
+            pal.palette[8]=RGB9
+            pal.palette[9]=RGB10
+            pal.palette[10]=RGB11
+            pal.palette[11]=RGB12
+            pal.palette[12]=RGB13
+            pal.palette[13]=RGB14
+            pal.palette[14]=RGB15
+            pal.palette[15]=RGB16
+            pal.palette[16]=RGB17
+            pal.palette[17]=RGB18
+
+            self.AllPal.store(pal)
+            self.setPaletteName()
+            self.palAppend(pal, self.name)
     
     def buttonText(self):
         check= False
@@ -637,6 +708,13 @@ class PaletteWindow:
                     check = True
                     break
         return check
+
+    def setPaletteName(self):
+        PNameIND= self.getListIndex("PaletteName")
+        if(self.palette_window_buttons[PNameIND].text):
+            self.name= self.palette_window_buttons[PNameIND].text
+        else:
+            self.name= "Palette"+str(self.count)
 
     def setText(self):
         r1Ind= self.getListIndex("ColorR1")
@@ -687,199 +765,282 @@ class PaletteWindow:
         r16Ind= self.getListIndex("ColorR16")
         g16Ind= self.getListIndex("ColorG16")
         b16Ind= self.getListIndex("ColorB16")
+        r17Ind= self.getListIndex("ColorR17")
+        g17Ind= self.getListIndex("ColorG17")
+        b17Ind= self.getListIndex("ColorB17")
+        r18Ind= self.getListIndex("ColorR18")
+        g18Ind= self.getListIndex("ColorG18")
+        b18Ind= self.getListIndex("ColorB18")
         if (self.buttonText):
             if self.palette_window_buttons[r1Ind].text:
                 self.r1 = int(self.palette_window_buttons[r1Ind].text)
             else :
                 self.r1 = 0
+
             if self.palette_window_buttons[r2Ind].text:
                 self.r2 = int(self.palette_window_buttons[r2Ind].text)
             else :
                 self.r2 = 0
+
             if self.palette_window_buttons[r3Ind].text:
                 self.r3 = int(self.palette_window_buttons[r3Ind].text)
             else :
                 self.r3 = 0
+
             if self.palette_window_buttons[r4Ind].text:
                 self.r4 = int(self.palette_window_buttons[r4Ind].text)
             else :
                 self.r4 = 0
+
             if self.palette_window_buttons[r5Ind].text:
                 self.r5 = int(self.palette_window_buttons[r5Ind].text)
             else :
                 self.r5 = 0
+
             if self.palette_window_buttons[r6Ind].text:
                 self.r6 = int(self.palette_window_buttons[r6Ind].text)
             else :
                 self.r6 = 0
+
             if self.palette_window_buttons[r7Ind].text:
                 self.r7 = int(self.palette_window_buttons[r7Ind].text)
             else :
                 self.r7 = 0
+
             if self.palette_window_buttons[r8Ind].text:
                 self.r8 = int(self.palette_window_buttons[r8Ind].text)
             else :
                 self.r8 = 0
+                
             if self.palette_window_buttons[r9Ind].text:
                 self.r9 = int(self.palette_window_buttons[r9Ind].text)
             else :
                 self.r9 = 0
+
             if self.palette_window_buttons[r10Ind].text:
                 self.r10 = int(self.palette_window_buttons[r10Ind].text)
             else :
                 self.r10 = 0
+
             if self.palette_window_buttons[r11Ind].text:
                 self.r11 = int(self.palette_window_buttons[r11Ind].text)
             else :
                 self.r11 = 0
+
             if self.palette_window_buttons[r12Ind].text:
                 self.r12 = int(self.palette_window_buttons[r12Ind].text)
             else :
                 self.r12 = 0
+
             if self.palette_window_buttons[r13Ind].text:
                 self.r13 = int(self.palette_window_buttons[r13Ind].text)
             else :
                 self.r13 = 0
+
             if self.palette_window_buttons[r14Ind].text:
                 self.r14 = int(self.palette_window_buttons[r14Ind].text)
             else :
                 self.r14 = 0
+            
             if self.palette_window_buttons[r15Ind].text:
                 self.r15 = int(self.palette_window_buttons[r15Ind].text)
             else :
                 self.r15 = 0
+            
             if self.palette_window_buttons[r16Ind].text:
                 self.r16 = int(self.palette_window_buttons[r16Ind].text)
             else :
                 self.r16 = 0
+
+            if self.palette_window_buttons[r17Ind].text:
+                self.r17 = int(self.palette_window_buttons[r17Ind].text)
+            else :
+                self.r17 = 0
+            
+            if self.palette_window_buttons[r18Ind].text:
+                self.r18 = int(self.palette_window_buttons[r18Ind].text)
+            else :
+                self.r18 = 0
+            
             if self.palette_window_buttons[g1Ind].text:
                 self.g1 = int(self.palette_window_buttons[g1Ind].text)
             else :
                 self.g1 = 0
+            
             if self.palette_window_buttons[g2Ind].text:
                 self.g2 = int(self.palette_window_buttons[g2Ind].text)
             else :
                 self.g2 = 0
+            
             if self.palette_window_buttons[g3Ind].text:
                 self.g3 = int(self.palette_window_buttons[g3Ind].text)
             else :
                 self.g3 = 0
+            
             if self.palette_window_buttons[g4Ind].text:
                 self.g4 = int(self.palette_window_buttons[g4Ind].text)
             else :
                 self.g4 = 0
+            
             if self.palette_window_buttons[g5Ind].text:
                 self.g5 = int(self.palette_window_buttons[g5Ind].text)
             else :
                 self.g5 = 0
+            
             if self.palette_window_buttons[g6Ind].text:
                 self.g6 = int(self.palette_window_buttons[g6Ind].text)
             else :
                 self.g6 = 0
+            
             if self.palette_window_buttons[g7Ind].text:
                 self.g7 = int(self.palette_window_buttons[g7Ind].text)
             else :
                 self.g7 = 0
+            
             if self.palette_window_buttons[g8Ind].text:
                 self.g8 = int(self.palette_window_buttons[g8Ind].text)
             else :
                 self.g8 = 0
+            
             if self.palette_window_buttons[g9Ind].text:
                 self.g9 = int(self.palette_window_buttons[g9Ind].text)
             else :
                 self.g9 = 0
+            
             if self.palette_window_buttons[g10Ind].text:
                 self.g10 = int(self.palette_window_buttons[g10Ind].text)
             else :
                 self.g10 = 0
+            
             if self.palette_window_buttons[g11Ind].text:
                 self.g11 = int(self.palette_window_buttons[g11Ind].text)
             else :
                 self.g11 = 0
+            
             if self.palette_window_buttons[g12Ind].text:
                 self.g12 = int(self.palette_window_buttons[g12Ind].text)
             else :
                 self.g12 = 0
+            
             if self.palette_window_buttons[g13Ind].text:
                 self.g13 = int(self.palette_window_buttons[g13Ind].text)
             else :
                 self.g13 = 0
+            
             if self.palette_window_buttons[g14Ind].text:
                 self.g14 = int(self.palette_window_buttons[g14Ind].text)
             else :
                 self.g14 = 0
+            
             if self.palette_window_buttons[g15Ind].text:
                 self.g15 = int(self.palette_window_buttons[g15Ind].text)
             else :
                 self.g15 = 0
+            
             if self.palette_window_buttons[g16Ind].text:
                 self.g16 = int(self.palette_window_buttons[g16Ind].text)
             else :
                 self.g16 = 0
+
+            if self.palette_window_buttons[g17Ind].text:
+                self.g17 = int(self.palette_window_buttons[g17Ind].text)
+            else :
+                self.g17 = 0
+            
+            if self.palette_window_buttons[g18Ind].text:
+                self.g18 = int(self.palette_window_buttons[g18Ind].text)
+            else :
+                self.g18 = 0
+            
             if self.palette_window_buttons[b1Ind].text:
                 self.b1 = int(self.palette_window_buttons[b1Ind].text)
             else :
                 self.b1 = 0
+            
             if self.palette_window_buttons[b2Ind].text:
                 self.b2 = int(self.palette_window_buttons[b2Ind].text)
             else :
                 self.b2 = 0
+            
             if self.palette_window_buttons[b3Ind].text:
                 self.b3 = int(self.palette_window_buttons[b3Ind].text)
             else :
                 self.b3 = 0
+            
             if self.palette_window_buttons[b4Ind].text:
                 self.b4 = int(self.palette_window_buttons[b4Ind].text)
             else :
                 self.b4 = 0
+            
             if self.palette_window_buttons[b5Ind].text:
                 self.b5 = int(self.palette_window_buttons[b5Ind].text)
             else :
                 self.b5 = 0
+            
             if self.palette_window_buttons[b6Ind].text:
                 self.b6 = int(self.palette_window_buttons[b6Ind].text)
             else :
                 self.b6 = 0
+            
             if self.palette_window_buttons[b7Ind].text:
                 self.b7 = int(self.palette_window_buttons[b7Ind].text)
             else :
                 self.b7 = 0
+            
             if self.palette_window_buttons[b8Ind].text:
                 self.b8 = int(self.palette_window_buttons[b8Ind].text)
             else :
                 self.b8 = 0
+            
             if self.palette_window_buttons[b9Ind].text:
                 self.b9 = int(self.palette_window_buttons[b9Ind].text)
             else :
                 self.b9 = 0
+            
             if self.palette_window_buttons[b10Ind].text:
                 self.b10 = int(self.palette_window_buttons[b10Ind].text)
             else :
                 self.b10 = 0
+            
             if self.palette_window_buttons[b11Ind].text:
                 self.b11 = int(self.palette_window_buttons[b11Ind].text)
             else :
                 self.b11 = 0
+            
             if self.palette_window_buttons[b12Ind].text:
                 self.b12 = int(self.palette_window_buttons[b12Ind].text)
             else :
                 self.b12 = 0
+            
             if self.palette_window_buttons[b13Ind].text:
                 self.b13 = int(self.palette_window_buttons[b13Ind].text)
             else :
                 self.b13 = 0
+            
             if self.palette_window_buttons[b14Ind].text:
                 self.b14 = int(self.palette_window_buttons[b14Ind].text)
             else :
                 self.b14 = 0
+            
             if self.palette_window_buttons[b15Ind].text:
                 self.b15 = int(self.palette_window_buttons[b15Ind].text)
             else :
                 self.b15 = 0
+            
             if self.palette_window_buttons[b16Ind].text:
                 self.b16 = int(self.palette_window_buttons[b16Ind].text)
             else :
-                self.b1
+                self.b16 = 0
+
+            if self.palette_window_buttons[b17Ind].text:
+                self.b17 = int(self.palette_window_buttons[b17Ind].text)
+            else :
+                self.b17 = 0
+            
+            if self.palette_window_buttons[b18Ind].text:
+                self.b18 = int(self.palette_window_buttons[b18Ind].text)
+            else :
+                self.b18 = 0
         
 
     

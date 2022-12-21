@@ -424,8 +424,7 @@ for i in range(int(len(COLORS) / 2)):
     palette.setColor(COLORS[i + int(len(COLORS) / 2)])
 
 palette.setName("Standard")
-
-palWindow.AllPal.store(palette)
+palWindow.palAppend(palette, palette.Name)
 
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
@@ -562,8 +561,7 @@ while run:
                             if int(user_input) > 255:
                                 user_input = user_input[:-1]
                             palette_window_button.text = user_input
-                        if(palWindow.buttonText):
-                            palWindow.setText
+                        palWindow.setText()
                     elif palette_window_button.name == "PaletteName":
                         if event.key == pygame.K_BACKSPACE:
                             user_input = palette_window_button.text
@@ -573,6 +571,8 @@ while run:
                             user_input = palette_window_button.text
                             user_input += event.unicode
                             palette_window_button.text = user_input
+                        palWindow.setPaletteName()
+
 
         if colorWindow.isColorWindow:
             colorMode.setSelectionBorderColor()
@@ -649,6 +649,9 @@ while run:
                         if button.name == "ClosePaletteWindow":
                             palWindow.isPaletteWindow = False
                             colorWindow.isColorWindow = True
+                            break
+                        if button.name == "SavePalette":
+                            palWindow.savePalette()
                             break
                         button.selected = True
 
