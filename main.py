@@ -1,9 +1,9 @@
 from utils import *
-
 WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
 colorPicker = ColorPicker()
+palWindow = PaletteWindow()
 pygame.display.set_caption("Pyaint")
 Change = False
 
@@ -41,61 +41,70 @@ def draw_mouse_position_text(win):
     pos = pygame.mouse.get_pos()
     pos_font = get_font(MOUSE_POSITION_TEXT_SIZE)
     try:
-        if not colorWindow.isColorWindow:
+        if not colorWindow.isColorWindow and not palWindow.isPaletteWindow:
             row, col = get_row_col_from_pos(pos)
             text_surface = pos_font.render(str(row) + ", " + str(col), 1, BLACK)
             win.blit(text_surface, (5, HEIGHT - TOOLBAR_HEIGHT))
         else:
-            for button in colorWindow.color_window_buttons:
-                if not button.hover(pos):
-                    continue
-                if button.name == "CloseColorWindow":
-                    text_surface = pos_font.render("Close Window", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-            for button in colorMode.color_mode_buttons:
-                if not button.hover(pos):
-                    continue
-                if colorMode.isRGBMode:
-                    if button.name == "ColorModeInputOne":
-                        text_surface = pos_font.render("Enter Red Value", 1, BLACK)
+            if palWindow.isPaletteWindow:
+                for button in palWindow.palette_window_buttons:
+                    if not button.hover(pos):
+                        continue
+                    if button.name == "ClosePaletteWindow":
+                        text_surface = pos_font.render("Close Window", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
-                    if button.name == "ColorModeInputTwo":
-                        text_surface = pos_font.render("Enter Green Value", 1, BLACK)
+            else:
+                for button in colorWindow.color_window_buttons:
+                    if not button.hover(pos):
+                        continue
+                    if button.name == "CloseColorWindow":
+                        text_surface = pos_font.render("Close Window", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
-                    if button.name == "ColorModeInputThree":
-                        text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
+                for button in colorMode.color_mode_buttons:
+                    if not button.hover(pos):
+                        continue
+                    if colorMode.isRGBMode:
+                        if button.name == "ColorModeInputOne":
+                            text_surface = pos_font.render("Enter Red Value", 1, BLACK)
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputTwo":
+                            text_surface = pos_font.render("Enter Green Value", 1, BLACK)
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputThree":
+                            text_surface = pos_font.render("Enter Blue Value", 1, BLACK)
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                    else:
+                        if button.name == "ColorModeInputOne":
+                            text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputTwo":
+                            text_surface = pos_font.render(
+                                "Enter Saturation Value", 1, BLACK
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                        if button.name == "ColorModeInputThree":
+                            text_surface = pos_font.render("Enter Value", 1, BLACK)
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                    if button.name == "DisplayColorInColorMode":
+                        text_surface = pos_font.render("Color Mode Display", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
-                else:
-                    if button.name == "ColorModeInputOne":
-                        text_surface = pos_font.render("Enter Hue Value", 1, BLACK)
+                    if button.name == "AddToCustomColors":
+                        text_surface = pos_font.render("Add To Custom Colors", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
-                    if button.name == "ColorModeInputTwo":
-                        text_surface = pos_font.render(
-                            "Enter Saturation Value", 1, BLACK
-                        )
+                    if button.name == "SwitchColorMode":
+                        text_surface = pos_font.render("Switch Color Mode", 1, BLACK)
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
-                    if button.name == "ColorModeInputThree":
-                        text_surface = pos_font.render("Enter Value", 1, BLACK)
-                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                        break
-                if button.name == "DisplayColorInColorMode":
-                    text_surface = pos_font.render("Color Mode Display", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "AddToCustomColors":
-                    text_surface = pos_font.render("Add To Custom Colors", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
-                if button.name == "SwitchColorMode":
-                    text_surface = pos_font.render("Switch Color Mode", 1, BLACK)
-                    win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    break
     except IndexError:
         for button in buttons:
             if not button.hover(pos):
@@ -167,6 +176,9 @@ def draw(win, grid, buttons):
         colorWindow.draw_color_window(win)
         colorWindow.draw_color_window_buttons(win)
         colorMode.draw_color_mode_buttons(win)
+    if palWindow.isPaletteWindow:
+        palWindow.draw_palette_window(win)
+        palWindow.draw_palette_window_buttons(win, False)
 
     if STATE == "PICKER":
         colorPicker.draw_zoom_feature_for_color_picker(win)
@@ -246,7 +258,7 @@ def get_row_col_from_pos(pos):
 
 
 def paint_using_brush(row, col, size):
-    if colorWindow.isColorWindow == False:
+    if colorWindow.isColorWindow == False and palWindow.isPaletteWindow == False:
         if BRUSH_SIZE == 1:
             grid[row][col] = drawing_color
         else:  # for values greater than 1
@@ -386,6 +398,7 @@ brush_widths = [
 # Adding Buttons
 buttons = []
 
+palette= Palette()
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
         Button(
@@ -396,6 +409,7 @@ for i in range(int(len(COLORS) / 2)):
             (COLORS[i]),
         )
     )
+    palette.setColor(COLORS[i])
 
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
@@ -407,6 +421,11 @@ for i in range(int(len(COLORS) / 2)):
             COLORS[i + int(len(COLORS) / 2)],
         )
     )
+    palette.setColor(COLORS[i + int(len(COLORS) / 2)])
+
+palette.setName("Standard")
+
+palWindow.AllPal.store(palette)
 
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
@@ -522,8 +541,47 @@ while run:
         if event.type == pygame.QUIT:  # if user closed the program
             run = False
 
+        if palWindow.isPaletteWindow: 
+            for button in palWindow.palette_window_buttons:
+                name= button.name
+                if  ((button is not None) and (button.name.startswith("Color") or button.name == "PaletteName")):
+                    if button.selected == True:
+                            button.border_color = BLACK
+                    else:
+                            button.border_color = SILVER
+            if event.type == pygame.KEYDOWN:
+                for palette_window_button in palWindow.palette_window_buttons:
+                    if ((palette_window_button is not None) and (palette_window_button.name.startswith("Color") and palette_window_button.selected == True)):
+                        if event.key == pygame.K_BACKSPACE:
+                            user_input = palette_window_button.text
+                            user_input = user_input[:-1]
+                            palette_window_button.text = user_input
+                        elif (event.key == pygame.K_0 or event.key == pygame.K_1 or event.key == pygame.K_2 or event.key == pygame.K_3 or event.key == pygame.K_4 or event.key == pygame.K_5 or event.key == pygame.K_6 or event.key == pygame.K_7 or event.key == pygame.K_8 or event.key == pygame.K_9) and len(palette_window_button.text) < 3:
+                            user_input = palette_window_button.text
+                            user_input += event.unicode
+                            if int(user_input) > 255:
+                                user_input = user_input[:-1]
+                            palette_window_button.text = user_input
+                        if(palWindow.buttonText):
+                            palWindow.setText
+                    elif palette_window_button.name == "PaletteName":
+                        if event.key == pygame.K_BACKSPACE:
+                            user_input = palette_window_button.text
+                            user_input = user_input[:-1]
+                            palette_window_button.text = user_input
+                        elif (event.key == pygame.K_a or event.key == pygame.K_b or event.key == pygame.K_c or event.key == pygame.K_d or event.key == pygame.K_e or event.key == pygame.K_f or event.key == pygame.K_g or event.key == pygame.K_h or event.key == pygame.K_i or event.key == pygame.K_j or event.key == pygame.K_k or event.key == pygame.K_l or event.key == pygame.K_m or event.key == pygame.K_n or event.key == pygame.K_o or event.key == pygame.K_p or event.key == pygame.K_q or event.key == pygame.K_r or event.key == pygame.K_s or event.key == pygame.K_t or event.key == pygame.K_u or event.key == pygame.K_v or event.key == pygame.K_w or event.key == pygame.K_x or event.key == pygame.K_y or event.key == pygame.K_z) and len(palette_window_button.text) < 15:
+                            user_input = palette_window_button.text
+                            user_input += event.unicode
+                            palette_window_button.text = user_input
+
         if colorWindow.isColorWindow:
             colorMode.setSelectionBorderColor()
+
+            for button in colorWindow.color_window_buttons:
+                if (button.name == "Change Palette" and button.selected) :
+                    palWindow.isPaletteWindow = True
+                    colorWindow.isColorWindow = False
+                    break
 
             if event.type == pygame.KEYDOWN:
                 for button in colorMode.color_mode_buttons:
@@ -582,6 +640,17 @@ while run:
                     drawing_color = colorPicker.picker(WIN)
                     draw_button.color = drawing_color
                     STATE = colorPicker.toggle(STATE)
+                
+                if palWindow.isPaletteWindow:
+                    for button in palWindow.palette_window_buttons:
+                        if not button.clicked(pos):
+                            button.selected = False
+                            continue
+                        if button.name == "ClosePaletteWindow":
+                            palWindow.isPaletteWindow = False
+                            colorWindow.isColorWindow = True
+                            break
+                        button.selected = True
 
                 if colorWindow.isColorWindow:
 

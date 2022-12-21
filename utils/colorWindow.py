@@ -51,6 +51,17 @@ class ColorWindow(object):
                 color=WHITE,
                 name="CloseColorWindow",
                 image_url=r"assets/close_color_window.png",
+            ),
+            Button(
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 220,
+                33 * self.COLOR_WINDOW_HEIGHT+20,
+                45,
+                40,
+                WHITE,
+                name="Change Palette",
+                text="Palette",
+                text_color=BLACK,
+                shape="rectangleWithBorderRadius"
             )
         ]
 
