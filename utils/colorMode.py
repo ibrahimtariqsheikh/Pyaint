@@ -1,6 +1,7 @@
 from .settings import *
 from .button import *
 from .colorWindow import *
+from .theme import *
 import math
 
 

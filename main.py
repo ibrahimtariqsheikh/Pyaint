@@ -261,11 +261,18 @@ def draw_brush_widths(win):
     for button in brush_widths:
         button.draw(win)
         # Set border colour
-        border_color = BLACK
-        if button.color == BLACK:
-            border_color = GRAY
-        else:
+        if theme.isLightMode:
             border_color = BLACK
+            if button.color == BLACK:
+                border_color = GRAY
+            else:
+                border_color = BLACK
+        else:
+            border_color = WHITE
+            if button.color == WHITE:
+                border_color = GRAY
+            else:
+                border_color = WHITE
         # Set border width
         border_width = 2
         if (
@@ -389,7 +396,7 @@ def fill_bucket(row, col, color):
 run = True
 
 clock = pygame.time.Clock()
-grid = init_grid(ROWS, COLS, theme.BG_COLOR)
+grid = init_grid(ROWS, COLS, WHITE)
 drawing_color = BLACK
 
 button_width = 40
@@ -721,10 +728,8 @@ while run:
 
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
-
             try:
                 row, col = get_row_col_from_pos(pos)
-
                 if STATE == "COLOR":
                     paint_using_brush(row, col, BRUSH_SIZE)
 
@@ -778,7 +783,7 @@ while run:
                     if not button.clicked(pos):
                         continue
                     if button.text == "Clear":
-                        grid = init_grid(ROWS, COLS, theme.BG_COLOR)
+                        grid = init_grid(ROWS, COLS, WHITE)
                         drawing_color = BLACK
                         draw_button.color = drawing_color
                         STATE = "COLOR"
@@ -801,6 +806,7 @@ while run:
                             buttons,
                             colorMode.color_mode_buttons,
                             colorWindow.color_window_buttons,
+                            colorWindow.custom_color_count,
                         )
 
                         break
