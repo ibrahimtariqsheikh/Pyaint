@@ -55,7 +55,10 @@ class Theme(object):
                     button.color = WHITE
                     button.text_color = BLACK
             for button in colorModeButtons:
-                button.border_color = BLACK
+                if button.color == BLACK:
+                    button.border_color = GRAY
+                else:
+                    button.border_color = BLACK
                 if button.text:
                     button.color = WHITE
                     button.text_color = BLACK

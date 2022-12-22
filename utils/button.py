@@ -18,6 +18,7 @@ class Button:
         selected=False,
         border_color=BLACK,
         border_width=0,
+        font_size=None,
     ):
         self.x = x
         self.y = y
@@ -32,6 +33,7 @@ class Button:
         self.selected = selected
         self.border_color = border_color
         self.border_width = border_width
+        self.font_size = font_size
 
     def draw(self, win):
         # Draws button with an image
@@ -70,10 +72,8 @@ class Button:
             )  # border
 
         if self.text:
-            if self.name == "AddToCustomColors" or self.name == "SwitchColorMode" or self.name=="Change Palette":
-                button_font = get_font(int(self.height / 2) - 6)
-            elif self.name == "PaletteName":
-                button_font = get_font(int(self.width / 4) - 6)
+            if self.font_size:
+                button_font = get_font(self.font_size)
             else:
                 button_font = get_font(int(self.width / 2) - 6)
             text_surface = button_font.render(self.text, 1, self.text_color)
@@ -104,3 +104,9 @@ class Button:
             return False
 
         return True
+
+
+"""if self.name == "AddToCustomColors" or self.name == "SwitchColorMode" or self.name=="Change Palette":
+    button_font = get_font(int(self.height / 2) - 6)
+elif self.name == "PaletteName":
+    button_font = get_font(int(self.width / 4) - 6)"""

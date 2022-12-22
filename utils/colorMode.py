@@ -114,7 +114,7 @@ class ColorMode(object):
                 60,
                 50,
                 BLACK,
-                border_color=DARKGRAY,
+                border_color=GRAY,
                 name="DisplayColorInColorMode",
             ),
             Button(
@@ -160,6 +160,7 @@ class ColorMode(object):
                 text="Add To Custom Colors",
                 name="AddToCustomColors",
                 shape="rectangleWithBorderRadius",
+                font_size=15,
             ),
             Button(
                 self.colorWindow.color_mode_rect.x
@@ -172,6 +173,7 @@ class ColorMode(object):
                 text="Switch",
                 name="SwitchColorMode",
                 shape="rectangleWithBorderRadius",
+                font_size=15,
             ),
         ]
         self.input_one_index = self.getListIndex("ColorModeInputOne")
