@@ -5,6 +5,7 @@ from .Palette import *
 
 class PaletteWindow:
     def __init__(self):
+        self.currentPalette= 0
         self.count=0
         self.j=0
         self.isAppend= True
@@ -96,6 +97,16 @@ class PaletteWindow:
                 WHITE,
                 name="SavePalette",
                 text="Save",
+                shape="",
+            ),
+            Button(
+                self.COLOR_WINDOW_WIDTH +10+5+50,
+                self.COLOR_WINDOW_HEIGHT + self.j+35,
+                15,
+                15,
+                WHITE,
+                name="TickPalette",
+                image_url="assets/tick.png",
                 shape="",
             ),
             Button(
@@ -569,12 +580,18 @@ class PaletteWindow:
     def deletePalette(self, button):
         self.palette_window_buttons[self.getListIndex("Error Message")].text=""
         ind= self.getListIndex("Palbutton"+str(button.name[6]))
-        self.AllPal.delete(self.palette_window_buttons[ind].text)
         delname="Palbutton"
         sc=0
         delname+=button.name[6]
         sc= int(button.name[6])
         sc1= int(button.name[6])
+        
+        if(self.AllPal.getPalIndex(self.palette_window_buttons[self.getListIndex(delname)].text)==self.currentPalette):
+            self.selectPalette(self.palette_window_buttons[self.getListIndex("Palbutton1")])
+
+        self.AllPal.delete(self.palette_window_buttons[ind].text)
+        
+
         for btn in self.palette_window_buttons:
             if btn.name == delname:
                 self.palette_window_buttons.remove(btn)
@@ -617,8 +634,6 @@ class PaletteWindow:
 
     def palAppend(self, palette, name):
         if(self.count<8):
-            for i in palette.palette:
-                print(i)
             self.count+=1
             if(self.isAppend==True):
                 self.AllPal.store(palette)
@@ -626,6 +641,7 @@ class PaletteWindow:
                 self.j+=30
             else:
                 self.j+=10
+
             self.palette_window_buttons.append(
                 Button(
                 self.COLOR_WINDOW_WIDTH +10+5,
@@ -673,7 +689,14 @@ class PaletteWindow:
                         name= "Pal"+str(self.count)
                     )
                 )
-            self.isAppend= False    
+            self.isAppend= False   
+
+    def selectPalette(self, button):
+        chng= self.AllPal.getPalIndex(button.text)
+        if(self.currentPalette!=int(chng)):
+            self.currentPalette= chng
+            tickInd= self.getListIndex("TickPalette")
+            self.palette_window_buttons[tickInd].y= int(button.y+5)
 
     def draw_palette_window_buttons(self, win, check):
         if(check == False):

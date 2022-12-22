@@ -1,6 +1,10 @@
 from .settings import *
 from .button import *
 from .theme import *
+from .paletteWindow import *
+from .AllPalettes import *
+from .Palette import *
+from .Grayscale import *
 
 
 class ColorWindow(object):
@@ -11,7 +15,10 @@ class ColorWindow(object):
 
     def __init__(self):
         self.isColorWindow = False
+        self.paletteWindow= PaletteWindow()
+        self.color_window_palette= None
         self.custom_color_count = 0
+        self.grayscalePal= Grayscale()
         self.COLOR_WINDOW_WIDTH_SIZE = 500
         self.COLOR_WINDOW_HEIGHT_SIZE = 570
         self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_WIDTH_SIZE / 2
@@ -55,17 +62,79 @@ class ColorWindow(object):
                 image_url=r"assets/close_color_window.png",
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 220,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 200,
                 33 * self.COLOR_WINDOW_HEIGHT + 20,
-                45,
+                90,
                 40,
                 WHITE,
                 name="Change Palette",
-                text="Palette",
+                text="Change Palette",
                 text_color=BLACK,
                 shape="rectangleWithBorderRadius",
             ),
         ]
+        
+    def append_palette(self):
+        self.color_window_palette= self.paletteWindow.currentPalette
+        self.j= 450
+        for i in range(9):
+                self.color_window_buttons.append(
+                    Button(
+                        self.COLOR_WINDOW_WIDTH+40 + 21 * i,
+                        self.COLOR_WINDOW_HEIGHT + self.j,
+                        20,
+                        20,
+                        self.paletteWindow.AllPal.palettes[self.color_window_palette].palette[i],
+                        name= "Pal"
+                    )
+                )
+        self.j+=22
+        for i in range(9):
+            self.color_window_buttons.append(
+                Button(
+                    self.COLOR_WINDOW_WIDTH+40 + 21 * i,
+                    self.COLOR_WINDOW_HEIGHT + self.j,
+                    20,
+                    20,
+                    self.paletteWindow.AllPal.palettes[self.color_window_palette].palette[i + 9],
+                    name= "Pal"
+                ))
+        self.grayscalePal.setUp(self.paletteWindow.AllPal.palettes[self.color_window_palette])
+        self.j= 450
+        for i in range(9):
+            y= list(self.grayscalePal.palette.palette[i])
+            value= int(0.299*y[0])+int(0.587*y[1])+int(0.114*y[2])
+            y[0]= value
+            y[1]= value
+            y[2]= value
+            x= tuple(y)
+            self.color_window_buttons.append(
+                Button(
+                    self.COLOR_WINDOW_WIDTH+270 + 21 * i,
+                    self.COLOR_WINDOW_HEIGHT + self.j,
+                    20,
+                    20,
+                    x,
+                    name= "GS"
+                )
+            )
+        self.j+=22
+        for i in range(9):
+            y= list(self.grayscalePal.palette.palette[i+9])
+            value= int(0.299*y[0])+int(0.587*y[1])+int(0.114*y[2])
+            y[0]= value
+            y[1]= value
+            y[2]= value
+            x= tuple(y)
+            self.color_window_buttons.append(
+                Button(
+                    self.COLOR_WINDOW_WIDTH+270 + 21 * i,
+                    self.COLOR_WINDOW_HEIGHT + self.j,
+                    20,
+                    20,
+                    x,
+                    name= "GS"
+                ))
 
     def draw_color_window(self, win):
         pygame.draw.rect(
@@ -121,6 +190,35 @@ class ColorWindow(object):
         )
 
     def draw_color_window_buttons(self, win):
+        if(self.color_window_palette!=self.paletteWindow.currentPalette):
+            self.color_window_palette=self.paletteWindow.currentPalette
+            i=0
+            y=0
+            for button in self.color_window_buttons:
+                if(button.name.startswith("Pal")):
+                    button.color=self.paletteWindow.AllPal.palettes[self.color_window_palette].palette[i]
+                    i=i+1
+                if(button.name.startswith("GS")):
+                    lis= list(self.grayscalePal.palette.palette[y])
+                    value= int(0.299*lis[0])+int(0.587*lis[1])+int(0.114*lis[2])
+                    lis[0]= value
+                    lis[1]= value
+                    lis[2]= value
+                    self.grayscalePal.palette.palette[y]= tuple(lis)
+                    button.color=tuple(lis)
+                    y=y+1
+
+        base_font= get_font(15)
+        text= "Color Palette"
+        text_surface= base_font.render(text, True, (0 , 0, 0))
+        win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 40,
+        self.COLOR_WINDOW_HEIGHT+420))
+
+        base_font= get_font(15)
+        text= "Grayscale Palette"
+        text_surface= base_font.render(text, True, (0 , 0, 0))
+        win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 255,
+        self.COLOR_WINDOW_HEIGHT+420))
         for button in self.color_window_buttons:
             button.draw(win)
 

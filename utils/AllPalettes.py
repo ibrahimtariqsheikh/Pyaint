@@ -9,6 +9,14 @@ class AllPalettes:
         if(len(self.palettes)<8): 
             if(self.checkName(newPalette.Name)==False): 
                 self.palettes.append(newPalette)
+    
+    def getPalIndex(self, name):
+        count=0
+        for palette in self.palettes:
+            if(palette.Name == name):
+                return count
+            count= count+1
+        return -1
 
     def checkName(self, nm):
         check= False

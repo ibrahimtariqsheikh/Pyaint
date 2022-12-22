@@ -6,6 +6,7 @@ colorMode = ColorMode()
 colorPicker = ColorPicker()
 theme = Theme()
 palWindow = PaletteWindow()
+colorWindow.paletteWindow= palWindow
 pygame.display.set_caption("Pyaint")
 Change = False
 
@@ -472,6 +473,7 @@ for i in range(int(len(COLORS) / 2)):
 
 palette.setName("Standard")
 palWindow.palAppend(palette, palette.Name)
+colorWindow.append_palette()
 
 for i in range(int(len(COLORS) / 2)):
     buttons.append(
@@ -754,6 +756,11 @@ while run:
                             break
                         if button.name.startswith("Delete"):
                             palWindow.deletePalette(button)
+                            colorWindow.draw_color_window_buttons
+                            break
+                        if button.name.startswith("Palbutton") or button.name == "Standard":
+                            palWindow.selectPalette(button)
+                            colorWindow.draw_color_window_buttons
                             break
                         button.selected = True
 
