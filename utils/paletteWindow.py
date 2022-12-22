@@ -90,13 +90,23 @@ class PaletteWindow:
                 name="PaletteName",
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 170+50,
-                self.COLOR_WINDOW_HEIGHT+450,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 170+10,
+                self.COLOR_WINDOW_HEIGHT+425,
                 40,
                 15,
                 WHITE,
                 name="SavePalette",
                 text="Save",
+                shape="",
+            ),
+            Button(
+                self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 130+70,
+                self.COLOR_WINDOW_HEIGHT+20 * 2+420,
+                40,
+                15,
+                WHITE,
+                name="Error Message",
+                text="",
                 shape="",
             ),
             Button(
@@ -557,61 +567,112 @@ class PaletteWindow:
             width=2,
         )
 
+    def deletePalette(self, button):
+        self.palette_window_buttons[self.getListIndex("Error Message")].text=""
+        ind= self.getListIndex("Palbutton"+str(button.name[6]))
+        self.AllPal.delete(self.palette_window_buttons[ind].text)
+        delname="Palbutton"
+        sc=0
+        delname+=button.name[6]
+        sc= int(button.name[6])
+        sc1= int(button.name[6])
+        for btn in self.palette_window_buttons:
+            if btn.name == delname:
+                self.palette_window_buttons.remove(btn)
+        while(self.getListIndex("Pal"+str(sc))!=-1):
+            del self.palette_window_buttons[self.getListIndex("Pal"+str(sc))]
+        
+        del self.palette_window_buttons[self.getListIndex(button.name)]
+        self.count=self.count-1
+
+        sc1+=1
+        while(self.getListIndex("Palbutton"+str(sc1))!=-1 and sc1<9):
+            ind= self.getListIndex("Palbutton"+str(sc1))
+            self.palette_window_buttons[ind].y= self.palette_window_buttons[ind].y-55
+            self.palette_window_buttons[ind].name= "Palbutton"+str(sc1-1)
+            sc1+=1
+        
+        sc+=1
+        while(self.getListIndex("Pal"+str(sc))!=-1 and sc<9):
+            while(self.getListIndex("Pal"+str(sc))!=-1):
+                ind= self.getListIndex("Pal"+str(sc))
+                self.palette_window_buttons[ind].y= self.palette_window_buttons[ind].y-55
+                self.palette_window_buttons[ind].name= "Pal"+str(sc-1)
+            sc+=1
+        
+        sc1= int(button.name[6])
+        sc1+=1
+        while(self.getListIndex("Delete"+str(sc1))!=-1 and sc1<9):
+            ind= self.getListIndex("Delete"+str(sc1))
+            self.palette_window_buttons[ind].y= self.palette_window_buttons[ind].y-55
+            self.palette_window_buttons[ind].name= "Delete"+str(sc1-1)
+            sc1+=1
+
+        self.j=self.j-55
+        
+
+
+        
+            
+        
+
     def palAppend(self, palette, name):
-        self.name= name
-        self.count+=1
-        palette.setName(name)
-        if(self.isAppend==True):
-            self.j+=30
-        else:
-            self.j+=10
-        self.palette_window_buttons.append(
-            Button(
-            self.COLOR_WINDOW_WIDTH +10,
-            self.COLOR_WINDOW_HEIGHT + self.j,
-            40,
-            30,
-            WHITE,
-            self.name,
-            BLACK,
-            name= "Palbutton"+str(self.count),
-            shape= ""
-        ))
-        self.palette_window_buttons.append(
-            Button(
-                self.COLOR_WINDOW_WIDTH +170,
-                self.COLOR_WINDOW_HEIGHT + self.j+30,
-                25,
-                25,
-                color=WHITE,
-                name="Delete"+str(self.count),
-                image_url="assets/trash-bin.png",
+        if(self.count<8):
+            self.count+=1
+            if(self.isAppend==True):
+                self.AllPal.store(palette)
+                self.name=name
+                self.j+=30
+            else:
+                self.j+=10
+            self.palette_window_buttons.append(
+                Button(
+                self.COLOR_WINDOW_WIDTH +10,
+                self.COLOR_WINDOW_HEIGHT + self.j,
+                40,
+                30,
+                WHITE,
+                self.name,
+                BLACK,
+                name= "Palbutton"+str(self.count),
+                shape= ""
             ))
-        self.j+=25
-        for i in range(9):
-            self.palette_window_buttons.append(
-                Button(
-                    self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                    self.COLOR_WINDOW_HEIGHT + self.j,
-                    15,
-                    15,
-                    palette.palette[i],
-                    name= "Pal"+str(i)+str(self.count)
+            if(self.isAppend==False):
+                self.palette_window_buttons.append(
+                    Button(
+                        self.COLOR_WINDOW_WIDTH +170,
+                        self.COLOR_WINDOW_HEIGHT + self.j+30,
+                        25,
+                        25,
+                        color=WHITE,
+                        name="Delete"+str(self.count),
+                        image_url="assets/trash-bin.png",
+                    ))
+            self.j+=25
+            for i in range(9):
+                self.palette_window_buttons.append(
+                    Button(
+                        self.COLOR_WINDOW_WIDTH+10 + 16 * i,
+                        self.COLOR_WINDOW_HEIGHT + self.j,
+                        15,
+                        15,
+                        palette.palette[i],
+                        name= "Pal"+str(self.count)
+                    )
                 )
-            )
-        self.j+=20
-        for i in range(9):
-            self.palette_window_buttons.append(
-                Button(
-                    self.COLOR_WINDOW_WIDTH+10 + 16 * i,
-                    self.COLOR_WINDOW_HEIGHT + self.j,
-                    15,
-                    15,
-                    palette.palette[i + 9],
-                    name= "Pal"+str(i + 9)+str(self.count)
+            self.j+=20
+            for i in range(9):
+                self.palette_window_buttons.append(
+                    Button(
+                        self.COLOR_WINDOW_WIDTH+10 + 16 * i,
+                        self.COLOR_WINDOW_HEIGHT + self.j,
+                        15,
+                        15,
+                        palette.palette[i + 9],
+                        name= "Pal"+str(self.count)
+                    )
                 )
-            )
-        self.isAppend= False    
+            self.isAppend= False    
 
     def draw_palette_window_buttons(self, win, check):
         if(check == False):
@@ -634,6 +695,13 @@ class PaletteWindow:
             text_surface= base_font.render(text, True, (0 , 0, 0))
             win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
             self.COLOR_WINDOW_HEIGHT+20 * 2))
+
+            base_font= get_font(15)
+            text= "Error:"
+            text_surface= base_font.render(text, True, (0 , 0, 0))
+            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
+            self.COLOR_WINDOW_HEIGHT+20 * 2+400))
+
 
             for i in range(18):
                 base_font= get_font(15)
@@ -696,9 +764,19 @@ class PaletteWindow:
             pal.palette[16]=RGB17
             pal.palette[17]=RGB18
 
-            self.AllPal.store(pal)
+
+            print(len(self.AllPal.palettes))
             self.setPaletteName()
-            self.palAppend(pal, self.name)
+            pal.Name= self.name
+            if(self.AllPal.checkName(self.name)==False):
+                self.palAppend(pal, self.name)
+                self.AllPal.store(pal)
+                self.palette_window_buttons[self.getListIndex("Error Message")].text=""
+            else:
+                self.palette_window_buttons[self.getListIndex("Error Message")].text="Please enter palette name!"
+        else:
+            self.palette_window_buttons[self.getListIndex("Error Message")].text="No more palettes can be created."
+
     
     def buttonText(self):
         check= False

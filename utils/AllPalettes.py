@@ -6,9 +6,19 @@ class AllPalettes:
         self.palettes= []
 
     def store(self, newPalette):
-        if(len(self.palettes)<8):
-            self.palettes.append(newPalette)
-    
+        if(len(self.palettes)<8): 
+            if(self.checkName(newPalette.Name)==False): 
+                self.palettes.append(newPalette)
+
+    def checkName(self, nm):
+        check= False
+        for palette in self.palettes:
+            if palette.Name == nm:
+                check =True
+                break
+
+        return check
+
     def delete(self, name):
         for palette in self.palettes:
             if(palette.getName()==name):

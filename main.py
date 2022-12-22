@@ -653,6 +653,9 @@ while run:
                         if button.name == "SavePalette":
                             palWindow.savePalette()
                             break
+                        if button.name.startswith("Delete"):
+                            palWindow.deletePalette(button)
+                            break
                         button.selected = True
 
                 if colorWindow.isColorWindow:
