@@ -13,7 +13,7 @@ class Theme(object):
         self.BG_COLOR = WHITE
         self.BORDER_COLOR = BLACK
         self.BG_TEXTCOLOR = BLACK
-        self.DARK_THEME_COLOR = (30, 30, 30)
+        self.DARK_THEME_COLOR = (15, 15, 15)
         self.DARK_THEME_TEXT_BACKGROUND_COLOR = (81, 81, 81)
 
     def toggle(self, buttons, colorModeButtons, colorWindowButtons, custom_color_count):

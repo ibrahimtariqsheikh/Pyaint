@@ -12,6 +12,8 @@ class PaletteWindow:
         self.isAppend = True
         self.AllPal = AllPalettes()
         self.isPaletteWindow = False
+        self.RGB_BUTTON_WIDTH = 40
+        self.RGB_BUTTON_HEIGHT = 20
         self.r1 = 0
         self.g1 = 0
         self.b1 = 0
@@ -67,122 +69,200 @@ class PaletteWindow:
         self.g18 = 0
         self.b18 = 0
         self.name = ""
+        self.COLOR_WINDOW_WIDTH_SIZE = 500
+        self.COLOR_WINDOW_HEIGHT_SIZE = 570
+        self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_WIDTH_SIZE / 2
+        self.COLOR_WINDOW_HEIGHT = WIDTH / 2 - self.COLOR_WINDOW_HEIGHT_SIZE / 2
+        self.buttonHeightStart = self.COLOR_WINDOW_HEIGHT + 80
+        self.ButtonOffset = 5
+        self.seperation = (
+            self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_WIDTH_SIZE / 3 + 40
+        )
+        self.buttonStart = self.seperation + 70
         self.rect_x_y = [
-            370,
-            162,
-            413,
-            162,
-            456,
-            162,
-            370,
-            182,
-            413,
-            182,
-            456,
-            182,
-            370,
-            202,
-            413,
-            202,
-            456,
-            202,
-            370,
-            222,
-            413,
-            222,
-            456,
-            222,
-            370,
-            242,
-            413,
-            242,
-            456,
-            242,
-            370,
-            262,
-            413,
-            262,
-            456,
-            262,
-            370,
-            282,
-            413,
-            282,
-            456,
-            282,
-            370,
-            302,
-            413,
-            302,
-            456,
-            302,
-            370,
-            322,
-            413,
-            322,
-            456,
-            322,
-            370,
-            342,
-            413,
-            342,
-            456,
-            342,
-            370,
-            362,
-            413,
-            362,
-            456,
-            362,
-            370,
-            382,
-            413,
-            382,
-            456,
-            382,
-            370,
-            402,
-            413,
-            402,
-            456,
-            402,
-            370,
-            422,
-            413,
-            422,
-            456,
-            422,
-            370,
-            442,
-            413,
-            442,
-            456,
-            442,
-            370,
-            462,
-            413,
-            462,
-            456,
-            462,
-            370,
-            482,
-            413,
-            482,
-            456,
-            482,
-            370,
-            502,
-            413,
-            502,
-            456,
-            502,
+            self.buttonStart,
+            self.buttonHeightStart,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart,
+            self.buttonStart,
+            self.buttonHeightStart + self.RGB_BUTTON_HEIGHT + self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + self.RGB_BUTTON_HEIGHT + self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + self.RGB_BUTTON_HEIGHT + self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 2 * self.RGB_BUTTON_HEIGHT + 2 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 2 * self.RGB_BUTTON_HEIGHT + 2 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 2 * self.RGB_BUTTON_HEIGHT + 2 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 3 * self.RGB_BUTTON_HEIGHT + 3 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 3 * self.RGB_BUTTON_HEIGHT + 3 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 3 * self.RGB_BUTTON_HEIGHT + 3 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 4 * self.RGB_BUTTON_HEIGHT + 4 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 4 * self.RGB_BUTTON_HEIGHT + 4 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 4 * self.RGB_BUTTON_HEIGHT + 4 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 5 * self.RGB_BUTTON_HEIGHT + 5 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 5 * self.RGB_BUTTON_HEIGHT + 5 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 5 * self.RGB_BUTTON_HEIGHT + 5 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 6 * self.RGB_BUTTON_HEIGHT + 6 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 6 * self.RGB_BUTTON_HEIGHT + 6 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 6 * self.RGB_BUTTON_HEIGHT + 6 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 7 * self.RGB_BUTTON_HEIGHT + 7 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 7 * self.RGB_BUTTON_HEIGHT + 7 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 7 * self.RGB_BUTTON_HEIGHT + 7 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 8 * self.RGB_BUTTON_HEIGHT + 8 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 8 * self.RGB_BUTTON_HEIGHT + 8 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 8 * self.RGB_BUTTON_HEIGHT + 8 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart + 9 * self.RGB_BUTTON_HEIGHT + 9 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart + 9 * self.RGB_BUTTON_HEIGHT + 9 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart + 9 * self.RGB_BUTTON_HEIGHT + 9 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 10 * self.RGB_BUTTON_HEIGHT
+            + 10 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 10 * self.RGB_BUTTON_HEIGHT
+            + 10 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 10 * self.RGB_BUTTON_HEIGHT
+            + 10 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 11 * self.RGB_BUTTON_HEIGHT
+            + 11 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 11 * self.RGB_BUTTON_HEIGHT
+            + 11 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 11 * self.RGB_BUTTON_HEIGHT
+            + 11 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 12 * self.RGB_BUTTON_HEIGHT
+            + 12 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 12 * self.RGB_BUTTON_HEIGHT
+            + 12 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 12 * self.RGB_BUTTON_HEIGHT
+            + 12 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 13 * self.RGB_BUTTON_HEIGHT
+            + 13 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 13 * self.RGB_BUTTON_HEIGHT
+            + 13 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 13 * self.RGB_BUTTON_HEIGHT
+            + 13 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 14 * self.RGB_BUTTON_HEIGHT
+            + 14 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 14 * self.RGB_BUTTON_HEIGHT
+            + 14 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 14 * self.RGB_BUTTON_HEIGHT
+            + 14 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 15 * self.RGB_BUTTON_HEIGHT
+            + 15 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 15 * self.RGB_BUTTON_HEIGHT
+            + 15 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 15 * self.RGB_BUTTON_HEIGHT
+            + 15 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 16 * self.RGB_BUTTON_HEIGHT
+            + 16 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 16 * self.RGB_BUTTON_HEIGHT
+            + 16 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 16 * self.RGB_BUTTON_HEIGHT
+            + 16 * self.ButtonOffset,
+            self.buttonStart,
+            self.buttonHeightStart
+            + 17 * self.RGB_BUTTON_HEIGHT
+            + 17 * self.ButtonOffset,
+            self.buttonStart + self.RGB_BUTTON_WIDTH + self.ButtonOffset,
+            self.buttonHeightStart
+            + 17 * self.RGB_BUTTON_HEIGHT
+            + 17 * self.ButtonOffset,
+            self.buttonStart + 2 * self.RGB_BUTTON_WIDTH + 2 * self.ButtonOffset,
+            self.buttonHeightStart
+            + 17 * self.RGB_BUTTON_HEIGHT
+            + 17 * self.ButtonOffset,
         ]
-        self.COLOR_WINDOW_SIZE = 400
-        self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_SIZE / 2
-        self.COLOR_WINDOW_HEIGHT = WIDTH / 2 - self.COLOR_WINDOW_SIZE / 2
+
         self.palette_window_buttons = [
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_SIZE - 25 - 5 + 50,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_WIDTH_SIZE / 8,
+                self.COLOR_WINDOW_HEIGHT + 10,
+                100,
+                40,
+                name="YourPaletteText",
+                color=WHITE,
+                shape=None,
+                text="Your Palettes",
+                font_size=18,
+            ),
+            Button(
+                self.seperation + 100,
+                self.COLOR_WINDOW_HEIGHT + 10,
+                100,
+                40,
+                name="CreateNewPaletteText",
+                color=WHITE,
+                shape=None,
+                text="Create New Pallete",
+                font_size=18,
+            ),
+            Button(
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_WIDTH_SIZE - 25 - 5,
                 self.COLOR_WINDOW_HEIGHT + 5,
                 25,
                 25,
@@ -191,23 +271,24 @@ class PaletteWindow:
                 image_url="assets/close_color_window.png",
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 40 + 50,
-                self.COLOR_WINDOW_HEIGHT + 20 * 2,
-                80,
-                15,
+                self.buttonStart,
+                self.buttonHeightStart - self.ButtonOffset * 2 - self.RGB_BUTTON_HEIGHT,
+                self.RGB_BUTTON_WIDTH * 3 + self.ButtonOffset * 2,
+                25,
                 WHITE,
                 name="PaletteName",
-                font_size=13,
+                font_size=15,
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 170 + 10,
-                self.COLOR_WINDOW_HEIGHT + 425,
-                40,
-                15,
+                self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_WIDTH_SIZE - 70,
+                self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE - 100,
+                50,
+                50,
                 WHITE,
                 name="SavePalette",
                 text="Save",
-                shape=None,
+                font_size=13,
+                shape="rectangleWithBorderRadius",
             ),
             Button(
                 self.COLOR_WINDOW_WIDTH + 10 + 5 + 50,
@@ -220,8 +301,8 @@ class PaletteWindow:
                 shape=None,
             ),
             Button(
-                self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 130 + 70,
-                self.COLOR_WINDOW_HEIGHT + 20 * 2 + 420,
+                self.seperation + 130,
+                self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE - 25,
                 40,
                 15,
                 WHITE,
@@ -232,432 +313,432 @@ class PaletteWindow:
             Button(
                 int(self.rect_x_y[0]),
                 int(self.rect_x_y[1]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR1",
             ),
             Button(
                 int(self.rect_x_y[2]),
                 int(self.rect_x_y[3]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG1",
             ),
             Button(
                 int(self.rect_x_y[4]),
                 int(self.rect_x_y[5]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB1",
             ),
             Button(
                 int(self.rect_x_y[6]),
                 int(self.rect_x_y[7]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR2",
             ),
             Button(
                 int(self.rect_x_y[8]),
                 int(self.rect_x_y[9]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG2",
             ),
             Button(
                 int(self.rect_x_y[10]),
                 int(self.rect_x_y[11]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB2",
             ),
             Button(
                 int(self.rect_x_y[12]),
                 int(self.rect_x_y[13]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR3",
             ),
             Button(
                 int(self.rect_x_y[14]),
                 int(self.rect_x_y[15]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG3",
             ),
             Button(
                 int(self.rect_x_y[16]),
                 int(self.rect_x_y[17]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB3",
             ),
             Button(
                 int(self.rect_x_y[18]),
                 int(self.rect_x_y[19]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR4",
             ),
             Button(
                 int(self.rect_x_y[20]),
                 int(self.rect_x_y[21]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG4",
             ),
             Button(
                 int(self.rect_x_y[22]),
                 int(self.rect_x_y[23]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB4",
             ),
             Button(
                 int(self.rect_x_y[24]),
                 int(self.rect_x_y[25]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR5",
             ),
             Button(
                 int(self.rect_x_y[26]),
                 int(self.rect_x_y[27]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG5",
             ),
             Button(
                 int(self.rect_x_y[28]),
                 int(self.rect_x_y[29]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB5",
             ),
             Button(
                 int(self.rect_x_y[30]),
                 int(self.rect_x_y[31]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR6",
             ),
             Button(
                 int(self.rect_x_y[32]),
                 int(self.rect_x_y[33]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG6",
             ),
             Button(
                 int(self.rect_x_y[34]),
                 int(self.rect_x_y[35]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB6",
             ),
             Button(
                 int(self.rect_x_y[36]),
                 int(self.rect_x_y[37]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR7",
             ),
             Button(
                 int(self.rect_x_y[38]),
                 int(self.rect_x_y[39]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG7",
             ),
             Button(
                 int(self.rect_x_y[40]),
                 int(self.rect_x_y[41]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB7",
             ),
             Button(
                 int(self.rect_x_y[42]),
                 int(self.rect_x_y[43]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR8",
             ),
             Button(
                 int(self.rect_x_y[44]),
                 int(self.rect_x_y[45]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG8",
             ),
             Button(
                 int(self.rect_x_y[46]),
                 int(self.rect_x_y[47]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB8",
             ),
             Button(
                 int(self.rect_x_y[48]),
                 int(self.rect_x_y[49]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR9",
             ),
             Button(
                 int(self.rect_x_y[50]),
                 int(self.rect_x_y[51]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG9",
             ),
             Button(
                 int(self.rect_x_y[52]),
                 int(self.rect_x_y[53]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB9",
             ),
             Button(
                 int(self.rect_x_y[54]),
                 int(self.rect_x_y[55]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR10",
             ),
             Button(
                 int(self.rect_x_y[56]),
                 int(self.rect_x_y[57]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG10",
             ),
             Button(
                 int(self.rect_x_y[58]),
                 int(self.rect_x_y[59]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB10",
             ),
             Button(
                 int(self.rect_x_y[60]),
                 int(self.rect_x_y[61]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR11",
             ),
             Button(
                 int(self.rect_x_y[62]),
                 int(self.rect_x_y[63]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG11",
             ),
             Button(
                 int(self.rect_x_y[64]),
                 int(self.rect_x_y[65]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB11",
             ),
             Button(
                 int(self.rect_x_y[66]),
                 int(self.rect_x_y[67]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR12",
             ),
             Button(
                 int(self.rect_x_y[68]),
                 int(self.rect_x_y[69]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG12",
             ),
             Button(
                 int(self.rect_x_y[70]),
                 int(self.rect_x_y[71]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB12",
             ),
             Button(
                 int(self.rect_x_y[72]),
                 int(self.rect_x_y[73]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR13",
             ),
             Button(
                 int(self.rect_x_y[74]),
                 int(self.rect_x_y[75]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG13",
             ),
             Button(
                 int(self.rect_x_y[76]),
                 int(self.rect_x_y[77]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB13",
             ),
             Button(
                 int(self.rect_x_y[78]),
                 int(self.rect_x_y[79]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR14",
             ),
             Button(
                 int(self.rect_x_y[80]),
                 int(self.rect_x_y[81]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG14",
             ),
             Button(
                 int(self.rect_x_y[82]),
                 int(self.rect_x_y[83]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB14",
             ),
             Button(
                 int(self.rect_x_y[84]),
                 int(self.rect_x_y[85]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR15",
             ),
             Button(
                 int(self.rect_x_y[86]),
                 int(self.rect_x_y[87]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG15",
             ),
             Button(
                 int(self.rect_x_y[88]),
                 int(self.rect_x_y[89]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB15",
             ),
             Button(
                 int(self.rect_x_y[90]),
                 int(self.rect_x_y[91]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR16",
             ),
             Button(
                 int(self.rect_x_y[92]),
                 int(self.rect_x_y[93]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG16",
             ),
             Button(
                 int(self.rect_x_y[94]),
                 int(self.rect_x_y[95]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB16",
             ),
             Button(
                 int(self.rect_x_y[96]),
                 int(self.rect_x_y[97]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR17",
             ),
             Button(
                 int(self.rect_x_y[98]),
                 int(self.rect_x_y[99]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG17",
             ),
             Button(
                 int(self.rect_x_y[100]),
                 int(self.rect_x_y[101]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB17",
             ),
             Button(
                 int(self.rect_x_y[102]),
                 int(self.rect_x_y[103]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR18",
             ),
             Button(
                 int(self.rect_x_y[104]),
                 int(self.rect_x_y[105]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG18",
             ),
             Button(
                 int(self.rect_x_y[106]),
                 int(self.rect_x_y[107]),
-                40,
-                15,
+                self.RGB_BUTTON_WIDTH,
+                self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB18",
             ),
@@ -670,8 +751,8 @@ class PaletteWindow:
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
-                self.COLOR_WINDOW_SIZE + 50,
-                self.COLOR_WINDOW_SIZE + 150,
+                self.COLOR_WINDOW_WIDTH_SIZE,
+                self.COLOR_WINDOW_HEIGHT_SIZE,
             ),
             width=0,
         )
@@ -681,11 +762,22 @@ class PaletteWindow:
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
-                self.COLOR_WINDOW_SIZE + 50,
-                self.COLOR_WINDOW_SIZE + 150,
+                self.COLOR_WINDOW_WIDTH_SIZE,
+                self.COLOR_WINDOW_HEIGHT_SIZE,
             ),
             width=2,
         )
+        for i in range(18):
+            base_font = get_font(15)
+            text = "RGB: "
+            text_surface = base_font.render(text, True, (0, 0, 0))
+            win.blit(
+                text_surface,
+                (
+                    self.seperation + 20,
+                    self.COLOR_WINDOW_HEIGHT + 20 * (i + 4) + i * self.ButtonOffset,
+                ),
+            )
 
     def deletePalette(self, button):
         self.palette_window_buttons[self.getListIndex("Error Message")].text = ""
@@ -771,7 +863,7 @@ class PaletteWindow:
                 self.palette_window_buttons.append(
                     Button(
                         self.COLOR_WINDOW_WIDTH + 170,
-                        self.COLOR_WINDOW_HEIGHT + self.j + 30,
+                        self.COLOR_WINDOW_HEIGHT + self.j,
                         25,
                         25,
                         color=WHITE,
@@ -814,42 +906,17 @@ class PaletteWindow:
 
     def draw_palette_window_buttons(self, win, check):
         if check == False:
-            line_color = (0, 0, 0)
+            line_color = SILVER
             pygame.draw.line(
                 win,
                 line_color,
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 120,
-                    self.COLOR_WINDOW_HEIGHT + 10 * 1,
+                    self.seperation,
+                    self.COLOR_WINDOW_HEIGHT,
                 ),
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 120,
-                    self.COLOR_WINDOW_HEIGHT * 3 + 180 + 150,
-                ),
-            )
-            base_font = get_font(15)
-            text = "YOUR PALETTES"
-            text_surface = base_font.render(text, True, (0, 0, 0))
-            win.blit(
-                text_surface,
-                (
-                    self.COLOR_WINDOW_WIDTH + (self.COLOR_WINDOW_HEIGHT / 2) - 15 + 20,
-                    self.COLOR_WINDOW_HEIGHT + 10 * 1,
-                ),
-            )
-
-            base_font = get_font(15)
-            text = "CREATE NEW PALETTE"
-            text_surface = base_font.render(text, True, (0, 0, 0))
-            win.blit(
-                text_surface,
-                (
-                    self.COLOR_WINDOW_WIDTH
-                    + 50
-                    + self.COLOR_WINDOW_HEIGHT / 2
-                    + 145
-                    + 10,
-                    self.COLOR_WINDOW_HEIGHT + 10 * 1,
+                    self.seperation,
+                    self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE,
                 ),
             )
 
@@ -859,8 +926,8 @@ class PaletteWindow:
             win.blit(
                 text_surface,
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
-                    self.COLOR_WINDOW_HEIGHT + 20 * 2,
+                    self.seperation + 15,
+                    self.COLOR_WINDOW_HEIGHT + 55,
                 ),
             )
 
@@ -870,25 +937,10 @@ class PaletteWindow:
             win.blit(
                 text_surface,
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
-                    self.COLOR_WINDOW_HEIGHT + 20 * 2 + 400,
+                    self.seperation + 20,
+                    self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE - 30,
                 ),
             )
-
-            for i in range(18):
-                base_font = get_font(15)
-                text = "RGB: "
-                text_surface = base_font.render(text, True, (0, 0, 0))
-                win.blit(
-                    text_surface,
-                    (
-                        self.COLOR_WINDOW_WIDTH
-                        + 50
-                        + self.COLOR_WINDOW_HEIGHT / 2
-                        + 130,
-                        self.COLOR_WINDOW_HEIGHT + 20 * (i + 3),
-                    ),
-                )
 
             for button in self.palette_window_buttons:
                 button.draw(win)
@@ -1302,3 +1354,19 @@ class PaletteWindow:
                 self.b18 = int(self.palette_window_buttons[b18Ind].text)
             else:
                 self.b18 = 0
+
+
+"""for i in range(18):
+                base_font = get_font(15)
+                text = "RGB: "
+                text_surface = base_font.render(text, True, (0, 0, 0))
+                win.blit(
+                    text_surface,
+                    (
+                        self.COLOR_WINDOW_WIDTH
+                        + 50
+                        + self.COLOR_WINDOW_HEIGHT / 2
+                        + 130,
+                        self.COLOR_WINDOW_HEIGHT + 20 * (i + 3),
+                    ),
+                )"""
