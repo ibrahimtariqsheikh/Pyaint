@@ -10,7 +10,6 @@ class PaletteWindow:
         self.isAppend= True
         self.AllPal= AllPalettes()
         self.isPaletteWindow = False
-        self.isRGBMode = True
         self.r1 = 0
         self.g1 = 0
         self.b1 = 0
@@ -618,6 +617,8 @@ class PaletteWindow:
 
     def palAppend(self, palette, name):
         if(self.count<8):
+            for i in palette.palette:
+                print(i)
             self.count+=1
             if(self.isAppend==True):
                 self.AllPal.store(palette)
@@ -627,7 +628,7 @@ class PaletteWindow:
                 self.j+=10
             self.palette_window_buttons.append(
                 Button(
-                self.COLOR_WINDOW_WIDTH +10,
+                self.COLOR_WINDOW_WIDTH +10+5,
                 self.COLOR_WINDOW_HEIGHT + self.j,
                 40,
                 30,
@@ -681,13 +682,13 @@ class PaletteWindow:
             base_font= get_font(15)
             text= "YOUR PALETTES"
             text_surface= base_font.render(text, True, (0 , 0, 0))
-            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH + (self.COLOR_WINDOW_HEIGHT / 2) - 15,
+            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH + (self.COLOR_WINDOW_HEIGHT / 2) - 15+20,
             self.COLOR_WINDOW_HEIGHT+10 * 1))
 
             base_font= get_font(15)
             text= "CREATE NEW PALETTE"
             text_surface= base_font.render(text, True, (0 , 0, 0))
-            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 145,
+            win.blit(text_surface, (self.COLOR_WINDOW_WIDTH+50 + self.COLOR_WINDOW_HEIGHT / 2 + 145+10,
             self.COLOR_WINDOW_HEIGHT+10 * 1))
 
             base_font= get_font(15)
@@ -764,8 +765,6 @@ class PaletteWindow:
             pal.palette[16]=RGB17
             pal.palette[17]=RGB18
 
-
-            print(len(self.AllPal.palettes))
             self.setPaletteName()
             pal.Name= self.name
             if(self.AllPal.checkName(self.name)==False):

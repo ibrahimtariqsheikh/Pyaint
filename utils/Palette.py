@@ -19,6 +19,4 @@ class Palette:
         
     def getName(self):
         return self.Name
-        
-    #def convertHSVtoRGB(colorHSV):
 

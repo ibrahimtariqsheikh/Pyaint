@@ -1,5 +1,6 @@
 from .settings import *
 from .button import *
+from .theme import *
 
 
 class ColorWindow(object):
@@ -15,6 +16,7 @@ class ColorWindow(object):
         self.COLOR_WINDOW_HEIGHT_SIZE = 570
         self.COLOR_WINDOW_WIDTH = WIDTH / 2 - self.COLOR_WINDOW_WIDTH_SIZE / 2
         self.COLOR_WINDOW_HEIGHT = WIDTH / 2 - self.COLOR_WINDOW_HEIGHT_SIZE / 2
+        self.theme = Theme()
 
         self.color_mixer_rect = pygame.Rect(
             self.COLOR_WINDOW_WIDTH + 20, self.COLOR_WINDOW_HEIGHT + 30, 225, 200
@@ -54,21 +56,21 @@ class ColorWindow(object):
             ),
             Button(
                 self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 220,
-                33 * self.COLOR_WINDOW_HEIGHT+20,
+                33 * self.COLOR_WINDOW_HEIGHT + 20,
                 45,
                 40,
                 WHITE,
                 name="Change Palette",
                 text="Palette",
                 text_color=BLACK,
-                shape="rectangleWithBorderRadius"
-            )
+                shape="rectangleWithBorderRadius",
+            ),
         ]
 
     def draw_color_window(self, win):
         pygame.draw.rect(
             win,
-            (255, 255, 255),
+            self.theme.BG_COLOR,
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
@@ -79,7 +81,7 @@ class ColorWindow(object):
         )
         pygame.draw.rect(
             win,
-            (0, 0, 0),
+            self.theme.BORDER_COLOR,
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,

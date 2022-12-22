@@ -17,6 +17,7 @@ class Button:
         name=None,
         selected=False,
         border_color=BLACK,
+        border_width=0,
     ):
         self.x = x
         self.y = y
@@ -30,6 +31,7 @@ class Button:
         self.name = name
         self.selected = selected
         self.border_color = border_color
+        self.border_width = border_width
 
     def draw(self, win):
         # Draws button with an image
@@ -52,7 +54,10 @@ class Button:
 
         elif self.shape == "ellipse":
             pygame.draw.ellipse(
-                win, self.color, (self.x, self.y, self.width, self.height)
+                win,
+                self.color,
+                (self.x, self.y, self.width, self.height),
+                self.border_width,
             )  # fill
             # pygame.draw.ellipse(win, BLACK, (self.x, self.y, self.width, self.height), 2) #border
 
@@ -67,6 +72,8 @@ class Button:
         if self.text:
             if self.name == "AddToCustomColors" or self.name == "SwitchColorMode":
                 button_font = get_font(int(self.height / 2) - 6)
+            elif self.name == "PaletteName":
+                button_font = get_font(int(self.width / 4) - 6)
             else:
                 button_font = get_font(int(self.width / 2) - 6)
             text_surface = button_font.render(self.text, 1, self.text_color)
