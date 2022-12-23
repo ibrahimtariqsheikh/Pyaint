@@ -15,6 +15,20 @@ colorWindow.paletteWindow = palWindow
 Change = False
 
 
+def adjust_theme_grid(rows, columns):
+
+    if theme.isLightMode:
+        for i in range(rows):
+            for j in range(columns):  # use _ when variable is not required
+                if grid[i][j] == (190, 190, 190):
+                    grid[i][j] = WHITE
+    else:
+        for i in range(rows):
+            for j in range(columns):  # use _ when variable is not required
+                if grid[i][j] == WHITE:
+                    grid[i][j] = (190, 190, 190)
+
+
 def init_grid(rows, columns, color):
     grid = []
 
@@ -34,14 +48,29 @@ def draw_grid(win, grid):
 
     if DRAW_GRID_LINES:
         for i in range(ROWS + 1):
-            pygame.draw.line(win, SILVER, (0, i * PIXEL_SIZE), (WIDTH, i * PIXEL_SIZE))
+            if theme.isLightMode:
+                pygame.draw.line(
+                    win, SILVER, (0, i * PIXEL_SIZE), (WIDTH, i * PIXEL_SIZE)
+                )
+            else:
+                pygame.draw.line(
+                    win, WHITE, (0, i * PIXEL_SIZE), (WIDTH, i * PIXEL_SIZE)
+                )
         for i in range(COLS + 1):
-            pygame.draw.line(
-                win,
-                SILVER,
-                (i * PIXEL_SIZE, 0),
-                (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
-            )
+            if theme.isLightMode:
+                pygame.draw.line(
+                    win,
+                    SILVER,
+                    (i * PIXEL_SIZE, 0),
+                    (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
+                )
+            else:
+                pygame.draw.line(
+                    win,
+                    WHITE,
+                    (i * PIXEL_SIZE, 0),
+                    (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
+                )
 
 
 def draw_mouse_position_text(win):
@@ -782,7 +811,7 @@ while run:
                     if not button.clicked(pos):
                         continue
                     if button.text == "Clear":
-                        grid = init_grid(ROWS, COLS, WHITE)
+                        grid = init_grid(ROWS, COLS, theme.GRID_COLOR)
                         drawing_color = BLACK
                         draw_button.color = drawing_color
                         STATE = "COLOR"
@@ -809,6 +838,7 @@ while run:
                             colorWindow.custom_color_count,
                             palWindow.palette_window_buttons,
                         )
+                        adjust_theme_grid(ROWS, COLS)
 
                         break
 

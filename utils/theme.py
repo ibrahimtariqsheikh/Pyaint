@@ -13,8 +13,9 @@ class Theme(object):
         self.BG_COLOR = WHITE
         self.BORDER_COLOR = BLACK
         self.BG_TEXTCOLOR = BLACK
-        self.DARK_THEME_COLOR = (15, 15, 15)
+        self.DARK_THEME_COLOR = (20, 20, 20)
         self.DARK_THEME_TEXT_BACKGROUND_COLOR = (81, 81, 81)
+        self.GRID_COLOR = WHITE
 
     def toggle(
         self,
@@ -27,7 +28,9 @@ class Theme(object):
     ):
         if self.isLightMode:
             self.BG_COLOR = self.DARK_THEME_COLOR
+            self.BORDER_COLOR = WHITE
             self.BG_TEXTCOLOR = WHITE
+            self.GRID_COLOR = WHITE
             count = 0
             for button in buttons:
                 button.border_color = WHITE
@@ -68,7 +71,9 @@ class Theme(object):
 
         else:
             self.BG_COLOR = WHITE
+            self.BORDER_COLOR = BLACK
             self.BG_TEXTCOLOR = BLACK
+            self.GRID_COLOR = (190, 190, 190)
             count = 0
             for button in buttons:
                 button.border_color = BLACK
