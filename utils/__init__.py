@@ -2,6 +2,7 @@ from .settings import *
 from .button import *
 from .colorWindow import *
 from .colorMode import *
+from .colorMixer import *
 from .colorPicker import *
 from .theme import *
 from .paletteWindow import *

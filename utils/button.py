@@ -104,9 +104,3 @@ class Button:
             return False
 
         return True
-
-
-"""if self.name == "AddToCustomColors" or self.name == "SwitchColorMode" or self.name=="Change Palette":
-    button_font = get_font(int(self.height / 2) - 6)
-elif self.name == "PaletteName":
-    button_font = get_font(int(self.width / 4) - 6)"""

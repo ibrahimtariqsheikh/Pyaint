@@ -16,7 +16,15 @@ class Theme(object):
         self.DARK_THEME_COLOR = (15, 15, 15)
         self.DARK_THEME_TEXT_BACKGROUND_COLOR = (81, 81, 81)
 
-    def toggle(self, buttons, colorModeButtons, colorWindowButtons, custom_color_count, paletteWindowButtons):
+    def toggle(
+        self,
+        buttons,
+        colorModeButtons,
+        colorMixerButtons,
+        colorWindowButtons,
+        custom_color_count,
+        paletteWindowButtons,
+    ):
         if self.isLightMode:
             self.BG_COLOR = self.DARK_THEME_COLOR
             self.BG_TEXTCOLOR = WHITE
@@ -31,6 +39,11 @@ class Theme(object):
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
                     button.text_color = WHITE
             for button in colorModeButtons:
+                button.border_color = WHITE
+                if button.text:
+                    button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
+                    button.text_color = WHITE
+            for button in colorMixerButtons:
                 button.border_color = WHITE
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
@@ -62,6 +75,14 @@ class Theme(object):
                     button.color = WHITE
                     button.text_color = BLACK
             for button in colorModeButtons:
+                if button.color == BLACK:
+                    button.border_color = GRAY
+                else:
+                    button.border_color = BLACK
+                if button.text:
+                    button.color = WHITE
+                    button.text_color = BLACK
+            for button in colorMixerButtons:
                 if button.color == BLACK:
                     button.border_color = GRAY
                 else:

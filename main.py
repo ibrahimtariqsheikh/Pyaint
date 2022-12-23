@@ -4,6 +4,7 @@ WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
 colorPicker = ColorPicker()
+colorMixer = ColorMixer()
 theme = Theme()
 palWindow = PaletteWindow()
 colorWindow.paletteWindow = palWindow
@@ -160,6 +161,57 @@ def draw_mouse_position_text(win):
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
+                for button in colorMixer.color_mixer_buttons:
+                    if not button.hover(pos):
+                        continue
+                    if button.name == "ColorMixerBoxOneInputOne":
+                        text_surface = pos_font.render(
+                            "Enter Color One Red Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorMixerBoxOneInputTwo":
+                        text_surface = pos_font.render(
+                            "Enter Color One Green Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorMixerBoxOneInputThree":
+                        text_surface = pos_font.render(
+                            "Enter Color One Blue Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorMixerBoxTwoInputOne":
+                        text_surface = pos_font.render(
+                            "Enter Color Two Red Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorMixerBoxTwoInputTwo":
+                        text_surface = pos_font.render(
+                            "Enter Color Two Green Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorMixerBoxTwoInputThree":
+                        text_surface = pos_font.render(
+                            "Enter Color Two Blue Value", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "DisplayColorInColorMixer":
+                        text_surface = pos_font.render(
+                            "Color Mode Display", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "AddToCustomColors":
+                        text_surface = pos_font.render(
+                            "Add To Custom Colors", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
     except IndexError:
         for button in buttons:
             if not button.hover(pos):
@@ -247,6 +299,7 @@ def draw(win, grid, buttons):
         colorWindow.draw_color_window(win)
         colorWindow.draw_color_window_buttons(win)
         colorMode.draw_color_mode_buttons(win)
+        colorMixer.draw_color_mixer_buttons(win)
     if palWindow.isPaletteWindow:
         palWindow.draw_palette_window(win)
         palWindow.draw_palette_window_buttons(win, False)
@@ -641,6 +694,7 @@ while run:
                     colorWindow.isColorWindow = False
                     break
             colorMode.handleColorModeEvents(event)
+            colorMixer.handleColorMixerEvents(event)
 
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
@@ -711,6 +765,15 @@ while run:
                             break
                         button.selected = True
 
+                    for button in colorMixer.color_mixer_buttons:
+                        if not button.clicked(pos):
+                            button.selected = False
+                            continue
+                        if button.name == "AddToCustomColors":
+                            colorMixer.addToCustomColors(buttons)
+                            break
+                        button.selected = True
+
             except IndexError:
                 for button in buttons:
                     if not button.clicked(pos):
@@ -738,6 +801,7 @@ while run:
                         theme.toggle(
                             buttons,
                             colorMode.color_mode_buttons,
+                            colorMixer.color_mixer_buttons,
                             colorWindow.color_window_buttons,
                             colorWindow.custom_color_count,
                             palWindow.palette_window_buttons,
