@@ -57,7 +57,31 @@ def draw_mouse_position_text(win):
                         continue
                     if button.name == "ClosePaletteWindow":
                         text_surface = pos_font.render(
-                            "Close Window", 1, theme.BG_TEXTCOLOR
+                            "Close Palette Window", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name.startswith("Palbutton"):
+                        text_surface = pos_font.render(
+                            button.text, 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "SavePalette":
+                        text_surface = pos_font.render(
+                            "Save Palette", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "PaletteName":
+                        text_surface = pos_font.render(
+                            "Enter Palette name", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name.startswith("Delete"):
+                        text_surface = pos_font.render(
+                            "Delete Palette", 1, theme.BG_TEXTCOLOR
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
@@ -68,6 +92,12 @@ def draw_mouse_position_text(win):
                     if button.name == "CloseColorWindow":
                         text_surface = pos_font.render(
                             "Close Window", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "Change Palette":
+                        text_surface = pos_font.render(
+                            "Palette Window", 1, theme.BG_TEXTCOLOR
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
@@ -604,11 +634,12 @@ while run:
         if palWindow.isPaletteWindow:
             for button in palWindow.palette_window_buttons:
                 name = button.name
-                if (button is not None) and (
-                    button.name.startswith("Color") or button.name == "PaletteName"
-                ):
+                if button.name.startswith("Color") or button.name == "PaletteName":
                     if button.selected == True:
-                        button.border_color = BLACK
+                        if theme.isLightMode:
+                            button.border_color = BLACK
+                        else:
+                            button.border_color = WHITE
                     else:
                         button.border_color = SILVER
             if event.type == pygame.KEYDOWN:
@@ -756,11 +787,9 @@ while run:
                             break
                         if button.name.startswith("Delete"):
                             palWindow.deletePalette(button)
-                            colorWindow.draw_color_window_buttons
                             break
                         if button.name.startswith("Palbutton") or button.name == "Standard":
                             palWindow.selectPalette(button)
-                            colorWindow.draw_color_window_buttons
                             break
                         button.selected = True
 
@@ -816,6 +845,7 @@ while run:
                             colorMode.color_mode_buttons,
                             colorWindow.color_window_buttons,
                             colorWindow.custom_color_count,
+                            palWindow.palette_window_buttons
                         )
 
                         break
@@ -860,7 +890,8 @@ while run:
                                         )
                                     )
                         break
-
+                    
+                        
                     if button.name == "Brush":
                         STATE = "COLOR"
                         break

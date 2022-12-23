@@ -100,7 +100,7 @@ class ColorWindow(object):
         ]
 
     def append_palette(self):
-        self.color_window_palette = self.paletteWindow.currentPalette
+        self.color_window_palette = self.paletteWindow.currentPalette*1
         self.j = 450
         for i in range(9):
             self.color_window_buttons.append(
@@ -129,9 +129,7 @@ class ColorWindow(object):
                     name="Pal",
                 )
             )
-        self.grayscalePal.setUp(
-            self.paletteWindow.AllPal.palettes[self.color_window_palette]
-        )
+        self.grayscalePal.palette.palette= list(self.paletteWindow.AllPal.palettes[self.color_window_palette].palette)
         self.j = 450
         for i in range(9):
             y = list(self.grayscalePal.palette.palette[i])
@@ -224,14 +222,13 @@ class ColorWindow(object):
 
     def draw_color_window_buttons(self, win):
         if self.color_window_palette != self.paletteWindow.currentPalette:
-            self.color_window_palette = self.paletteWindow.currentPalette
-            i = 0
+            self.color_window_palette = self.paletteWindow.currentPalette*1
             y = 0
+            self.grayscalePal.palette.palette = list(self.paletteWindow.AllPal.palettes[self.paletteWindow.currentPalette].palette)
+            i = 0
             for button in self.color_window_buttons:
                 if button.name.startswith("Pal"):
-                    button.color = self.paletteWindow.AllPal.palettes[
-                        self.color_window_palette
-                    ].palette[i]
+                    button.color = self.paletteWindow.AllPal.palettes[self.color_window_palette].palette[i]
                     i = i + 1
                 if button.name.startswith("GS"):
                     lis = list(self.grayscalePal.palette.palette[y])

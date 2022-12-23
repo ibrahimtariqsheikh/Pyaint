@@ -2,10 +2,12 @@ from .settings import *
 from .button import *
 from .AllPalettes import *
 from .Palette import *
+from .theme import *
 
 
 class PaletteWindow:
     def __init__(self):
+        self.theme= Theme()
         self.currentPalette = 0
         self.count = 0
         self.j = 0
@@ -666,7 +668,7 @@ class PaletteWindow:
     def draw_palette_window(self, win):
         pygame.draw.rect(
             win,
-            (255, 255, 255),
+            self.theme.BG_COLOR,
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
@@ -677,7 +679,7 @@ class PaletteWindow:
         )
         pygame.draw.rect(
             win,
-            (0, 0, 0),
+            self.theme.BORDER_COLOR,
             (
                 self.COLOR_WINDOW_WIDTH,
                 self.COLOR_WINDOW_HEIGHT,
@@ -753,7 +755,6 @@ class PaletteWindow:
                 self.j += 30
             else:
                 self.j += 10
-
             self.palette_window_buttons.append(
                 Button(
                     self.COLOR_WINDOW_WIDTH + 10 + 5,
@@ -808,7 +809,7 @@ class PaletteWindow:
     def selectPalette(self, button):
         chng = self.AllPal.getPalIndex(button.text)
         if self.currentPalette != int(chng):
-            self.currentPalette = chng
+            self.currentPalette = chng*1
             tickInd = self.getListIndex("TickPalette")
             self.palette_window_buttons[tickInd].y = int(button.y + 5)
 
@@ -834,7 +835,7 @@ class PaletteWindow:
                 text_surface,
                 (
                     self.COLOR_WINDOW_WIDTH + (self.COLOR_WINDOW_HEIGHT / 2) - 15 + 20,
-                    self.COLOR_WINDOW_HEIGHT + 10 * 1,
+                    self.COLOR_WINDOW_HEIGHT + 10,
                 ),
             )
 
@@ -845,11 +846,9 @@ class PaletteWindow:
                 text_surface,
                 (
                     self.COLOR_WINDOW_WIDTH
-                    + 50
                     + self.COLOR_WINDOW_HEIGHT / 2
-                    + 145
-                    + 10,
-                    self.COLOR_WINDOW_HEIGHT + 10 * 1,
+                    + 205,
+                    self.COLOR_WINDOW_HEIGHT + 10,
                 ),
             )
 
@@ -859,7 +858,7 @@ class PaletteWindow:
             win.blit(
                 text_surface,
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
+                    self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 180,
                     self.COLOR_WINDOW_HEIGHT + 20 * 2,
                 ),
             )
@@ -870,7 +869,7 @@ class PaletteWindow:
             win.blit(
                 text_surface,
                 (
-                    self.COLOR_WINDOW_WIDTH + 50 + self.COLOR_WINDOW_HEIGHT / 2 + 130,
+                    self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_HEIGHT / 2 + 180,
                     self.COLOR_WINDOW_HEIGHT + 20 * 2 + 400,
                 ),
             )
@@ -883,9 +882,8 @@ class PaletteWindow:
                     text_surface,
                     (
                         self.COLOR_WINDOW_WIDTH
-                        + 50
                         + self.COLOR_WINDOW_HEIGHT / 2
-                        + 130,
+                        + 180,
                         self.COLOR_WINDOW_HEIGHT + 20 * (i + 3),
                     ),
                 )
@@ -944,11 +942,13 @@ class PaletteWindow:
             pal.palette[16] = RGB17
             pal.palette[17] = RGB18
 
+            while(len(pal.palette)!=18):
+                pal.palette.pop()
             self.setPaletteName()
             pal.Name = self.name
             if self.AllPal.checkName(self.name) == False:
-                self.palAppend(pal, self.name)
                 self.AllPal.store(pal)
+                self.palAppend(pal, self.name)
                 self.palette_window_buttons[
                     self.getListIndex("Error Message")
                 ].text = ""

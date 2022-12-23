@@ -1,14 +1,16 @@
 from turtle import pos
 from .settings import *
+from .Palette import *
 
 class AllPalettes:
     def __init__(self):
         self.palettes= []
 
     def store(self, newPalette):
-        if(len(self.palettes)<8): 
-            if(self.checkName(newPalette.Name)==False): 
-                self.palettes.append(newPalette)
+        pal= Palette()
+        pal.palette= list(newPalette.palette)
+        pal.Name= newPalette.Name
+        self.palettes.append(pal)
     
     def getPalIndex(self, name):
         count=0

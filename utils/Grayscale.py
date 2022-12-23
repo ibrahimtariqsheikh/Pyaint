@@ -2,7 +2,7 @@ from .settings import *
 from .button import *
 from .AllPalettes import *
 from .Palette import *
-from copy import deepcopy
+import copy
 
 
 class Grayscale:
@@ -11,5 +11,5 @@ class Grayscale:
     
     def setUp(self, palette):
         for i in range(18):
-            self.palette.palette[i]= palette.palette[i]
+            self.palette.palette[i]= copy.copy(palette.palette[i])
 
