@@ -280,6 +280,7 @@ class PaletteWindow:
                 WHITE,
                 name="PaletteName",
                 font_size=15,
+                text= "[Name]"
             ),
             Button(
                 self.COLOR_WINDOW_WIDTH + self.COLOR_WINDOW_WIDTH_SIZE - 70,
@@ -319,6 +320,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR1",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[2]),
@@ -327,6 +329,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG1",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[4]),
@@ -335,6 +338,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB1",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[6]),
@@ -343,6 +347,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR2",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[8]),
@@ -351,6 +356,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG2",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[10]),
@@ -359,6 +365,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB2",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[12]),
@@ -367,6 +374,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR3",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[14]),
@@ -375,6 +383,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG3",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[16]),
@@ -383,6 +392,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB3",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[18]),
@@ -391,6 +401,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR4",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[20]),
@@ -399,6 +410,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG4",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[22]),
@@ -407,6 +419,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB4",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[24]),
@@ -415,6 +428,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR5",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[26]),
@@ -423,6 +437,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG5",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[28]),
@@ -431,6 +446,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB5",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[30]),
@@ -439,6 +455,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR6",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[32]),
@@ -447,6 +464,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG6",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[34]),
@@ -455,6 +473,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB6",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[36]),
@@ -463,6 +482,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR7",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[38]),
@@ -471,6 +491,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG7",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[40]),
@@ -479,6 +500,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB7",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[42]),
@@ -487,6 +509,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR8",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[44]),
@@ -495,6 +518,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG8",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[46]),
@@ -503,6 +527,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB8",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[48]),
@@ -511,6 +536,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR9",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[50]),
@@ -519,6 +545,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG9",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[52]),
@@ -527,6 +554,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB9",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[54]),
@@ -535,6 +563,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR10",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[56]),
@@ -543,6 +572,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG10",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[58]),
@@ -551,6 +581,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB10",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[60]),
@@ -559,6 +590,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR11",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[62]),
@@ -567,6 +599,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG11",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[64]),
@@ -575,6 +608,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB11",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[66]),
@@ -583,6 +617,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR12",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[68]),
@@ -591,6 +626,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG12",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[70]),
@@ -599,6 +635,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB12",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[72]),
@@ -607,6 +644,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR13",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[74]),
@@ -615,6 +653,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG13",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[76]),
@@ -623,6 +662,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB13",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[78]),
@@ -631,6 +671,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR14",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[80]),
@@ -639,6 +680,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG14",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[82]),
@@ -647,6 +689,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB14",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[84]),
@@ -655,6 +698,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR15",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[86]),
@@ -663,6 +707,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG15",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[88]),
@@ -671,6 +716,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB15",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[90]),
@@ -679,6 +725,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR16",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[92]),
@@ -687,6 +734,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG16",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[94]),
@@ -695,6 +743,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB16",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[96]),
@@ -703,6 +752,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR17",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[98]),
@@ -711,6 +761,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG17",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[100]),
@@ -719,6 +770,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB17",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[102]),
@@ -727,6 +779,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorR18",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[104]),
@@ -735,6 +788,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorG18",
+                text="0"
             ),
             Button(
                 int(self.rect_x_y[106]),
@@ -743,6 +797,7 @@ class PaletteWindow:
                 self.RGB_BUTTON_HEIGHT,
                 WHITE,
                 name="ColorB18",
+                text="0"
             ),
         ]
         self.appendRGBTextButtons()
