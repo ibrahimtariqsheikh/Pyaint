@@ -7,7 +7,7 @@ from .theme import *
 
 class PaletteWindow:
     def __init__(self):
-        self.theme= Theme()
+        self.theme = Theme()
         self.currentPalette = 0
         self.count = 0
         self.j = 0
@@ -745,6 +745,49 @@ class PaletteWindow:
                 name="ColorB18",
             ),
         ]
+        self.appendRGBTextButtons()
+
+    def appendRGBTextButtons(self):
+        for i in range(18):
+            self.palette_window_buttons.append(
+                Button(
+                    self.seperation + 20,
+                    self.COLOR_WINDOW_HEIGHT + 20 * (i + 4) + (i * self.ButtonOffset),
+                    40,
+                    25,
+                    name="RGBButText",
+                    color=WHITE,
+                    shape=None,
+                    text="RGB: ",
+                    font_size=15,
+                )
+            )
+        self.palette_window_buttons.append(
+            Button(
+                self.seperation + 15,
+                self.COLOR_WINDOW_HEIGHT + 55,
+                40,
+                25,
+                name="NameButText",
+                color=WHITE,
+                shape=None,
+                text="Name: ",
+                font_size=15,
+            )
+        )
+        self.palette_window_buttons.append(
+            Button(
+                self.seperation + 20,
+                self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE - 30,
+                40,
+                25,
+                name="ErrorButText",
+                color=WHITE,
+                shape=None,
+                text="Error: ",
+                font_size=15,
+            )
+        )
 
     def draw_palette_window(self, win):
         pygame.draw.rect(
@@ -769,17 +812,6 @@ class PaletteWindow:
             ),
             width=2,
         )
-        for i in range(18):
-            base_font = get_font(15)
-            text = "RGB: "
-            text_surface = base_font.render(text, True, (0, 0, 0))
-            win.blit(
-                text_surface,
-                (
-                    self.seperation + 20,
-                    self.COLOR_WINDOW_HEIGHT + 20 * (i + 4) + i * self.ButtonOffset,
-                ),
-            )
 
     def deletePalette(self, button):
         self.palette_window_buttons[self.getListIndex("Error Message")].text = ""
@@ -901,7 +933,7 @@ class PaletteWindow:
     def selectPalette(self, button):
         chng = self.AllPal.getPalIndex(button.text)
         if self.currentPalette != int(chng):
-            self.currentPalette = chng*1
+            self.currentPalette = chng * 1
             tickInd = self.getListIndex("TickPalette")
             self.palette_window_buttons[tickInd].y = int(button.y + 5)
 
@@ -918,28 +950,6 @@ class PaletteWindow:
                 (
                     self.seperation,
                     self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE,
-                ),
-            )
-
-            base_font = get_font(15)
-            text = "Name:"
-            text_surface = base_font.render(text, True, (0, 0, 0))
-            win.blit(
-                text_surface,
-                (
-                    self.seperation + 15,
-                    self.COLOR_WINDOW_HEIGHT + 55,
-                ),
-            )
-
-            base_font = get_font(15)
-            text = "Error:"
-            text_surface = base_font.render(text, True, (0, 0, 0))
-            win.blit(
-                text_surface,
-                (
-                    self.seperation + 20,
-                    self.COLOR_WINDOW_HEIGHT + self.COLOR_WINDOW_HEIGHT_SIZE - 30,
                 ),
             )
 
@@ -997,7 +1007,7 @@ class PaletteWindow:
             pal.palette[16] = RGB17
             pal.palette[17] = RGB18
 
-            while(len(pal.palette)!=18):
+            while len(pal.palette) != 18:
                 pal.palette.pop()
             self.setPaletteName()
             pal.Name = self.name
@@ -1358,18 +1368,80 @@ class PaletteWindow:
             else:
                 self.b18 = 0
 
+    def setSelectionBorderColor(self):
+        for button in self.palette_window_buttons:
+            if button.name.startswith("Color") or button.name == "PaletteName":
+                if button.selected == True:
+                    if self.theme.isLightMode:
+                        button.border_color = BLACK
+                    else:
+                        button.border_color = WHITE
+                else:
+                    button.border_color = SILVER
 
-"""for i in range(18):
-                base_font = get_font(15)
-                text = "RGB: "
-                text_surface = base_font.render(text, True, (0, 0, 0))
-                win.blit(
-                    text_surface,
-                    (
-                        self.COLOR_WINDOW_WIDTH
-                        + 50
-                        + self.COLOR_WINDOW_HEIGHT / 2
-                        + 130,
-                        self.COLOR_WINDOW_HEIGHT + 20 * (i + 3),
-                    ),
-                )"""
+    def handlePaletteWindowEvents(self, event):
+        self.setSelectionBorderColor()
+        if event.type == pygame.KEYDOWN:
+            for button in self.palette_window_buttons:
+                if (button is not None) and (
+                    button.name.startswith("Color") and button.selected == True
+                ):
+                    if event.key == pygame.K_BACKSPACE:
+                        user_input = button.text
+                        user_input = user_input[:-1]
+                        button.text = user_input
+                    elif (
+                        event.key == pygame.K_0
+                        or event.key == pygame.K_1
+                        or event.key == pygame.K_2
+                        or event.key == pygame.K_3
+                        or event.key == pygame.K_4
+                        or event.key == pygame.K_5
+                        or event.key == pygame.K_6
+                        or event.key == pygame.K_7
+                        or event.key == pygame.K_8
+                        or event.key == pygame.K_9
+                    ) and len(button.text) < 3:
+                        user_input = button.text
+                        user_input += event.unicode
+                        if int(user_input) > 255:
+                            user_input = user_input[:-1]
+                        button.text = user_input
+                    self.setText()
+                elif button.name == "PaletteName":
+                    if event.key == pygame.K_BACKSPACE:
+                        user_input = button.text
+                        user_input = user_input[:-1]
+                        button.text = user_input
+                    elif (
+                        event.key == pygame.K_a
+                        or event.key == pygame.K_b
+                        or event.key == pygame.K_c
+                        or event.key == pygame.K_d
+                        or event.key == pygame.K_e
+                        or event.key == pygame.K_f
+                        or event.key == pygame.K_g
+                        or event.key == pygame.K_h
+                        or event.key == pygame.K_i
+                        or event.key == pygame.K_j
+                        or event.key == pygame.K_k
+                        or event.key == pygame.K_l
+                        or event.key == pygame.K_m
+                        or event.key == pygame.K_n
+                        or event.key == pygame.K_o
+                        or event.key == pygame.K_p
+                        or event.key == pygame.K_q
+                        or event.key == pygame.K_r
+                        or event.key == pygame.K_s
+                        or event.key == pygame.K_t
+                        or event.key == pygame.K_u
+                        or event.key == pygame.K_v
+                        or event.key == pygame.K_w
+                        or event.key == pygame.K_x
+                        or event.key == pygame.K_y
+                        or event.key == pygame.K_z
+                    ) and len(button.text) < 15:
+                        user_input = button.text
+                        user_input += event.unicode
+                        button.text = user_input
+                    self.setPaletteName()

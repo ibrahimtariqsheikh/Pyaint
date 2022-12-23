@@ -378,3 +378,43 @@ class ColorMode(object):
                 return count
             count = count + 1
         return -1
+
+    def handleColorModeEvents(self, event):
+        self.setSelectionBorderColor()
+        if event.type == pygame.KEYDOWN:
+            for button in self.color_mode_buttons:
+                if button.name.startswith("ColorModeInput") and button.selected == True:
+                    if event.key == pygame.K_BACKSPACE:
+                        user_input = button.text
+                        user_input = user_input[:-1]
+                        button.text = user_input
+                    elif (
+                        event.key == pygame.K_0
+                        or event.key == pygame.K_1
+                        or event.key == pygame.K_2
+                        or event.key == pygame.K_3
+                        or event.key == pygame.K_4
+                        or event.key == pygame.K_5
+                        or event.key == pygame.K_6
+                        or event.key == pygame.K_7
+                        or event.key == pygame.K_8
+                        or event.key == pygame.K_9
+                    ) and len(button.text) < 3:
+                        user_input = button.text
+                        user_input += event.unicode
+                        if self.isRGBMode:
+                            if int(user_input) > 255:
+                                user_input = user_input[:-1]
+                        else:
+                            if button.name == "ColorModeInputOne":
+                                if int(user_input) > 360:
+                                    user_input = user_input[:-1]
+                            if (
+                                button.name == "ColorModeInputTwo"
+                                or button.name == "ColorModeInputThree"
+                            ):
+                                if int(user_input) > 100:
+                                    user_input = user_input[:-1]
+                        button.text = user_input
+
+                self.setColorModeInputValues()

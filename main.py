@@ -632,131 +632,15 @@ while run:
             run = False
 
         if palWindow.isPaletteWindow:
-            for button in palWindow.palette_window_buttons:
-                name = button.name
-                if button.name.startswith("Color") or button.name == "PaletteName":
-                    if button.selected == True:
-                        if theme.isLightMode:
-                            button.border_color = BLACK
-                        else:
-                            button.border_color = WHITE
-                    else:
-                        button.border_color = SILVER
-            if event.type == pygame.KEYDOWN:
-                for palette_window_button in palWindow.palette_window_buttons:
-                    if (palette_window_button is not None) and (
-                        palette_window_button.name.startswith("Color")
-                        and palette_window_button.selected == True
-                    ):
-                        if event.key == pygame.K_BACKSPACE:
-                            user_input = palette_window_button.text
-                            user_input = user_input[:-1]
-                            palette_window_button.text = user_input
-                        elif (
-                            event.key == pygame.K_0
-                            or event.key == pygame.K_1
-                            or event.key == pygame.K_2
-                            or event.key == pygame.K_3
-                            or event.key == pygame.K_4
-                            or event.key == pygame.K_5
-                            or event.key == pygame.K_6
-                            or event.key == pygame.K_7
-                            or event.key == pygame.K_8
-                            or event.key == pygame.K_9
-                        ) and len(palette_window_button.text) < 3:
-                            user_input = palette_window_button.text
-                            user_input += event.unicode
-                            if int(user_input) > 255:
-                                user_input = user_input[:-1]
-                            palette_window_button.text = user_input
-                        palWindow.setText()
-                    elif palette_window_button.name == "PaletteName":
-                        if event.key == pygame.K_BACKSPACE:
-                            user_input = palette_window_button.text
-                            user_input = user_input[:-1]
-                            palette_window_button.text = user_input
-                        elif (
-                            event.key == pygame.K_a
-                            or event.key == pygame.K_b
-                            or event.key == pygame.K_c
-                            or event.key == pygame.K_d
-                            or event.key == pygame.K_e
-                            or event.key == pygame.K_f
-                            or event.key == pygame.K_g
-                            or event.key == pygame.K_h
-                            or event.key == pygame.K_i
-                            or event.key == pygame.K_j
-                            or event.key == pygame.K_k
-                            or event.key == pygame.K_l
-                            or event.key == pygame.K_m
-                            or event.key == pygame.K_n
-                            or event.key == pygame.K_o
-                            or event.key == pygame.K_p
-                            or event.key == pygame.K_q
-                            or event.key == pygame.K_r
-                            or event.key == pygame.K_s
-                            or event.key == pygame.K_t
-                            or event.key == pygame.K_u
-                            or event.key == pygame.K_v
-                            or event.key == pygame.K_w
-                            or event.key == pygame.K_x
-                            or event.key == pygame.K_y
-                            or event.key == pygame.K_z
-                        ) and len(palette_window_button.text) < 15:
-                            user_input = palette_window_button.text
-                            user_input += event.unicode
-                            palette_window_button.text = user_input
-                        palWindow.setPaletteName()
+            palWindow.handlePaletteWindowEvents(event)
 
         if colorWindow.isColorWindow:
-            colorMode.setSelectionBorderColor()
-
             for button in colorWindow.color_window_buttons:
                 if button.name == "Change Palette" and button.selected:
                     palWindow.isPaletteWindow = True
                     colorWindow.isColorWindow = False
                     break
-
-            if event.type == pygame.KEYDOWN:
-                for button in colorMode.color_mode_buttons:
-                    if (
-                        button.name.startswith("ColorModeInput")
-                        and button.selected == True
-                    ):
-                        if event.key == pygame.K_BACKSPACE:
-                            user_input = button.text
-                            user_input = user_input[:-1]
-                            button.text = user_input
-                        elif (
-                            event.key == pygame.K_0
-                            or event.key == pygame.K_1
-                            or event.key == pygame.K_2
-                            or event.key == pygame.K_3
-                            or event.key == pygame.K_4
-                            or event.key == pygame.K_5
-                            or event.key == pygame.K_6
-                            or event.key == pygame.K_7
-                            or event.key == pygame.K_8
-                            or event.key == pygame.K_9
-                        ) and len(button.text) < 3:
-                            user_input = button.text
-                            user_input += event.unicode
-                            if colorMode.isRGBMode:
-                                if int(user_input) > 255:
-                                    user_input = user_input[:-1]
-                            else:
-                                if button.name == "ColorModeInputOne":
-                                    if int(user_input) > 360:
-                                        user_input = user_input[:-1]
-                                if (
-                                    button.name == "ColorModeInputTwo"
-                                    or button.name == "ColorModeInputThree"
-                                ):
-                                    if int(user_input) > 100:
-                                        user_input = user_input[:-1]
-                            button.text = user_input
-
-                    colorMode.setColorModeInputValues()
+            colorMode.handleColorModeEvents(event)
 
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
@@ -805,6 +689,14 @@ while run:
                         if button.name == "CloseColorWindow":
                             colorWindow.toggle()
                             break
+                        if button.name.startswith("Pal"):
+                            drawing_color = button.color
+                            draw_button.color = drawing_color
+                            break
+                        if button.name.startswith("GS"):
+                            drawing_color = button.color
+                            draw_button.color = drawing_color
+                            break
                         button.selected = True
 
                     for button in colorMode.color_mode_buttons:
@@ -848,7 +740,7 @@ while run:
                             colorMode.color_mode_buttons,
                             colorWindow.color_window_buttons,
                             colorWindow.custom_color_count,
-                            palWindow.palette_window_buttons
+                            palWindow.palette_window_buttons,
                         )
 
                         break
@@ -893,8 +785,7 @@ while run:
                                         )
                                     )
                         break
-                    
-                        
+
                     if button.name == "Brush":
                         STATE = "COLOR"
                         break
