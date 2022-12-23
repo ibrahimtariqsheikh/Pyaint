@@ -45,6 +45,8 @@ class Theme(object):
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
                     button.text_color = WHITE
+                if button.name == "TickPalette":
+                    button.image_url = "assets/white-tick.png"
 
         else:
             self.BG_COLOR = WHITE
@@ -77,5 +79,7 @@ class Theme(object):
                 if button.text:
                     button.color = WHITE
                     button.text_color = BLACK
+                if button.name == "TickPalette":
+                    button.image_url = "assets/tick.png"
 
         self.isLightMode = not self.isLightMode

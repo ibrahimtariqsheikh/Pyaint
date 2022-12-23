@@ -885,9 +885,9 @@ class PaletteWindow:
                     self.COLOR_WINDOW_HEIGHT + self.j,
                     40,
                     30,
-                    WHITE,
+                    self.theme.BORDER_COLOR,
                     self.name,
-                    BLACK,
+                    self.theme.BG_TEXTCOLOR,
                     name="Palbutton" + str(self.count),
                     shape="",
                 )
@@ -902,11 +902,13 @@ class PaletteWindow:
                         color=WHITE,
                         name="Delete" + str(self.count),
                         image_url="assets/trash-bin.png",
+                        border_color=self.theme.BORDER_COLOR
                     )
                 )
             self.j += 25
             for i in range(9):
-                self.palette_window_buttons.append(
+                if self.theme.isLightMode:
+                    self.palette_window_buttons.append(
                     Button(
                         self.COLOR_WINDOW_WIDTH + 10 + 16 * i,
                         self.COLOR_WINDOW_HEIGHT + self.j,
@@ -914,20 +916,47 @@ class PaletteWindow:
                         15,
                         palette.palette[i],
                         name="Pal" + str(self.count),
+                        border_color = BLACK
                     )
-                )
-            self.j += 20
-            for i in range(9):
-                self.palette_window_buttons.append(
+                    )
+                else:
+                    self.palette_window_buttons.append(
                     Button(
                         self.COLOR_WINDOW_WIDTH + 10 + 16 * i,
                         self.COLOR_WINDOW_HEIGHT + self.j,
                         15,
                         15,
-                        palette.palette[i + 9],
+                        palette.palette[i],
                         name="Pal" + str(self.count),
+                        border_color = WHITE
                     )
-                )
+                    )
+            self.j += 20
+            for i in range(9):
+                if(self.theme.isLightMode):
+                    self.palette_window_buttons.append(
+                        Button(
+                            self.COLOR_WINDOW_WIDTH + 10 + 16 * i,
+                            self.COLOR_WINDOW_HEIGHT + self.j,
+                            15,
+                            15,
+                            palette.palette[i + 9],
+                            name="Pal" + str(self.count),
+                            border_color = BLACK
+                        )
+                    )
+                else:
+                    self.palette_window_buttons.append(
+                        Button(
+                            self.COLOR_WINDOW_WIDTH + 10 + 16 * i,
+                            self.COLOR_WINDOW_HEIGHT + self.j,
+                            15,
+                            15,
+                            palette.palette[i + 9],
+                            name="Pal" + str(self.count),
+                            border_color=WHITE
+                        )
+                    )
             self.isAppend = False
 
     def selectPalette(self, button):
