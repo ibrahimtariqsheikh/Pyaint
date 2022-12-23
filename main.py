@@ -1,5 +1,9 @@
 from utils import *
 
+pygame_icon = pygame.image.load("assets/pyaint.png")
+pygame.display.set_icon(pygame_icon)
+pygame.display.set_caption("Pyaint")
+
 WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
@@ -8,7 +12,6 @@ colorMixer = ColorMixer()
 theme = Theme()
 palWindow = PaletteWindow()
 colorWindow.paletteWindow = palWindow
-pygame.display.set_caption("Pyaint")
 Change = False
 
 
