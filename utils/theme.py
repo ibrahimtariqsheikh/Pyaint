@@ -60,6 +60,11 @@ class Theme(object):
                     button.text_color = WHITE
                 if button.name == "TickPalette":
                     button.image_url = "assets/white-tick.png"
+                if button.name == "Error Message":
+                    button.text_color = WHITE
+                if button.name == "PaletteName":
+                    button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
+                    button.text_color = WHITE
 
         else:
             self.BG_COLOR = WHITE
@@ -102,5 +107,10 @@ class Theme(object):
                     button.text_color = BLACK
                 if button.name == "TickPalette":
                     button.image_url = "assets/tick.png"
+                if button.name == "Error Message":
+                    button.text_color = BLACK
+                if button.name == "PaletteName":
+                    button.color = WHITE
+                    button.text_color = BLACK
 
         self.isLightMode = not self.isLightMode
