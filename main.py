@@ -772,7 +772,7 @@ while run:
                             draw_button.color = drawing_color
                             break
                         button.selected = True
-
+                        
                     for button in colorMode.color_mode_buttons:
                         if not button.clicked(pos):
                             button.selected = False
@@ -799,7 +799,7 @@ while run:
                             button.selected = False
                             continue
                         if button.name == "AddToCustomColors":
-                            colorGradient.addToCustomColors(buttons)
+                            colorGradient.addToGradientColors()
                             break
                         button.selected = True
 

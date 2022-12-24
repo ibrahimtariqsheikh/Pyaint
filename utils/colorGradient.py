@@ -38,7 +38,7 @@ class ColorGradient(object):
         self.color_gradient_buttons = [
             Button(
                 self.colorWindow.color_gradients_rect.x + 65,
-                self.colorWindow.color_gradients_rect.y + 25,
+                self.colorWindow.color_gradients_rect.y + 35,
                 50,
                 0,
                 WHITE,
@@ -47,7 +47,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 20,
-                self.colorWindow.color_gradients_rect.y + 100,
+                self.colorWindow.color_gradients_rect.y + 121,
                 40,
                 0,
                 WHITE,
@@ -56,7 +56,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 20,
-                self.colorWindow.color_gradients_rect.y + 70,
+                self.colorWindow.color_gradients_rect.y + 82,
                 40,
                 0,
                 WHITE,
@@ -65,7 +65,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70,
-                self.colorWindow.color_gradients_rect.y + 60,
+                self.colorWindow.color_gradients_rect.y + 70,
                 40,
                 25,
                 WHITE,
@@ -74,7 +74,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70 + 40 + 10,
-                self.colorWindow.color_gradients_rect.y + 60,
+                self.colorWindow.color_gradients_rect.y + 70,
                 40,
                 25,
                 WHITE,
@@ -83,7 +83,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70 + 80 + 20,
-                self.colorWindow.color_gradients_rect.y + 60,
+                self.colorWindow.color_gradients_rect.y + 70,
                 40,
                 25,
                 WHITE,
@@ -92,7 +92,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70,
-                self.colorWindow.color_gradients_rect.y + 90,
+                self.colorWindow.color_gradients_rect.y + 110,
                 40,
                 25,
                 WHITE,
@@ -101,7 +101,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70 + 40 + 10,
-                self.colorWindow.color_gradients_rect.y + 90,
+                self.colorWindow.color_gradients_rect.y + 110,
                 40,
                 25,
                 WHITE,
@@ -110,7 +110,7 @@ class ColorGradient(object):
             ),
             Button(
                 self.colorWindow.color_gradients_rect.x + 70 + 80 + 20,
-                self.colorWindow.color_gradients_rect.y + 90,
+                self.colorWindow.color_gradients_rect.y + 110,
                 40,
                 25,
                 WHITE,
@@ -122,7 +122,7 @@ class ColorGradient(object):
                 + self.colorWindow.color_gradients_rect.w / 2,
                 self.colorWindow.color_gradients_rect.y
                 + self.colorWindow.color_gradients_rect.h
-                - 85,
+                - 67,
                 50,
                 40,
                 WHITE,
@@ -134,7 +134,7 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 80,
+                - 125,
                 self.colorWindow.color_gradients_rect.y + 10,
                 60,
                 50,
@@ -146,6 +146,42 @@ class ColorGradient(object):
                 name="DisplayColorInColorGradient",
             ),
         ]
+        for i in range(4):
+            self.color_gradient_buttons.append(
+            Button(
+                self.colorWindow.color_gradients_rect.x
+                + self.colorWindow.color_gradients_rect.w
+                - 162 + 35 * i,
+                self.colorWindow.color_gradients_rect.y + 70,
+                30,
+                30,
+                WHITE,
+                name="gradient"+str(i),
+            ))
+            self.color_gradient_buttons.append(
+            Button(
+                self.colorWindow.color_gradients_rect.x
+                + self.colorWindow.color_gradients_rect.w
+                - 162 + 35 * i,
+                self.colorWindow.color_gradients_rect.y + 70,
+                10,
+                10,
+                WHITE,
+                name="gradientDel"+str(i),
+                image_url="assets/close_color_window.png"
+            ))
+        for i in range(4):
+            self.color_gradient_buttons.append(
+            Button(
+                self.colorWindow.color_gradients_rect.x
+                + self.colorWindow.color_gradients_rect.w
+                - 162 + 35 * i,
+                self.colorWindow.color_gradients_rect.y + 105,
+                30,
+                30,
+                WHITE,
+                name="gradient"+str(i),
+            ))
         self.box_one_input_one_index = self.getListIndex("ColorGradientBoxOneInputOne")
         self.box_one_input_two_index = self.getListIndex("ColorGradientBoxOneInputTwo")
         self.box_one_input_three_index = self.getListIndex(
@@ -246,17 +282,19 @@ class ColorGradient(object):
             )
 
     # adds the color to the custom color buttons
-    def addToCustomColors(self, buttons):
-        for custom_button in buttons:
-            if (
-                custom_button.name
-                == f"custom_colors_{self.colorWindow.custom_color_count}"
-            ):
-                self.colorWindow.custom_color_count = (
-                    self.colorWindow.custom_color_count + 1
-                ) % 9
-                custom_button.color = self.combineColorGradientColors()
-                COLORS.append(custom_button.color)
+    def addToGradientColors(self):
+        for btn in self.color_gradient_buttons:
+            if btn.name.startswith("gradient") and btn.isGradient == False:
+                btn.isGradient = True
+                btn.gradient_left_color = (
+                    int(self.color_gradient_box_one_input_one),
+                    int(self.color_gradient_box_one_input_two),
+                    int(self.color_gradient_box_one_input_three))
+                btn.gradient_right_color = (
+                    int(self.color_gradient_box_two_input_one),
+                    int(self.color_gradient_box_two_input_two),
+                    int(self.color_gradient_box_two_input_three)
+                )
                 break
 
     # gets the list index according to the name
