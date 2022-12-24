@@ -9,6 +9,7 @@ theme = Theme()
 palWindow = PaletteWindow()
 colorWindow.paletteWindow = palWindow
 Change = False
+forgroundBackground = ForgroundBackgroundColor()
 
 
 def adjust_theme_grid(rows, columns):
@@ -119,7 +120,13 @@ def draw_mouse_position_text(win):
                             "Palette Window", 1, theme.BG_TEXTCOLOR
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                    if button.name == "foreground":
+                        background.color, forground.color = (
+                            forground.color,
+                            background.color,
+                        )
                         break
+                    forground.color = button.color
                 for button in colorMode.color_mode_buttons:
                     if not button.hover(pos):
                         continue
@@ -324,7 +331,10 @@ def draw(win, grid, buttons):
         palWindow.draw_palette_window_buttons(win, False)
 
     if STATE == "PICKER":
+        pygame.mouse.set_visible(False)
         colorPicker.draw_zoom_feature_for_color_picker(win)
+    else:
+        pygame.mouse.set_visible(True)
     pygame.display.update()
 
 
@@ -515,6 +525,24 @@ size_medium = 35
 size_large = 50
 
 rtb_x = WIDTH + RIGHT_TOOLBAR_WIDTH / 2
+background = Button(
+    30,
+    HEIGHT - TOOLBAR_HEIGHT / 2 - 15,
+    button_width + 10,
+    button_height + 10,
+    forgroundBackground.backgroundColor,
+    name="background",
+)
+forground = Button(
+    10,
+    HEIGHT - TOOLBAR_HEIGHT / 2 - 30,
+    button_width + 10,
+    button_height + 10,
+    forgroundBackground.forgroundColor,
+    name="foreground",
+)
+
+
 brush_widths = [
     Button(
         rtb_x - size_small / 2,
@@ -693,8 +721,8 @@ buttons.append(
 )  # ColorWindow
 
 
-draw_button = Button(5, HEIGHT - TOOLBAR_HEIGHT / 2 - 30, 60, 60, drawing_color)
-buttons.append(draw_button)
+buttons.append(background)
+buttons.append(forground)
 
 while run:
     clock.tick(FPS)  # limiting FPS to 60 or any other value
@@ -728,7 +756,7 @@ while run:
 
                 elif STATE == "PICKER":
                     drawing_color = colorPicker.picker(WIN)
-                    draw_button.color = drawing_color
+                    forground.color = drawing_color
                     STATE = colorPicker.toggle(STATE)
 
                 if palWindow.isPaletteWindow:
@@ -765,11 +793,11 @@ while run:
                             break
                         if button.name.startswith("Pal"):
                             drawing_color = button.color
-                            draw_button.color = drawing_color
+                            forground.color = drawing_color
                             break
                         if button.name.startswith("GS"):
                             drawing_color = button.color
-                            draw_button.color = drawing_color
+                            forground.color = drawing_color
                             break
                         button.selected = True
 
@@ -810,7 +838,7 @@ while run:
                     if button.text == "Clear":
                         grid = init_grid(ROWS, COLS, theme.GRID_COLOR)
                         drawing_color = BLACK
-                        draw_button.color = drawing_color
+                        forground.color = drawing_color
                         STATE = "COLOR"
                         break
 
@@ -885,10 +913,17 @@ while run:
                         STATE = "COLOR"
                         break
 
-                    drawing_color = button.color
-                    draw_button.color = drawing_color
+                    if button.name == "foreground":
+                        background.color, forground.color = (
+                            forground.color,
+                            background.color,
+                        )
+                        drawing_color = button.color
+                        forground.color = drawing_color
+                        break
 
-                    break
+                    drawing_color = button.color
+                    forground.color = drawing_color
 
                 for button in brush_widths:
                     if not button.clicked(pos):
