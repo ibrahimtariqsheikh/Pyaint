@@ -5,6 +5,7 @@ from .paletteWindow import *
 from .AllPalettes import *
 from .Palette import *
 from .Grayscale import *
+from .colorGradient import *
 
 
 class ColorWindow(object):
@@ -36,18 +37,18 @@ class ColorWindow(object):
             200,
         )
 
-        self.color_gradients_rect = pygame.Rect(
+        self.color_gradient_rect = pygame.Rect(
             self.COLOR_WINDOW_WIDTH + 20,
-            self.COLOR_WINDOW_HEIGHT + 40 + self.color_mixer_rect.h,
+            self.COLOR_WINDOW_HEIGHT + 30 + self.color_mixer_rect.h + 10,
             460,
             150,
         )
         self.color_pallete_rect = pygame.Rect(
             self.COLOR_WINDOW_WIDTH + 20,
             self.COLOR_WINDOW_HEIGHT
-            + 50
-            + self.color_mixer_rect.h
-            + self.color_gradients_rect.h,
+            + 30
+            + self.color_mixer_rect.h + 10
+            + self.color_gradient_rect.h + 10,
             460,
             150,
         )
@@ -97,6 +98,7 @@ class ColorWindow(object):
                 font_size=18,
                 shape=None,
             ),
+
         ]
 
     def append_palette(self):
@@ -209,7 +211,7 @@ class ColorWindow(object):
         pygame.draw.rect(
             win,
             SILVER,
-            self.color_gradients_rect,
+            self.color_gradient_rect,
             width=2,
             border_radius=10,
         )

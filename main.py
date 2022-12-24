@@ -9,11 +9,11 @@ colorWindow = ColorWindow()
 colorMode = ColorMode()
 colorPicker = ColorPicker()
 colorMixer = ColorMixer()
+colorGradient = ColorGradient()
 theme = Theme()
 palWindow = PaletteWindow()
 colorWindow.paletteWindow = palWindow
 Change = False
-
 
 def adjust_theme_grid(rows, columns):
 
@@ -445,6 +445,7 @@ def inBounds(row, col):
 
 
 def fill_bucket(row, col, color):
+
 
     # Visiting array
     vis = [[0 for i in range(101)] for j in range(101)]

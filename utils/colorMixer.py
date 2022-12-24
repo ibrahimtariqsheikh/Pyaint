@@ -11,7 +11,6 @@ class ColorMixer(object):
         return cls.instance
 
     def __init__(self):
-
         self.colorWindow = ColorWindow()
         self.color_mixer_box_one_input_one = 0
         self.color_mixer_box_one_input_two = 0
@@ -20,12 +19,6 @@ class ColorMixer(object):
         self.color_mixer_box_two_input_two = 0
         self.color_mixer_box_two_input_three = 0
         self.theme = Theme()
-        self.color_mixer_display_rect = pygame.Rect(
-            self.colorWindow.COLOR_WINDOW_WIDTH + 20,
-            self.colorWindow.COLOR_WINDOW_HEIGHT + 75,
-            50,
-            50,
-        )
 
         self.color_mixer_buttons = [
             Button(
