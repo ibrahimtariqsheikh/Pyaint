@@ -67,6 +67,12 @@ BRUSH_SIZE = 1  # can be 2, 3, 4 or any other value
 
 STATE = "COLOR"
 
+pygame_icon = pygame.image.load("assets/pyaint.png")
+pygame.display.set_icon(pygame_icon)
+pygame.display.set_caption("Pyaint")
+
+WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
+
 
 def get_font(size):
     return pygame.font.SysFont("arial", size)

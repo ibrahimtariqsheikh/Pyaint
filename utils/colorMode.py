@@ -106,11 +106,9 @@ class ColorMode(object):
             ),
             Button(
                 self.colorWindow.color_mode_rect.x
-                + self.colorWindow.color_mode_rect.w / 2
-                + 30,
-                self.colorWindow.color_mode_rect.y
-                + self.colorWindow.color_mode_rect.h / 2
-                - 25,
+                + self.colorWindow.color_mode_rect.w
+                - 70,
+                self.colorWindow.color_mode_rect.y + 10,
                 60,
                 50,
                 BLACK,
@@ -164,9 +162,11 @@ class ColorMode(object):
             ),
             Button(
                 self.colorWindow.color_mode_rect.x
-                + self.colorWindow.color_mode_rect.w
-                - 70,
-                self.colorWindow.color_mode_rect.y + 10,
+                + self.colorWindow.color_mode_rect.w / 2
+                + 30,
+                self.colorWindow.color_mode_rect.y
+                + self.colorWindow.color_mode_rect.h / 2
+                - 15,
                 60,
                 40,
                 WHITE,

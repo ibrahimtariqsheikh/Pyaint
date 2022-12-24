@@ -16,6 +16,8 @@ class Theme(object):
         self.DARK_THEME_COLOR = (20, 20, 20)
         self.DARK_THEME_TEXT_BACKGROUND_COLOR = (81, 81, 81)
         self.GRID_COLOR = WHITE
+        self.GRID_LINES_COLOR = SILVER
+        self.GRID_COLOR_DARK_THEME = (189, 191, 189)
 
     def toggle(
         self,
@@ -25,12 +27,14 @@ class Theme(object):
         colorWindowButtons,
         custom_color_count,
         paletteWindowButtons,
+        colorGradientButtons,
     ):
         if self.isLightMode:
             self.BG_COLOR = self.DARK_THEME_COLOR
             self.BORDER_COLOR = WHITE
             self.BG_TEXTCOLOR = WHITE
-            self.GRID_COLOR = WHITE
+            self.GRID_COLOR = self.GRID_COLOR_DARK_THEME
+            self.GRID_LINES_COLOR = WHITE
             count = 0
             for button in buttons:
                 button.border_color = WHITE
@@ -42,6 +46,11 @@ class Theme(object):
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
                     button.text_color = WHITE
             for button in colorModeButtons:
+                button.border_color = WHITE
+                if button.text:
+                    button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
+                    button.text_color = WHITE
+            for button in colorGradientButtons:
                 button.border_color = WHITE
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
@@ -73,7 +82,8 @@ class Theme(object):
             self.BG_COLOR = WHITE
             self.BORDER_COLOR = BLACK
             self.BG_TEXTCOLOR = BLACK
-            self.GRID_COLOR = (190, 190, 190)
+            self.GRID_COLOR = WHITE
+            self.GRID_LINES_COLOR = SILVER
             count = 0
             for button in buttons:
                 button.border_color = BLACK
@@ -85,6 +95,14 @@ class Theme(object):
                     button.color = WHITE
                     button.text_color = BLACK
             for button in colorModeButtons:
+                if button.color == BLACK:
+                    button.border_color = GRAY
+                else:
+                    button.border_color = BLACK
+                if button.text:
+                    button.color = WHITE
+                    button.text_color = BLACK
+            for button in colorGradientButtons:
                 if button.color == BLACK:
                     button.border_color = GRAY
                 else:

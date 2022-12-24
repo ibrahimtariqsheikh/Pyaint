@@ -4,6 +4,7 @@ from .colorWindow import *
 from .colorMode import *
 from .colorMixer import *
 from .colorPicker import *
+from .colorGradient import *
 from .theme import *
 from .paletteWindow import *
 from .AllPalettes import *

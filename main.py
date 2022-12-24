@@ -1,14 +1,10 @@
 from utils import *
 
-pygame_icon = pygame.image.load("assets/pyaint.png")
-pygame.display.set_icon(pygame_icon)
-pygame.display.set_caption("Pyaint")
-
-WIN = pygame.display.set_mode((WIDTH + RIGHT_TOOLBAR_WIDTH, HEIGHT))
 colorWindow = ColorWindow()
 colorMode = ColorMode()
 colorPicker = ColorPicker()
 colorMixer = ColorMixer()
+colorGradient = ColorGradient()
 theme = Theme()
 palWindow = PaletteWindow()
 colorWindow.paletteWindow = palWindow
@@ -20,13 +16,13 @@ def adjust_theme_grid(rows, columns):
     if theme.isLightMode:
         for i in range(rows):
             for j in range(columns):  # use _ when variable is not required
-                if grid[i][j] == (190, 190, 190):
+                if grid[i][j] == theme.GRID_COLOR_DARK_THEME:
                     grid[i][j] = WHITE
     else:
         for i in range(rows):
             for j in range(columns):  # use _ when variable is not required
                 if grid[i][j] == WHITE:
-                    grid[i][j] = (190, 190, 190)
+                    grid[i][j] = theme.GRID_COLOR_DARK_THEME
 
 
 def init_grid(rows, columns, color):
@@ -48,29 +44,19 @@ def draw_grid(win, grid):
 
     if DRAW_GRID_LINES:
         for i in range(ROWS + 1):
-            if theme.isLightMode:
-                pygame.draw.line(
-                    win, SILVER, (0, i * PIXEL_SIZE), (WIDTH, i * PIXEL_SIZE)
-                )
-            else:
-                pygame.draw.line(
-                    win, WHITE, (0, i * PIXEL_SIZE), (WIDTH, i * PIXEL_SIZE)
-                )
+            pygame.draw.line(
+                win,
+                theme.GRID_LINES_COLOR,
+                (0, i * PIXEL_SIZE),
+                (WIDTH, i * PIXEL_SIZE),
+            )
         for i in range(COLS + 1):
-            if theme.isLightMode:
-                pygame.draw.line(
-                    win,
-                    SILVER,
-                    (i * PIXEL_SIZE, 0),
-                    (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
-                )
-            else:
-                pygame.draw.line(
-                    win,
-                    WHITE,
-                    (i * PIXEL_SIZE, 0),
-                    (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
-                )
+            pygame.draw.line(
+                win,
+                theme.GRID_LINES_COLOR,
+                (i * PIXEL_SIZE, 0),
+                (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT),
+            )
 
 
 def draw_mouse_position_text(win):
@@ -332,6 +318,7 @@ def draw(win, grid, buttons):
         colorWindow.draw_color_window_buttons(win)
         colorMode.draw_color_mode_buttons(win)
         colorMixer.draw_color_mixer_buttons(win)
+        colorGradient.draw_color_gradient_buttons(win)
     if palWindow.isPaletteWindow:
         palWindow.draw_palette_window(win)
         palWindow.draw_palette_window_buttons(win, False)
@@ -727,6 +714,7 @@ while run:
                     break
             colorMode.handleColorModeEvents(event)
             colorMixer.handleColorMixerEvents(event)
+            colorGradient.handleColorGradientEvents(event)
 
         if pygame.mouse.get_pressed()[0]:
             pos = pygame.mouse.get_pos()
@@ -806,6 +794,15 @@ while run:
                             break
                         button.selected = True
 
+                    for button in colorGradient.color_gradient_buttons:
+                        if not button.clicked(pos):
+                            button.selected = False
+                            continue
+                        if button.name == "AddToCustomColors":
+                            colorGradient.addToCustomColors(buttons)
+                            break
+                        button.selected = True
+
             except IndexError:
                 for button in buttons:
                     if not button.clicked(pos):
@@ -837,6 +834,7 @@ while run:
                             colorWindow.color_window_buttons,
                             colorWindow.custom_color_count,
                             palWindow.palette_window_buttons,
+                            colorGradient.color_gradient_buttons,
                         )
                         adjust_theme_grid(ROWS, COLS)
 
