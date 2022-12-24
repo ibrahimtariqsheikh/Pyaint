@@ -13,11 +13,9 @@ class ColorPicker(object):
 
     # returns the picked color
     def picker(self, win):
-        color = tuple(
-            win.get_at(pygame.mouse.get_pos())
-        )  # get the color of pixel at mouse position
-        drawing_color = (color[0], color[1], color[2])
-        return drawing_color
+        color = tuple(win.get_at(pygame.mouse.get_pos()))
+        current_color = (color[0], color[1], color[2])
+        return current_color
 
     def toggle(self, state):
         if not self.isColorPicker:
@@ -47,12 +45,12 @@ class ColorPicker(object):
             border_color=SILVER,
         )
         color_picker_image = Button(
-            pos[0] - 10,
+            pos[0],
             pos[1] - 20,
             25,
             25,
             name="Picker",
             image_url="assets/paint-picker.png",
         )
-        color_picker_image.draw(win)
         color_picker_button.draw(win)
+        color_picker_image.draw(win)
