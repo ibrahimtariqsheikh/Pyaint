@@ -127,7 +127,7 @@ class ColorGradient(object):
                 40,
                 WHITE,
                 text="Add",
-                name="AddToCustomColors",
+                name="AddGradientColor",
                 shape="rectangleWithBorderRadius",
                 font_size=15,
             ),
@@ -162,12 +162,12 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 162 + 35 * i,
-                self.colorWindow.color_gradients_rect.y + 70,
-                10,
-                10,
+                - 140 + 35 * i,
+                self.colorWindow.color_gradients_rect.y + 62,
+                15,
+                15,
                 WHITE,
-                name="gradientDel"+str(i),
+                name="gradDel"+str(i),
                 image_url="assets/close_color_window.png"
             ))
         for i in range(4):
@@ -180,7 +180,19 @@ class ColorGradient(object):
                 30,
                 30,
                 WHITE,
-                name="gradient"+str(i),
+                name="gradient"+str(i+4),
+            ))
+            self.color_gradient_buttons.append(
+            Button(
+                self.colorWindow.color_gradients_rect.x
+                + self.colorWindow.color_gradients_rect.w
+                - 140 + 35 * i,
+                self.colorWindow.color_gradients_rect.y + 97,
+                15,
+                15,
+                WHITE,
+                name="gradDel"+str(i+4),
+                image_url="assets/close_color_window.png"
             ))
         self.box_one_input_one_index = self.getListIndex("ColorGradientBoxOneInputOne")
         self.box_one_input_two_index = self.getListIndex("ColorGradientBoxOneInputTwo")
@@ -195,6 +207,12 @@ class ColorGradient(object):
         self.color_gradient_display_index = self.getListIndex(
             "DisplayColorInColorGradient"
         )
+    
+    def deleteGradientColor(self, button):
+        button_index = self.getListIndex("gradient"+str(button.name[7]))
+        self.color_gradient_buttons[button_index].isGradient = False
+        self.color_gradient_buttons[button_index].gradient_left_color = (255 , 255, 255)
+        self.color_gradient_buttons[button_index].gradient_right_color = (255, 255, 255)
 
     def draw_color_gradient_buttons(self, win):
         for button in self.color_gradient_buttons:

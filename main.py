@@ -186,6 +186,57 @@ def draw_mouse_position_text(win):
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
+                for button in colorGradient.color_gradient_buttons:
+                    if not button.hover(pos):
+                        continue
+                    if button.name == "ColorGradientBoxOneInputOne":
+                            text_surface = pos_font.render(
+                                "Enter Red Value for the Left Color", 1, theme.BG_TEXTCOLOR
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                    if button.name == "ColorGradientBoxOneInputTwo":
+                        text_surface = pos_font.render(
+                            "Enter Green Value for the Left Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorGradientBoxOneInputThree":
+                        text_surface = pos_font.render(
+                            "Enter Blue Value for the Left Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorGradientBoxTwoInputOne":
+                            text_surface = pos_font.render(
+                                "Enter Red Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                            )
+                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                            break
+                    if button.name == "ColorGradientBoxTwoInputTwo":
+                        text_surface = pos_font.render(
+                            "Enter Green Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "ColorGradientBoxTwoInputThree":
+                        text_surface = pos_font.render(
+                            "Enter Blue Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name.startswith("gradDel"):
+                        text_surface = pos_font.render(
+                            "Delete gradient " + str(int(button.name[7])+1), 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
+                    if button.name == "AddGradientColor":
+                        text_surface = pos_font.render(
+                            "Save Gradient", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
                 for button in colorMixer.color_mixer_buttons:
                     if not button.hover(pos):
                         continue
@@ -826,9 +877,11 @@ while run:
                         if not button.clicked(pos):
                             button.selected = False
                             continue
-                        if button.name == "AddToCustomColors":
+                        if button.name == "AddGradientColor":
                             colorGradient.addToGradientColors()
                             break
+                        if button.name.startswith("gradDel"):
+                            colorGradient.deleteGradientColor(button)
                         button.selected = True
 
             except IndexError:
