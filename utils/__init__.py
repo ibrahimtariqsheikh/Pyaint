@@ -9,6 +9,7 @@ from .theme import *
 from .paletteWindow import *
 from .AllPalettes import *
 from .Palette import *
+from .ForegroundBackground import *
 import pygame, sys, math
 
 pygame.init()

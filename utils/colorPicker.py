@@ -36,8 +36,8 @@ class ColorPicker(object):
 
         pos = pygame.mouse.get_pos()
         color_picker_button = Button(
-            pos[0],
-            pos[1] - 50,
+            pos[0] + 10,
+            pos[1] - 60,
             50,
             50,
             current_color,
@@ -46,4 +46,13 @@ class ColorPicker(object):
             "ellipseWithBorderColor",
             border_color=SILVER,
         )
+        color_picker_image = Button(
+            pos[0] - 10,
+            pos[1] - 20,
+            25,
+            25,
+            name="Picker",
+            image_url="assets/paint-picker.png",
+        )
+        color_picker_image.draw(win)
         color_picker_button.draw(win)
