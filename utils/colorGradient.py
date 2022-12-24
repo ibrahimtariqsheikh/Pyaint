@@ -134,7 +134,7 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 125,
+                - 123,
                 self.colorWindow.color_gradients_rect.y + 10,
                 60,
                 50,
@@ -151,18 +151,18 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 162 + 35 * i,
+                - 162 + 37 * i,
                 self.colorWindow.color_gradients_rect.y + 70,
                 30,
                 30,
-                WHITE,
+                self.theme.BG_COLOR,
                 name="gradient"+str(i),
             ))
             self.color_gradient_buttons.append(
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 140 + 35 * i,
+                - 140 + 37 * i,
                 self.colorWindow.color_gradients_rect.y + 62,
                 15,
                 15,
@@ -175,19 +175,19 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 162 + 35 * i,
-                self.colorWindow.color_gradients_rect.y + 105,
+                - 162 + 37 * i,
+                self.colorWindow.color_gradients_rect.y + 107,
                 30,
                 30,
-                WHITE,
+                self.theme.BG_COLOR,
                 name="gradient"+str(i+4),
             ))
             self.color_gradient_buttons.append(
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 140 + 35 * i,
-                self.colorWindow.color_gradients_rect.y + 97,
+                - 140 + 37 * i,
+                self.colorWindow.color_gradients_rect.y + 99,
                 15,
                 15,
                 WHITE,
