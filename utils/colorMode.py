@@ -329,6 +329,7 @@ class ColorMode(object):
                 self.colorWindow.custom_color_count = (
                     self.colorWindow.custom_color_count + 1
                 ) % 9
+                custom_button.isGradient = False
                 custom_button.color = (
                     self.color_mode_input_one,
                     self.color_mode_input_two,

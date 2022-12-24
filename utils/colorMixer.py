@@ -228,6 +228,7 @@ class ColorMixer(object):
                 self.colorWindow.custom_color_count = (
                     self.colorWindow.custom_color_count + 1
                 ) % 9
+                custom_button.isGradient = False
                 custom_button.color = self.combineColorMixerColors()
                 COLORS.append(custom_button.color)
                 break

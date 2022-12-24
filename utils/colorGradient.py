@@ -255,8 +255,17 @@ class ColorGradient(object):
                 self.colorWindow.custom_color_count = (
                     self.colorWindow.custom_color_count + 1
                 ) % 9
-                custom_button.color = self.combineColorGradientColors()
-                COLORS.append(custom_button.color)
+                custom_button.isGradient = True
+                custom_button.gradient_left_color = (
+                    int(self.color_gradient_box_one_input_one),
+                    int(self.color_gradient_box_one_input_two),
+                    int(self.color_gradient_box_one_input_three),
+                )
+                custom_button.gradient_right_color = (
+                    int(self.color_gradient_box_two_input_one),
+                    int(self.color_gradient_box_two_input_two),
+                    int(self.color_gradient_box_two_input_three),
+                )
                 break
 
     # gets the list index according to the name
