@@ -851,7 +851,7 @@ while run:
                             forground.color = drawing_color
                             break
                         button.selected = True
-                        
+
                     for button in colorMode.color_mode_buttons:
                         if not button.clicked(pos):
                             button.selected = False
