@@ -228,6 +228,7 @@ class ColorMixer(object):
                 and custom_button.color == self.theme.BG_BUTTON
             ):
                 self.colorWindow.custom_color_count = count
+                print("here")
                 custom_button.color = self.combineColorMixerColors()
                 COLORS.append(custom_button.color)
                 break
