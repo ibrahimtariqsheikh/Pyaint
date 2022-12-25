@@ -45,6 +45,8 @@ class Theme(object):
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
                     button.text_color = WHITE
+                if button.name == "switchForeBack":
+                    button.image_url = "assets/white-switch_foreback.png"
             for button in colorModeButtons:
                 button.border_color = WHITE
                 if button.text:
@@ -52,6 +54,9 @@ class Theme(object):
                     button.text_color = WHITE
             for button in colorGradientButtons:
                 button.border_color = WHITE
+                if button.name and button.name.startswith("gradient"):
+                    if button.color == WHITE:
+                        button.color = BLACK
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
                     button.text_color = WHITE
@@ -94,6 +99,8 @@ class Theme(object):
                 if button.text:
                     button.color = WHITE
                     button.text_color = BLACK
+                if button.name == "switchForeBack":
+                    button.image_url = "assets/switch_foreback.png"
             for button in colorModeButtons:
                 if button.color == BLACK:
                     button.border_color = GRAY
@@ -107,6 +114,9 @@ class Theme(object):
                     button.border_color = GRAY
                 else:
                     button.border_color = BLACK
+                if button.name and button.name.startswith("gradient"):
+                    if button.color == BLACK:
+                        button.color = WHITE
                 if button.text:
                     button.color = WHITE
                     button.text_color = BLACK

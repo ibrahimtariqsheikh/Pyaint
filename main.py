@@ -120,13 +120,6 @@ def draw_mouse_position_text(win):
                             "Palette Window", 1, theme.BG_TEXTCOLOR
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                    if button.name == "foreground":
-                        background.color, forground.color = (
-                            forground.color,
-                            background.color,
-                        )
-                        break
-                    forground.color = button.color
                 for button in colorMode.color_mode_buttons:
                     if not button.hover(pos):
                         continue
@@ -190,14 +183,16 @@ def draw_mouse_position_text(win):
                     if not button.hover(pos):
                         continue
                     if button.name == "ColorGradientBoxOneInputOne":
-                            text_surface = pos_font.render(
-                                "Enter Red Value for the Left Color", 1, theme.BG_TEXTCOLOR
-                            )
-                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                            break
+                        text_surface = pos_font.render(
+                            "Enter Red Value for the Left Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
                     if button.name == "ColorGradientBoxOneInputTwo":
                         text_surface = pos_font.render(
-                            "Enter Green Value for the Left Color", 1, theme.BG_TEXTCOLOR
+                            "Enter Green Value for the Left Color",
+                            1,
+                            theme.BG_TEXTCOLOR,
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
@@ -208,26 +203,32 @@ def draw_mouse_position_text(win):
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                     if button.name == "ColorGradientBoxTwoInputOne":
-                            text_surface = pos_font.render(
-                                "Enter Red Value for the Right Color", 1, theme.BG_TEXTCOLOR
-                            )
-                            win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
-                            break
+                        text_surface = pos_font.render(
+                            "Enter Red Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                        )
+                        win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                        break
                     if button.name == "ColorGradientBoxTwoInputTwo":
                         text_surface = pos_font.render(
-                            "Enter Green Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                            "Enter Green Value for the Right Color",
+                            1,
+                            theme.BG_TEXTCOLOR,
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                     if button.name == "ColorGradientBoxTwoInputThree":
                         text_surface = pos_font.render(
-                            "Enter Blue Value for the Right Color", 1, theme.BG_TEXTCOLOR
+                            "Enter Blue Value for the Right Color",
+                            1,
+                            theme.BG_TEXTCOLOR,
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
                     if button.name.startswith("gradDel"):
                         text_surface = pos_font.render(
-                            "Delete gradient " + str(int(button.name[7])+1), 1, theme.BG_TEXTCOLOR
+                            "Delete gradient " + str(int(button.name[7]) + 1),
+                            1,
+                            theme.BG_TEXTCOLOR,
                         )
                         win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                         break
@@ -298,6 +299,7 @@ def draw_mouse_position_text(win):
                 )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
+
             if button.text == "Theme":
                 text_surface = pos_font.render("Toggle Theme", 1, theme.BG_TEXTCOLOR)
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
@@ -326,6 +328,12 @@ def draw_mouse_position_text(win):
                 break
             if button.name == "Picker":
                 text_surface = pos_font.render("Color Picker", 1, theme.BG_TEXTCOLOR)
+                win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                break
+            if button.name == "switchForeBack":
+                text_surface = pos_font.render(
+                    "Switch Foreground Background Color", 1, theme.BG_TEXTCOLOR
+                )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
 
@@ -592,6 +600,14 @@ forground = Button(
     forgroundBackground.forgroundColor,
     name="foreground",
 )
+switchForBack = Button(
+    60,
+    HEIGHT - TOOLBAR_HEIGHT / 2 - 50,
+    30,
+    30,
+    name="switchForeBack",
+    image_url="./assets/switch_foreback.png",
+)
 
 
 brush_widths = [
@@ -774,6 +790,7 @@ buttons.append(
 
 buttons.append(background)
 buttons.append(forground)
+buttons.append(switchForBack)
 
 while run:
     clock.tick(FPS)  # limiting FPS to 60 or any other value
@@ -966,13 +983,12 @@ while run:
                         STATE = "COLOR"
                         break
 
-                    if button.name == "foreground":
+                    if button.name == "switchForeBack":
                         background.color, forground.color = (
                             forground.color,
                             background.color,
                         )
-                        drawing_color = button.color
-                        forground.color = drawing_color
+                        drawing_color = forground.color
                         break
 
                     drawing_color = button.color

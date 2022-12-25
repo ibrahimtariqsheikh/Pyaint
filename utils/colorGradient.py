@@ -134,7 +134,7 @@ class ColorGradient(object):
             Button(
                 self.colorWindow.color_gradients_rect.x
                 + self.colorWindow.color_gradients_rect.w
-                - 123,
+                - 70,
                 self.colorWindow.color_gradients_rect.y + 10,
                 60,
                 50,
@@ -148,52 +148,60 @@ class ColorGradient(object):
         ]
         for i in range(4):
             self.color_gradient_buttons.append(
-            Button(
-                self.colorWindow.color_gradients_rect.x
-                + self.colorWindow.color_gradients_rect.w
-                - 162 + 37 * i,
-                self.colorWindow.color_gradients_rect.y + 70,
-                30,
-                30,
-                self.theme.BG_COLOR,
-                name="gradient"+str(i),
-            ))
+                Button(
+                    self.colorWindow.color_gradients_rect.x
+                    + self.colorWindow.color_gradients_rect.w
+                    - 162
+                    + 37 * i,
+                    self.colorWindow.color_gradients_rect.y + 70,
+                    30,
+                    30,
+                    self.theme.BG_COLOR,
+                    name="gradient" + str(i),
+                )
+            )
             self.color_gradient_buttons.append(
-            Button(
-                self.colorWindow.color_gradients_rect.x
-                + self.colorWindow.color_gradients_rect.w
-                - 140 + 37 * i,
-                self.colorWindow.color_gradients_rect.y + 62,
-                15,
-                15,
-                WHITE,
-                name="gradDel"+str(i),
-                image_url="assets/close_color_window.png"
-            ))
+                Button(
+                    self.colorWindow.color_gradients_rect.x
+                    + self.colorWindow.color_gradients_rect.w
+                    - 140
+                    + 37 * i,
+                    self.colorWindow.color_gradients_rect.y + 62,
+                    15,
+                    15,
+                    WHITE,
+                    name="gradDel" + str(i),
+                    image_url="assets/close_color_window.png",
+                )
+            )
         for i in range(4):
             self.color_gradient_buttons.append(
-            Button(
-                self.colorWindow.color_gradients_rect.x
-                + self.colorWindow.color_gradients_rect.w
-                - 162 + 37 * i,
-                self.colorWindow.color_gradients_rect.y + 107,
-                30,
-                30,
-                self.theme.BG_COLOR,
-                name="gradient"+str(i+4),
-            ))
+                Button(
+                    self.colorWindow.color_gradients_rect.x
+                    + self.colorWindow.color_gradients_rect.w
+                    - 162
+                    + 37 * i,
+                    self.colorWindow.color_gradients_rect.y + 107,
+                    30,
+                    30,
+                    self.theme.BG_COLOR,
+                    name="gradient" + str(i + 4),
+                )
+            )
             self.color_gradient_buttons.append(
-            Button(
-                self.colorWindow.color_gradients_rect.x
-                + self.colorWindow.color_gradients_rect.w
-                - 140 + 37 * i,
-                self.colorWindow.color_gradients_rect.y + 99,
-                15,
-                15,
-                WHITE,
-                name="gradDel"+str(i+4),
-                image_url="assets/close_color_window.png"
-            ))
+                Button(
+                    self.colorWindow.color_gradients_rect.x
+                    + self.colorWindow.color_gradients_rect.w
+                    - 140
+                    + 37 * i,
+                    self.colorWindow.color_gradients_rect.y + 99,
+                    15,
+                    15,
+                    WHITE,
+                    name="gradDel" + str(i + 4),
+                    image_url="assets/close_color_window.png",
+                )
+            )
         self.box_one_input_one_index = self.getListIndex("ColorGradientBoxOneInputOne")
         self.box_one_input_two_index = self.getListIndex("ColorGradientBoxOneInputTwo")
         self.box_one_input_three_index = self.getListIndex(
@@ -207,11 +215,11 @@ class ColorGradient(object):
         self.color_gradient_display_index = self.getListIndex(
             "DisplayColorInColorGradient"
         )
-    
+
     def deleteGradientColor(self, button):
-        button_index = self.getListIndex("gradient"+str(button.name[7]))
+        button_index = self.getListIndex("gradient" + str(button.name[7]))
         self.color_gradient_buttons[button_index].isGradient = False
-        self.color_gradient_buttons[button_index].gradient_left_color = (255 , 255, 255)
+        self.color_gradient_buttons[button_index].gradient_left_color = (255, 255, 255)
         self.color_gradient_buttons[button_index].gradient_right_color = (255, 255, 255)
 
     def draw_color_gradient_buttons(self, win):
@@ -307,11 +315,12 @@ class ColorGradient(object):
                 btn.gradient_left_color = (
                     int(self.color_gradient_box_one_input_one),
                     int(self.color_gradient_box_one_input_two),
-                    int(self.color_gradient_box_one_input_three))
+                    int(self.color_gradient_box_one_input_three),
+                )
                 btn.gradient_right_color = (
                     int(self.color_gradient_box_two_input_one),
                     int(self.color_gradient_box_two_input_two),
-                    int(self.color_gradient_box_two_input_three)
+                    int(self.color_gradient_box_two_input_three),
                 )
                 break
 
@@ -355,18 +364,3 @@ class ColorGradient(object):
                         button.text = user_input
 
                 self.setColorGradientInputValues()
-
-    def combineColorGradientColors(self):
-        red = (
-            self.color_gradient_box_one_input_one
-            + self.color_gradient_box_two_input_one
-        ) / 2
-        green = (
-            self.color_gradient_box_one_input_two
-            + self.color_gradient_box_two_input_two
-        ) / 2
-        blue = (
-            self.color_gradient_box_one_input_three
-            + self.color_gradient_box_two_input_three
-        ) / 2
-        return (red, green, blue)
