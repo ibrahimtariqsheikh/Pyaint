@@ -11,6 +11,7 @@ class Theme(object):
     def __init__(self):
         self.isLightMode = True
         self.BG_COLOR = WHITE
+        self.BG_BUTTON = BLACK
         self.BORDER_COLOR = BLACK
         self.BG_TEXTCOLOR = BLACK
         self.DARK_THEME_COLOR = (20, 20, 20)
@@ -33,14 +34,13 @@ class Theme(object):
             self.BG_COLOR = self.DARK_THEME_COLOR
             self.BORDER_COLOR = WHITE
             self.BG_TEXTCOLOR = WHITE
+            self.BG_BUTTON = BLACK
             self.GRID_COLOR = self.GRID_COLOR_DARK_THEME
             self.GRID_LINES_COLOR = WHITE
-            count = 0
             for button in buttons:
                 button.border_color = WHITE
                 if button.name and button.name.startswith("custom_colors_"):
-                    count = count + 1
-                    if count > custom_color_count:
+                    if button.color == WHITE:
                         button.color = BLACK
                 if button.text:
                     button.color = self.DARK_THEME_TEXT_BACKGROUND_COLOR
@@ -85,6 +85,7 @@ class Theme(object):
 
         else:
             self.BG_COLOR = WHITE
+            self.BG_BUTTON = WHITE
             self.BORDER_COLOR = BLACK
             self.BG_TEXTCOLOR = BLACK
             self.GRID_COLOR = WHITE
@@ -93,8 +94,7 @@ class Theme(object):
             for button in buttons:
                 button.border_color = BLACK
                 if button.name and button.name.startswith("custom_colors_"):
-                    count = count + 1
-                    if count > custom_color_count:
+                    if button.color == BLACK:
                         button.color = WHITE
                 if button.text:
                     button.color = WHITE

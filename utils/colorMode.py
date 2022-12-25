@@ -322,9 +322,30 @@ class ColorMode(object):
     # adds the color to the custom color buttons
     def addToCustomColors(self, buttons):
         for custom_button in buttons:
+            count = 0
             if (
                 custom_button.name
+                and custom_button.name.startswith("custom_colors")
+                and custom_button.color == self.theme.BG_BUTTON
+            ):
+                self.colorWindow.custom_color_count = count
+                custom_button.color = (
+                    self.color_mode_input_one,
+                    self.color_mode_input_two,
+                    self.color_mode_input_three,
+                )
+                COLORS.append(
+                    (
+                        self.color_mode_input_one,
+                        self.color_mode_input_two,
+                        self.color_mode_input_three,
+                    )
+                )
+                break
+            elif (
+                custom_button.name
                 == f"custom_colors_{self.colorWindow.custom_color_count}"
+                and custom_button.color != self.theme.BG_BUTTON
             ):
                 self.colorWindow.custom_color_count = (
                     self.colorWindow.custom_color_count + 1
@@ -343,6 +364,7 @@ class ColorMode(object):
                     )
                 )
                 break
+            count += 1
 
     # switch color mode and set input values according to the one selected
     def switchColorMode(self):

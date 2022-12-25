@@ -220,10 +220,21 @@ class ColorMixer(object):
 
     # adds the color to the custom color buttons
     def addToCustomColors(self, buttons):
+        count = 0
         for custom_button in buttons:
             if (
                 custom_button.name
+                and custom_button.name.startswith("custom_colors")
+                and custom_button.color == self.theme.BG_BUTTON
+            ):
+                self.colorWindow.custom_color_count = count
+                custom_button.color = self.combineColorMixerColors()
+                COLORS.append(custom_button.color)
+                break
+            elif (
+                custom_button.name
                 == f"custom_colors_{self.colorWindow.custom_color_count}"
+                and custom_button.color != self.theme.BG_BUTTON
             ):
                 self.colorWindow.custom_color_count = (
                     self.colorWindow.custom_color_count + 1
@@ -232,6 +243,7 @@ class ColorMixer(object):
                 custom_button.color = self.combineColorMixerColors()
                 COLORS.append(custom_button.color)
                 break
+            count += 1
 
     # gets the list index according to the name
     def getListIndex(self, name):
