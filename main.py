@@ -336,6 +336,10 @@ def draw_mouse_position_text(win):
                 )
                 win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
                 break
+            if button.name == "background":
+                text_surface = pos_font.render("Fill background", 1, theme.BG_TEXTCOLOR)
+                win.blit(text_surface, (10, HEIGHT - TOOLBAR_HEIGHT))
+                break
 
             r, g, b = button.color
             text_surface = pos_font.render(
@@ -982,6 +986,10 @@ while run:
 
                     if button.name == "Brush":
                         STATE = "COLOR"
+                        break
+
+                    if button.name == "background":
+                        grid = init_grid(ROWS, COLS, button.color)
                         break
 
                     if button.name == "switchForeBack":
