@@ -501,68 +501,69 @@ def inBounds(row, col):
 
 
 def fill_bucket(row, col, color):
+    if colorWindow.isColorWindow == False and palWindow.isPaletteWindow == False:
 
-    # Visiting array
-    vis = [[0 for i in range(101)] for j in range(101)]
+        # Visiting array
+        vis = [[0 for i in range(101)] for j in range(101)]
 
-    # Creating queue for bfs
-    obj = []
+        # Creating queue for bfs
+        obj = []
 
-    # Pushing pair of {x, y}
-    obj.append([row, col])
+        # Pushing pair of {x, y}
+        obj.append([row, col])
 
-    # Marking {x, y} as visited
-    vis[row][col] = 1
+        # Marking {x, y} as visited
+        vis[row][col] = 1
 
-    # Until queue is empty
-    while len(obj) > 0:
+        # Until queue is empty
+        while len(obj) > 0:
 
-        # Extracting front pair
-        coord = obj[0]
-        x = coord[0]
-        y = coord[1]
-        preColor = grid[x][y]
+            # Extracting front pair
+            coord = obj[0]
+            x = coord[0]
+            y = coord[1]
+            preColor = grid[x][y]
 
-        grid[x][y] = color
+            grid[x][y] = color
 
-        # Popping front pair of queue
-        obj.pop(0)
+            # Popping front pair of queue
+            obj.pop(0)
 
-        # For Upside Pixel or Cell
-        if (
-            inBounds(x + 1, y) == 1
-            and vis[x + 1][y] == 0
-            and grid[x + 1][y] == preColor
-        ):
-            obj.append([x + 1, y])
-            vis[x + 1][y] = 1
+            # For Upside Pixel or Cell
+            if (
+                inBounds(x + 1, y) == 1
+                and vis[x + 1][y] == 0
+                and grid[x + 1][y] == preColor
+            ):
+                obj.append([x + 1, y])
+                vis[x + 1][y] = 1
 
-        # For Downside Pixel or Cell
-        if (
-            inBounds(x - 1, y) == 1
-            and vis[x - 1][y] == 0
-            and grid[x - 1][y] == preColor
-        ):
-            obj.append([x - 1, y])
-            vis[x - 1][y] = 1
+            # For Downside Pixel or Cell
+            if (
+                inBounds(x - 1, y) == 1
+                and vis[x - 1][y] == 0
+                and grid[x - 1][y] == preColor
+            ):
+                obj.append([x - 1, y])
+                vis[x - 1][y] = 1
 
-        # For Right side Pixel or Cell
-        if (
-            inBounds(x, y + 1) == 1
-            and vis[x][y + 1] == 0
-            and grid[x][y + 1] == preColor
-        ):
-            obj.append([x, y + 1])
-            vis[x][y + 1] = 1
+            # For Right side Pixel or Cell
+            if (
+                inBounds(x, y + 1) == 1
+                and vis[x][y + 1] == 0
+                and grid[x][y + 1] == preColor
+            ):
+                obj.append([x, y + 1])
+                vis[x][y + 1] = 1
 
-        # For Left side Pixel or Cell
-        if (
-            inBounds(x, y - 1) == 1
-            and vis[x][y - 1] == 0
-            and grid[x][y - 1] == preColor
-        ):
-            obj.append([x, y - 1])
-            vis[x][y - 1] = 1
+            # For Left side Pixel or Cell
+            if (
+                inBounds(x, y - 1) == 1
+                and vis[x][y - 1] == 0
+                and grid[x][y - 1] == preColor
+            ):
+                obj.append([x, y - 1])
+                vis[x][y - 1] = 1
 
 
 run = True
