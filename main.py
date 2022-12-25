@@ -992,6 +992,13 @@ while run:
                         drawing_color = forground.color
                         break
 
+                    if button.text == "Erase":
+                        if theme.isLightMode:
+                            drawing_color = theme.GRID_COLOR
+                        else:
+                            drawing_color = theme.GRID_COLOR_DARK_THEME
+                        break
+
                     drawing_color = button.color
                     forground.color = drawing_color
 
