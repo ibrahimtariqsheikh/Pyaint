@@ -227,22 +227,25 @@ class ColorMixer(object):
                 and custom_button.name.startswith("custom_colors")
                 and custom_button.color == self.theme.BG_BUTTON
             ):
-                self.colorWindow.custom_color_count = count
-                print("here")
-                custom_button.color = self.combineColorMixerColors()
-                COLORS.append(custom_button.color)
+                new_color = self.combineColorMixerColors()
+                if new_color != self.theme.BG_BUTTON:
+                    custom_button.color = new_color
+                    COLORS.append(custom_button.color)
+                    self.colorWindow.custom_color_count = count
                 break
             elif (
                 custom_button.name
                 == f"custom_colors_{self.colorWindow.custom_color_count}"
                 and custom_button.color != self.theme.BG_BUTTON
             ):
-                self.colorWindow.custom_color_count = (
-                    self.colorWindow.custom_color_count + 1
-                ) % 9
 
-                custom_button.color = self.combineColorMixerColors()
-                COLORS.append(custom_button.color)
+                new_color = self.combineColorMixerColors()
+                if new_color != self.theme.BG_BUTTON:
+                    custom_button.color = new_color
+                    COLORS.append(custom_button.color)
+                    self.colorWindow.custom_color_count = (
+                        self.colorWindow.custom_color_count + 1
+                    ) % 9
                 break
             count += 1
 

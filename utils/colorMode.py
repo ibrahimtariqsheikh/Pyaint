@@ -328,42 +328,33 @@ class ColorMode(object):
                 and custom_button.name.startswith("custom_colors")
                 and custom_button.color == self.theme.BG_BUTTON
             ):
-                self.colorWindow.custom_color_count = count
-                print("here")
-                custom_button.color = (
+                new_color = (
                     self.color_mode_input_one,
                     self.color_mode_input_two,
                     self.color_mode_input_three,
                 )
-                COLORS.append(
-                    (
-                        self.color_mode_input_one,
-                        self.color_mode_input_two,
-                        self.color_mode_input_three,
-                    )
-                )
+                if new_color != self.theme.BG_BUTTON:
+                    custom_button.color = new_color
+                    COLORS.append(new_color)
+                    self.colorWindow.custom_color_count = count
                 break
             elif (
                 custom_button.name
                 == f"custom_colors_{self.colorWindow.custom_color_count}"
                 and custom_button.color != self.theme.BG_BUTTON
             ):
-                self.colorWindow.custom_color_count = (
-                    self.colorWindow.custom_color_count + 1
-                ) % 9
                 custom_button.isGradient = False
-                custom_button.color = (
+                new_color = (
                     self.color_mode_input_one,
                     self.color_mode_input_two,
                     self.color_mode_input_three,
                 )
-                COLORS.append(
-                    (
-                        self.color_mode_input_one,
-                        self.color_mode_input_two,
-                        self.color_mode_input_three,
-                    )
-                )
+                if new_color != self.theme.BG_BUTTON:
+                    self.colorWindow.custom_color_count = (
+                        self.colorWindow.custom_color_count + 1
+                    ) % 9
+                    custom_button.color = new_color
+                    COLORS.append(new_color)
                 break
             count += 1
 
