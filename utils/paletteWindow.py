@@ -877,15 +877,9 @@ class PaletteWindow:
         sc = int(button.name[6])
         sc1 = int(button.name[6])
 
-        if (
-            self.AllPal.getPalIndex(
-                self.palette_window_buttons[self.getListIndex(delname)].text
-            )
-            == self.currentPalette
-        ):
-            self.selectPalette(
-                self.palette_window_buttons[self.getListIndex("Palbutton1")]
-            )
+        self.selectPalette(
+            self.palette_window_buttons[self.getListIndex("Palbutton1")]
+        )
 
         self.AllPal.delete(self.palette_window_buttons[ind].text)
 
@@ -1467,9 +1461,7 @@ class PaletteWindow:
         self.setSelectionBorderColor()
         if event.type == pygame.KEYDOWN:
             for button in self.palette_window_buttons:
-                if (button is not None) and (
-                    button.name.startswith("Color") and button.selected == True
-                ):
+                if(button.name.startswith("Color") and button.selected == True):
                     if event.key == pygame.K_BACKSPACE:
                         user_input = button.text
                         user_input = user_input[:-1]
@@ -1492,7 +1484,7 @@ class PaletteWindow:
                             user_input = user_input[:-1]
                         button.text = user_input
                     self.setText()
-                elif button.name == "PaletteName":
+                if button.name == "PaletteName" and button.selected == True:
                     if event.key == pygame.K_BACKSPACE:
                         user_input = button.text
                         user_input = user_input[:-1]
