@@ -10,12 +10,6 @@ class Palette:
 
     def setName(self, name):
         self.Name= name
-
-    def getRGBstatus(colormode):
-        if(colormode==True):
-            return True
-        else :
-            return False
         
     def getName(self):
         return self.Name
